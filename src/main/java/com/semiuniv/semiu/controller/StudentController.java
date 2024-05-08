@@ -23,4 +23,11 @@ public class StudentController {
         model.addAttribute("students", students);
         return "students/studentList";
     }
+
+
+    //수강 신청 페이지 : username로 이동 (조건 : 로그인 후)
+    @GetMapping("application")
+    public String lectureApplicationView(Model model){
+        return "students/lectureApplication";
+    }
 }

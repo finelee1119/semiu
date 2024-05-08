@@ -1,7 +1,7 @@
 package com.semiuniv.semiu.service;
 
 import com.semiuniv.semiu.entity.Student;
-import com.semiuniv.semiu.repository.StudentRepository;
+import com.semiuniv.semiu.repository.Student1Repository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,7 +13,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class StudentService {
 
-    private final StudentRepository studentRepository;
+    private final Student1Repository studentRepository;
 
     public List<Student> findStudents() {
         return studentRepository.findAll();
