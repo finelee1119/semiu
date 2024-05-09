@@ -48,8 +48,7 @@ public class StudentDto {
                 student.getAddress(),
                 student.getPhone(),
 
-//                student.getDepartment(),
-                student.getDepartment().getId(), // 변경
+                student.getDepartment().getId(),
                 student.getDepartment().getName(),
 
                 student.getAcademicYear(),
@@ -68,8 +67,6 @@ public class StudentDto {
         student.setGender(dto.getGender());
         student.setAddress(dto.getAddress());
         student.setPhone(dto.getPhone());
-
-//        student.setDepartment(dto.getDepartment());
 
         Department department = new Department();
         department.setId(dto.getDepartmentId());

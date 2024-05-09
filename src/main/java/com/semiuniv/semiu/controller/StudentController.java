@@ -21,8 +21,7 @@ import java.util.Date;
 import java.util.List;
 
 @Controller
-@Slf4j
-@RequestMapping("/semi")
+@RequestMapping("/semi/student")
 public class StudentController {
 
     private final DepartmentRepository departmentRepository;
@@ -51,7 +50,7 @@ public class StudentController {
         }
 
         studentService.insertStudent(dto);
-        return "redirect:/semi/show";
+        return "redirect:/semi/student/show";
     }
 
     //조회
@@ -73,7 +72,7 @@ public class StudentController {
         return "students/updateStudentForm";
     }
 
-    @PostMapping("update")
+    @PostMapping("/update")
     public String update(@Valid @ModelAttribute("studentDto") StudentDto dto,
                          BindingResult bindingResult) {
 
@@ -82,14 +81,14 @@ public class StudentController {
         }
 
         studentService.updateStudent(dto);
-        return "redirect:/semi/show";
+        return "redirect:/semi/student/show";
     }
 
     //삭제
     @PostMapping("/delete/{deleteId}")
     public String delete(@PathVariable("deleteId") Integer id) {
         studentService.deleteStudent(id);
-        return "redirect:/semi/show";
+        return "redirect:/semi/student/show";
     }
 
 }
