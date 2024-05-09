@@ -1,9 +1,11 @@
 package com.semiuniv.semiu.entity;
 
+import com.semiuniv.semiu.constant.SubjectType;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.sql.Time;
+import java.time.LocalTime;
 
 import static jakarta.persistence.FetchType.LAZY;
 
@@ -42,14 +44,14 @@ public class Subject {
     private String dayOfWeek;
 
     @Column(name = "start_time")
-    private Time startTime;
+    private LocalTime startTime;
 
     @Column(name = "end_time")
-    private Time endTime;
+    private LocalTime endTime;
 
     @Column(name = "max_student")
     private Integer maxStudent; //수강 정원
 
-    @Column(name = "total_student")
+    @Column(name = "total_student", columnDefinition = "Integer DEFAULT '0'")
     private Integer totalStudent; //현재 학생 수
 }

@@ -1,5 +1,6 @@
 package com.semiuniv.semiu.entity;
 
+import com.semiuniv.semiu.constant.Gender;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -41,8 +42,8 @@ public class Student {
     private Integer semester;
 
     @Column(name = "entrance_date")
-    private Date entranceDate;
+    private LocalDate entranceDate;
 
     @Column(name = "graduation_date", nullable = true)
-    private Date graduationDate;
+    private LocalDate graduationDate;
 }
