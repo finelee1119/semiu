@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default_layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Subject Update</title>
+    <script type="text/javascript" th:src="@{/js/subjectCheck.js}"></script>
+</head>
+<body>
+    <div class="content" layout:fragment="content">
+        <h1 style="text-align: center;">Subject Update</h1>
+        <br>
+        <form id="frm" th:action="@{/semi/updateSubject}" method="post" th:object="${subject}" class="border">
+            <input type="hidden" th:field="*{id}" th:value="*{id}">
+            <div class="border border-top-0">
+                <label for="name" class="col-sm-4 col-form-label border border-top-0 border-bottom-0 border-left-0" style="text-align: center;" >강의명</label>
+                <input type="text" id="name" th:field="*{name}">
+            </div>
+            <div class="border border-top-0">
+                <label for="professorName" class="col-sm-4 col-form-label border border-top-0 border-bottom-0 border-left-0" style="text-align: center;" >교수</label>
+                <input type="text" id="professorName" th:field="*{professor.name}">
+            </div>
+<!--            <div class="border border-top-0">-->
+<!--                <label for="classroomId" class="col-sm-4 col-form-label border border-top-0 border-bottom-0 border-left-0" style="text-align: center;" >강의실</label>-->
+<!--                <input type="text" id="classroomId" th:field="*{classroom.id}">-->
+<!--            </div>-->
+            <div class="border border-top-0">
+                <label class="col-sm-4 col-form-label border border-top-0 border-bottom-0 border-left-0"
+                       style="text-align: center;" >강의실</label>
+            <select th:field="*{classroom.id}"  id="classroom" >
+                <option value="">선택</option>
+                <option th:each="classroom : ${classrooms}" th:value="${classroom}"
+                        th:text="${classroom}"></option>
+            </select>
+            </div>
+            <div class="border border-top-0">
+                <label class="col-sm-4 col-form-label border border-top-0 border-bottom-0 border-left-0"
+                       style="text-align: center;" >강의 구분</label>
+                <select th:field="*{subjectType}"  id="subjectType" >
+                    <option value="">선택</option>
+                    <option th:each="subjectType : ${T(com.semiuniv.semiu.constant.SubjectType).values()}" th:value="${subjectType}"
+                            th:text="${subjectType}"></option>
+                </select>
+            </div>
+            <div class="border border-top-0">
+                <label for="credit" class="col-sm-4 col-form-label border border-top-0 border-bottom-0 border-left-0" style="text-align: center;" >이수학점</label>
+                <input type="text" id="credit" th:field="*{credit}">
+            </div>
+            <div class="border border-top-0">
+                <label for="academicYear" class="col-sm-4 col-form-label border border-top-0 border-bottom-0 border-left-0" style="text-align: center;" >연도</label>
+                <input type="text" id="academicYear" th:field="*{academicYear}">
+            </div>
+            <div class="border border-top-0">
+                <label for="semester" class="col-sm-4 col-form-label border border-top-0 border-bottom-0 border-left-0" style="text-align: center;" >학기</label>
+                <input type="text" id="semester" th:field="*{semester}">
+            </div>
+            <div class="border border-top-0">
+                <label class="col-sm-4 col-form-label border border-top-0 border-bottom-0 border-left-0"
+                       style="text-align: center;" >요일</label>
+                <select th:field="*{dayOfWeek}"  id="dayOfWeek" >
+                    <option value="">선택</option>
+                    <option value="Mon">Mon</option>
+                    <option value="Tue">Tue</option>
+                    <option value="Wed">Wed</option>
+                    <option value="Thu">Thu</option>
+                    <option value="Fri">Fri</option>
+                    <!--   다시 체크 ! -->
+                </select>
+            </div>
+            <div class="border border-top-0">
+                <label for="startTime" class="col-sm-4 col-form-label border border-top-0 border-bottom-0 border-left-0" style="text-align: center;" >시작시간</label>
+                <input type="text" id="startTime" th:field="*{startTime}">
+            </div>
+            <div class="border border-top-0">
+                <label for="endTime" class="col-sm-4 col-form-label border border-top-0 border-bottom-0 border-left-0" style="text-align: center;" >종료시간</label>
+                <input type="text" id="endTime" th:field="*{endTime}">
+            </div>
+            <div class="border border-top-0">
+                <label for="maxStudent" class="col-sm-4 col-form-label border border-top-0 border-bottom-0 border-left-0" style="text-align: center;" >수강 정원</label>
+                <input type="text" id="maxStudent" th:field="*{maxStudent}">
+            </div>
+            <div style="text-align: center;">
+                <button class="btn btn-primary btn-block" type="button" onclick="check()">등록</button>
+                <button class="btn btn-secondary btn-block" type="button">다시쓰기</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
