@@ -1,9 +1,10 @@
 package com.semiuniv.semiu.entity;
 
+import com.semiuniv.semiu.constant.Gender;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import static jakarta.persistence.FetchType.LAZY;
 
@@ -19,7 +20,7 @@ public class Professor {
     @Column(name = "professor_name", length = 30)
     private String name;
 
-    private Date birth;
+    private LocalDate birth;
 
     @Enumerated(EnumType.STRING)
     private Gender gender;
@@ -35,8 +36,8 @@ public class Professor {
     private Department department;
 
     @Column(name = "hire_date")
-    private Date hireDate;
+    private LocalDate hireDate;
 
     @Column(name = "termination_date", nullable = true)
-    private Date terminationDate;
+    private LocalDate terminationDate;
 }

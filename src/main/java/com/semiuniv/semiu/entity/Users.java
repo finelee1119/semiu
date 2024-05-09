@@ -1,5 +1,6 @@
 package com.semiuniv.semiu.entity;
 
+import com.semiuniv.semiu.constant.UserRole;
 import jakarta.persistence.*;
 import lombok.Data;
 

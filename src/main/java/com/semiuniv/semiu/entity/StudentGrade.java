@@ -1,5 +1,6 @@
 package com.semiuniv.semiu.entity;
 
+import com.semiuniv.semiu.constant.Grade;
 import jakarta.persistence.*;
 import lombok.Data;
 
