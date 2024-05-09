@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default_layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Subject List</title>
+    <script type="text/javascript" th:src="@{/js/subjectCheck.js}"></script>
+</head>
+<body>
+    <div class="content" layout:fragment="content">
+         <h1 style="text-align: center;" >Subject List</h1> <br>
+            <form id="deleteForm" th:action="@{/semi/deleteSubjects}" method="post">
+                <div style="text-align: right;">
+                    <button type="button" class="btn btn-outline-danger btn-sm" onclick="deleteSelectedSubjects()" >선택 항목 삭제</button>
+                </div>
+                <table class="table" border="1">
+                <thead>
+                <tr style="text-align: center;">
+                    <th><input type="checkbox" id="selectAllCheckbox" onclick="allSelected()"></th>
+                    <th>강의코드</th>
+                    <th>강의명</th>
+                    <th>교수</th>
+                    <th>강의실</th>
+                    <th>강의 구분</th>
+                    <th>이수학점</th>
+                    <th>연도</th>
+                    <th>학기</th>
+                    <th>요일</th>
+                    <th>시작시간</th>
+                    <th>종료시간</th>
+                    <th>수강정원</th>
+                    <th>현재인원</th>
+                    <th>수정</th>
+                </tr>
+                </thead>
+                <tr th:each="subject : ${subjects}" th:object="${subject}" style="text-align: center;">
+                    <td><input class="form-check-input" type="checkbox" th:value="*{id}" name="selectedIds" id="flexCheckDefault"></td>
+                    <td th:text="*{id}"></td>
+                    <td th:text="*{name}"></td>
+                    <td th:text="*{professor.name}"></td>
+                    <td th:text="*{classroom.id} +  '&nbsp;강의실'"></td>
+                    <td th:text="*{subjectType}"></td>
+                    <td th:text="*{credit}"></td>
+                    <td th:text="*{academicYear}"></td>
+                    <td th:text="*{semester}"></td>
+                    <td th:text="*{dayOfWeek}"></td>
+                    <td th:text="*{startTime}"></td>
+                    <td th:text="*{endTime}"></td>
+                    <td th:text="*{maxStudent}"></td>
+                    <td th:text="*{totalStudent}"></td>
+                    <td>
+                        <form th:action="@{/semi/updateSubject}" method="get">
+                            <input type="hidden" name="updateId" th:value="*{id}">
+                            <button type="submit" class="btn btn-outline-primary btn-sm">수정</button>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <script>
+        document.getElementById('selectAllCheckbox').addEventListener('click', function() {
+            var checkboxes = document.querySelectorAll('input[name="selectedIds"]');
+            checkboxes.forEach(function(checkbox) {
+                checkbox.checked = event.target.checked;
+            });
+        });
+    </script>
+</body>
+</html>
