@@ -50,22 +50,12 @@
                     <td th:text="*{maxStudent}"></td>
                     <td th:text="*{totalStudent}"></td>
                     <td>
-                        <form th:action="@{/semi/updateSubject}" method="get">
-                            <input type="hidden" name="updateId" th:value="*{id}">
-                            <button type="submit" class="btn btn-outline-primary btn-sm">수정</button>
-                        </form>
+                        <button type="button" class="btn btn-outline-primary btn-sm" th:onclick="'updateSubject(\'' + ${subject.id} + '\')'">수정</button>
                     </td>
                 </tr>
             </table>
         </form>
     </div>
-    <script>
-        document.getElementById('selectAllCheckbox').addEventListener('click', function() {
-            var checkboxes = document.querySelectorAll('input[name="selectedIds"]');
-            checkboxes.forEach(function(checkbox) {
-                checkbox.checked = event.target.checked;
-            });
-        });
-    </script>
+
 </body>
 </html>
