@@ -10,23 +10,25 @@
 </head>
 <body>
 
-<!-- Header fragment -->
-<th:block th:replace="~{fragments/header :: header}"></th:block>
+    <!-- Header fragment -->
+    <th:block th:replace="~{fragments/header :: header}"></th:block>
 
-<!-- Content -->
-<div class="container">
-    <h1>Main Content</h1>
-    <p>This is the main content of the page.</p>
+    <!-- Content -->
+    <div class="container">
+        <h1>Main Content</h1>
+        <p>This is the main content of the page.</p>
 
-    <!-- Buttons for navigation -->
-    <div class="mt-4">
-        <a href="/semi/insertForm" class="btn btn-primary me-2">Insert Student</a>
-        <a href="/semi/show" class="btn btn-primary me-2">Show Students</a>
+        <!-- Buttons for navigation -->
+        <div class="mt-4">
+            <a href="/semi/student/insertForm" class="btn btn-primary me-2">학생 등록</a>
+            <a href="/semi/student/show" class="btn btn-primary me-2">학생 목록</a>
+            <a href="/semi/professor/insertForm" class="btn btn-primary me-2">교수 등록</a>
+            <a href="/semi/professor/show" class="btn btn-primary me-2">교수 목록</a>
+        </div>
     </div>
-</div>
 
-<!-- Footer fragment -->
-<th:block th:replace="~{fragments/footer :: footer}"></th:block>
+    <!-- Footer fragment -->
+    <th:block th:replace="~{fragments/footer :: footer}"></th:block>
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
