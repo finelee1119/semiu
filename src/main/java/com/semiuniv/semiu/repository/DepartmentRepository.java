@@ -1,9 +1,9 @@
 package com.semiuniv.semiu.repository;
 
-import com.semiuniv.semiu.entity.Student;
+import com.semiuniv.semiu.entity.Department;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface StudentRepository extends JpaRepository<Student, Integer> {
+public interface DepartmentRepository extends JpaRepository<Department, Integer> {
 }

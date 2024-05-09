@@ -32,7 +32,7 @@ public class UserDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<Student> userStudent = studentRepository.findById(username);
+        Optional<Student> userStudent = studentRepository.findById(Integer.valueOf(username)); //에러 나서 일단 Integer로 감싸놨어요
         Optional<Users> user = userRepository.findById(username);
         if(user.isEmpty()){
             throw new UsernameNotFoundException("사용자를 찾을 수 없습니다.");

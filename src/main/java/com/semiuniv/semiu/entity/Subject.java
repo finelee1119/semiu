@@ -4,7 +4,6 @@ import com.semiuniv.semiu.constant.SubjectType;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.sql.Time;
 import java.time.LocalTime;
 
 import static jakarta.persistence.FetchType.LAZY;

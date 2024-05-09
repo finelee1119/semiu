@@ -21,7 +21,7 @@ public class Student {
     @Column(name = "student_name", length = 30)
     private String name;
 
-    private Date birth;
+    private LocalDate birth;
 
     @Enumerated(EnumType.STRING)
     private Gender gender;
