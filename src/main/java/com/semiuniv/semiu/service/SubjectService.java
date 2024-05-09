@@ -1,14 +1,12 @@
 package com.semiuniv.semiu.service;
 
 import com.semiuniv.semiu.dto.SubjectDto;
-import com.semiuniv.semiu.entity.Student;
 import com.semiuniv.semiu.entity.Subject;
 import com.semiuniv.semiu.repository.SubjectRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,23 +24,20 @@ public class SubjectService {
     }
     public void insertSubject(SubjectDto subjectDto){
         Subject subject = subjectDto.fromSubjectDto(subjectDto);
-        subjectRepository.insertSubject(subject);
+        subjectRepository.save(subject);
     }
 
     public SubjectDto findSubjectId(int id) {
-        Subject subject = subjectRepository.findById(id);
-        SubjectDto subjectDto = SubjectDto.fromSubjectEntity(subject);
+        SubjectDto subjectDto = subjectRepository.findById(id).map(x ->SubjectDto.fromSubjectEntity(x)).orElse(null);
         return subjectDto;
     }
 
     public void updateSubject(SubjectDto subjectDto) {
         Subject subject = subjectDto.fromSubjectDto(subjectDto);
-        subjectRepository.insertSubject(subject);
+        subjectRepository.save(subject);
     }
 
     public void deleteSubject(int id){
-        Subject subject = subjectRepository.findById(id);
-        subjectRepository.deleteSubject(subject);
+        subjectRepository.deleteById(id);
     }
-
 }
