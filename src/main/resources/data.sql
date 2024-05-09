@@ -30,7 +30,7 @@ INSERT INTO Notice (notice_id, title, content, created_time) VALUES
 -- Professor 테이블에 데이터 삽입
 INSERT INTO Professor (professor_id, professor_name, birth, gender, address, phone, dept_id, hire_date) VALUES
 (240001, 'John Smith', '1975-03-15', 'M', '123 Main St, City', '123-456-7890', 101, '2010-08-01'),
-(240002, 'Jane Doe', '1980-07-20', 'F', '456 Elm St, Town', '987-654-3210', 102, '2015-02-15');
+(240002, 'Jane Doe', '1985-07-20', 'F', '456 Elm St, Town', '987-654-3210', 102, '2015-02-15');
 
 
 -- Student 테이블에 데이터 삽입
