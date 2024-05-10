@@ -32,7 +32,7 @@ public class Student {
     @Column(length = 13)
     private String phone;
 
-    @OneToOne(fetch = LAZY)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "dept_id")
     private Department department;
 
