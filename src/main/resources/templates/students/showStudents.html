@@ -45,10 +45,10 @@
             <td th:text="${studentDto.graduationDate}"></td>
             <td>
                 <!-- 편집 버튼 -->
-                <a th:href="@{/semi/updateForm/{id}(id=${studentDto.id})}" class="btn btn-primary btn-sm">편집</a>
+                <a th:href="@{/semi/student/updateForm/{id}(id=${studentDto.id})}" class="btn btn-primary btn-sm">편집</a>
 
                 <!-- 삭제 버튼 -->
-                <form th:action="@{/semi/delete/{id}(id=${studentDto.id})}" method="post" style="display: inline;">
+                <form th:action="@{/semi/student/delete/{id}(id=${studentDto.id})}" method="post" style="display: inline;">
                     <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('정말로 이 학생을 삭제하시겠습니까?')">삭제</button>
                 </form>
             </td>

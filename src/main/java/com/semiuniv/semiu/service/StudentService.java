@@ -15,11 +15,9 @@ import java.util.List;
 public class StudentService {
 
     private final StudentRepository studentRepository;
-    private final DepartmentRepository departmentRepository;
 
     public StudentService(StudentRepository studentRepository, DepartmentRepository departmentRepository) {
         this.studentRepository = studentRepository;
-        this.departmentRepository = departmentRepository;
     }
 
     //등록
