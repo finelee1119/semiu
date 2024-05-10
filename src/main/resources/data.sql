@@ -44,3 +44,8 @@ INSERT INTO Subject (subject_id, subject_name, professor_id, classroom_id, subje
 (10001, 'Computer Science', 240001, 1, 'major', 3, 2024, 1, 'Mon', '09:00:00', '11:00:00', 30, 25),
 (10002, 'Biology', 240002, 3, 'general', 2, 2024, 1, 'Wed', '13:00:00', '15:00:00', 25, 20);
 
+
+-- StudentSubject 테이블에 데이터 삽입 (수강 내역 테이블)
+
+
+-- StudentGrade 테이블에 데이터 삽입 (성적 테이블)

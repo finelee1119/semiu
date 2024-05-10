@@ -10,6 +10,7 @@
 
 
     function deleteSelectedSubjects() {
+    if (confirm('정말로 이 학생을 삭제하시겠습니까?')) {
         var form = document.getElementById("deleteForm");
         var selectedItems = form.querySelectorAll('input[name="selectedIds"]:checked');
         var selectedIds = [];
@@ -18,17 +19,19 @@
         }
         if(selectedIds.length === 0) {
             alert("삭제할 데이터가 없습니다.")
-            return false
+            return false;
         }
         console.log("SelectedIDs:", selectedIds);
         form.submit();
-        return true
+        return true;
+    } else {
+        return false;}
     }
 
     function updateSubject(subjectId) {
         var updateForm = document.createElement("form");
         updateForm.setAttribute("method", "get");
-        updateForm.setAttribute("action", "/semi/updateSubject");
+        updateForm.setAttribute("action", "/semi/subject/updateSubject");
 
         var input = document.createElement("input");
         input.setAttribute("type", "hidden");
