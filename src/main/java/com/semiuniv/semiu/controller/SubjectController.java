@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 @Slf4j
 @Controller
-@RequestMapping("/semi")
+@RequestMapping("/semi/subject")
 @RequiredArgsConstructor
 public class SubjectController {
 
@@ -25,14 +25,14 @@ public class SubjectController {
     private final ClassroomRepository classroomRepository;
 
 
-    @GetMapping("/subject")
+    @GetMapping("/show")
     public String showSubject(Model model) {
         List<SubjectDto> subjectDto = subjectService.findSubject();
         model.addAttribute("subjects", subjectDto);
         return "subjects/showSubjectList";
     }
 
-    @GetMapping("/insertSubject")
+    @GetMapping("/insertForm")
     public String insertSubjectForm(Model model){
         List<Integer> classrooms = classroomRepository.findAllIds();
         model.addAttribute("classrooms", classrooms);
@@ -44,7 +44,7 @@ public class SubjectController {
         return "subjects/insertSubject";
     }
 
-    @PostMapping("/insertSubject")
+    @PostMapping("/insertForm")
     public String insertSubject (@ModelAttribute("subject") SubjectDto subject){
 //        // 사용자 입력 : 교수 이름, subject 테이블 내 professor_id 저장을 위한 코드
 //        Professor professor = professorRepository.findByName(subject.getProfessor().getName());
