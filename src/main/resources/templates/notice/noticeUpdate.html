@@ -6,7 +6,7 @@
 </head>
 <body>
 <h3>공지사항 수정</h3>
-<form th:action="@{/notice/update}" th:object="${noticeDto}" method="post">
+<form th:action="@{/semi/notice/update}" th:object="${noticeDto}" method="post">
     <input type="hidden" th:field="*{id}"/>
     <table border="1">
         <tr>

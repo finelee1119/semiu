@@ -17,7 +17,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
-@RequestMapping("notice")
+@RequestMapping("/semi/notice")
 public class NoticeController {
     NoticeService noticeService;
 
@@ -25,11 +25,11 @@ public class NoticeController {
         this.noticeService = noticeService;
     }
 
-    @GetMapping("")
+    @GetMapping("/insertForm")
     public String noticeList(Model model){
         List<NoticeDto> notices = noticeService.findAllNotice();
         model.addAttribute("notices", notices);
-        return "/students/noticeList";
+        return "notice/noticeList";
     }
 
     @GetMapping("/insert")
@@ -40,26 +40,30 @@ public class NoticeController {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
         String formattedDateTime = dateTime.format(formatter); // "yyyy-MM-ddTHH:mm"
         model.addAttribute("currentDateTime", formattedDateTime);
-        return "/students/noticeInsert";
+        return "notice/noticeInsert";
     }
 
     @PostMapping("insert")
-    public String notice(@Valid @ModelAttribute("noticeDto")NoticeDto noticeDto){
+    public String notice(@Valid @ModelAttribute("noticeDto")NoticeDto noticeDto,
+                         BindingResult bindingResult){
+        if (bindingResult.hasErrors()){
+            return "notice/noticeInsert";
+        }
         noticeService.insertNotice(noticeDto);
-        return "redirect:/notice";
+        return "redirect:/semi/notice/insertForm";
     }
 
     @PostMapping("/delete/{deleteId}")
     public String deleteNotice(@PathVariable("deleteId")Integer id){
         noticeService.deleteNotice(id);
-        return "redirect:/notice";
+        return "redirect:/semi/notice/insertForm";
     }
 
     @GetMapping("/update/{updateId}")
     public String updateForm(@PathVariable("updateId") Integer id, Model model) {
         NoticeDto noticeDto = noticeService.getNoticeById(id);
         model.addAttribute("noticeDto", noticeDto);
-        return "/students/noticeUpdate";
+        return "notice/noticeUpdate";
     }
 
 
@@ -67,9 +71,9 @@ public class NoticeController {
     public String update(@Valid @ModelAttribute("noticeDto") NoticeDto dto,
                          BindingResult bindingResult){
         if (bindingResult.hasErrors()){
-            return "/students/noticeUpdate";
+            return "notice/noticeUpdate";
         }
         noticeService.updateNotice(dto);
-        return "redirect:/notice";
+        return "redirect:/semi/notice/insertForm";
     }
 }
