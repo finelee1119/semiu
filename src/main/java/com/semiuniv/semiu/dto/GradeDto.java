@@ -3,7 +3,6 @@ package com.semiuniv.semiu.dto;
 import com.semiuniv.semiu.constant.Grade;
 import com.semiuniv.semiu.constant.SubjectType;
 import com.semiuniv.semiu.entity.StudentGrade;
-import com.semiuniv.semiu.entity.Subject;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class StudentGradeDto {
+public class GradeDto {
 //    연도	학기	학번	이름	과목명	점수
 
     // 과목 테이블
@@ -29,7 +28,7 @@ public class StudentGradeDto {
 
     private Grade grade;
 
-    public StudentGrade fromStudentGradeDto(StudentGradeDto dto){
+    public StudentGrade fromStudentGradeDto(GradeDto dto){
         StudentGrade studentGrade = new StudentGrade();
         studentGrade.getStudent().setId(dto.getStudentId());
         studentGrade.getSubject().setId(dto.getSubjectId());
