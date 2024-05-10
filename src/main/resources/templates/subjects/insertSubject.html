@@ -11,7 +11,7 @@
     <div class="content" layout:fragment="content">
         <h1 style="text-align: center;">Subject Insert</h1>
         <br>
-        <form id="frm" th:action="@{/semi/insertForm}" method="post" th:object="${subject}" class="border">
+        <form id="frm" th:action="@{/semi/subject/insertForm}" method="post" th:object="${subject}" class="border">
             <div class="border border-top-0">
                 <label for="name" class="col-sm-4 col-form-label border border-top-0 border-bottom-0 border-left-0" style="text-align: center;" >강의명</label>
                 <input type="text" id="name" th:field="*{name}">

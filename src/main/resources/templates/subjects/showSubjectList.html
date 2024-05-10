@@ -10,7 +10,7 @@
 <body>
     <div class="content" layout:fragment="content">
          <h1 style="text-align: center;" >Subject List</h1> <br>
-            <form id="deleteForm" th:action="@{/semi/deleteSubjects}" method="post">
+            <form id="deleteForm" th:action="@{/semi/subject/deleteSubjects}" method="post">
                 <div style="text-align: right;">
                     <button type="button" class="btn btn-outline-danger btn-sm" onclick="deleteSelectedSubjects()" >선택 항목 삭제</button>
                 </div>

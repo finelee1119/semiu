@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class StudentService {
@@ -52,4 +53,12 @@ public class StudentService {
         studentRepository.deleteById(id);
     }
 
+    //로그인 후 학생 정보 : main.html +
+    public Optional<Student> show_student(Integer loginId) {
+        return studentRepository.findById(loginId);
+    }
+    //수강 신청 페이지 이동 시 가져올 로그인 한 학생 정보 : 수강 신청 +
+    public Optional<Student> findById(Integer id) {
+        return studentRepository.findById(id);
+    }
 }

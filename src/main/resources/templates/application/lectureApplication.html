@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default_layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" th:src="@{/js/form.js}" ></script>
+</head>
+<body>
+<div class="content" layout:fragment="content">
+
+    <div class="lectureMain">
+
+        <!--사이드 nav -->
+        <div class="side">
+            <div class="flex-shrink-0 p-3">
+                <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="32" fill="currentColor" class="bi bi-bag-plus" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M8 7.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0v-1.5H6a.5.5 0 0 1 0-1h1.5V8a.5.5 0 0 1 .5-.5"/>
+                            <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z"/>
+                        </svg>
+                    <span class="fs-5 fw-semibold">수강</span>
+                </a>
+                <hr>
+                <ul class="nav nav-pills flex-column mb-auto">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link active" aria-current="page">
+                            <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"/></svg>
+                            수강신청
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link link-dark">
+                            <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
+                            수강 조회
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!--학생정보 Form : 현재 로그인되어 있는 학생 정보 보여주기-->
+        <div class="lectureApplicationForm">
+            <h1>학생 정보</h1>
+            <!--과목List Get-->
+            <table class="table" >
+                <tr>
+                    <th>ID</th>
+                    <th>이름</th>
+                    <th>학과</th>
+                    <th>학년</th>
+                    <th>학기</th>
+                </tr>
+                <tr th:each="student : ${studentLogin}" th:object="${student}">
+                    <td th:text="*{id}"></td>
+                    <td th:text="*{name}"></td>
+                    <td th:text="*{department.name}"></td>
+                    <td th:text="*{academicYear}"></td>
+                    <td th:text="*{semester}"></td>
+                </tr>
+            </table>
+        <!--수강신청 Form-->
+        <div class="lectureApplicationForm">
+        <h1>수강 신청 과목</h1>
+            <!--과목List Get-->
+            <table class="table" id="lecture">
+                <tr>
+                    <th>과목명</th>
+                    <th>교수명</th>
+                    <th>강의실</th>
+                    <th>강의 구분</th>
+                    <th>이수학점</th>
+                    <th>요일</th>
+                    <th>시작 시간</th>
+                    <th>종료 시간</th>
+                    <th>수강 정원</th>
+                    <th>현재 인원</th>
+                    <th>수강 신청</th>
+<!--                    <th>현재 인원/수강 정원</th>-->
+                </tr>
+                <tr th:each="sub : ${subject}" th:object="${sub}" id="lectureRow">
+                    <td th:text="*{id}"></td>
+                    <td th:text="*{professor.name}"></td>
+                    <td th:text="*{classroom.id}"></td>
+                    <td th:text="*{subjectType}"></td>
+                    <td th:text="*{credit}"></td>
+                    <td th:text="*{dayOfWeek}"></td>
+                    <td th:text="*{startTime}"></td>
+                    <td th:text="*{endTime}"></td>
+                    <td th:text="*{maxStudent}"></td>
+                    <!--totalStudent : 정원 반영-->
+                    <td th:text="*{totalStudent}"></td>
+                    <td>
+                        <!-- 1. 정원 마감 상태 -->
+                        <span th:if="*{maxStudent == totalStudent}" >신청마감</span>
+                        <!-- 2. 수강 신청 가능 상태 : (조건 : 정원마감X , 수강신청하지 않은 과목)-->
+                        <!--onClick : 수강 신청한 과목 내역에 추가, 정원 변경, 취소 버튼으로 변경-->
+                        <span th:unless="*{maxStudent == totalStudent}" id="add_lecture">
+                        <button
+                                th:id="*{id}"
+                                th:professor="*{professor.name}"
+                                th:classroom="*{classroom.id}"
+                                th:subjectType="*{subjectType}"
+                                th:credit="*{credit}"
+                                th:dayOfWeek="*{dayOfWeek}"
+                                th:startTime="*{startTime}"
+                                th:endTime="*{endTime}"
+                                th:maxStudent="*{maxStudent}"
+                                th:totalStudent="*{totalStudent}"
+                                th:onclick="add(this.getAttribute('id'),
+                                                this.getAttribute('professor'),
+                                                this.getAttribute('classroom'),
+                                                this.getAttribute('subjectType'),
+                                                this.getAttribute('credit'),
+                                                this.getAttribute('dayOfWeek'),
+                                                this.getAttribute('startTime'),
+                                                this.getAttribute('endTime'),
+                                                this.getAttribute('maxStudent'),
+                                                this.getAttribute('totalStudent'))"
+                                class="btn btn-outline-primary me-2">신청</button>
+                            </span>
+                        <!-- 3. 수강 신청 완료 상태 : 취소 가능 상태 -->
+                        <!--onClick : 수강 신청한 과목 내역에서 삭제 , 정원 변경, 수강 버튼으로 변경-->
+                        <!--확인 : !미리 취소일 경우 : 수강신청 기간동안 저장해두기 -->
+<!--                        <button th:unless="*{maxStudent == totalStudent}"-->
+<!--                                id="cancel" onClick={handleRegister}>취소</button>-->
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <!--신청항목 Post-->
+        <form th:action="@{/academicManagementView/insert}" method="post" class="container" >
+            <h1>수강 신청 내역</h1>
+            <table class="table">
+                <tr>
+                    <th>과목명</th>
+                    <th>교수명</th>
+                    <th>강의실</th>
+                    <th>강의 구분</th>
+                    <th>이수학점</th>
+                    <th>요일</th>
+                    <th>시작 시간</th>
+                    <th>종료 시간</th>
+                    <th>수강 정원</th>
+                    <th>현재 인원</th>
+                    <th>수강 신청</th>
+                </tr>
+                <tbody id="addLecture" th:each="student : ${studentLogin}" th:object="${student}"></tbody>
+            </table>
+            <input type="submit" value="저장" class="btn btn-primary">
+        </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
