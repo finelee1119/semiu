@@ -29,7 +29,7 @@ public class SecurityConfig {
                         .loginPage("/")
                         .loginProcessingUrl("/login")
 //                        .usernameParameter("email")
-                        .defaultSuccessUrl("/login", true))
+                        .defaultSuccessUrl("/semi/login", true))
 
                 .logout((out)->out
                         .logoutSuccessUrl("/")

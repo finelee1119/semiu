@@ -8,6 +8,7 @@ body {
     min-height : 100%
 }
 
+/*header=================*/
 .header svg {
     width: 40px;
     height: 40px;
@@ -32,12 +33,26 @@ body {
     gap: 50px;
 }
 
+/*content=================*/
+.content {
+    margin-bottom : 100%;
+    margin-top : 50px;
+    margin-left : 200px;
+    margin-right : 200px;
+    min-height: 100%;
+}
+
 /*index-HTML : 메인 폼*/
 .content .middle {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  height: 100%;
+  width: 100%;
+}
+
+.content .middleItem{
+  flex: 1 1 auto;
+  width: 50%;
 }
 
 .content .middleItem img{
@@ -46,15 +61,14 @@ body {
   border-bottom-left-radius: 40px;
 
 }
-
+ /*로그인 : index*/
 .content .middleItemLogin{
   text-align: center;
   display: inline-block;
   background-color: #F8F8FF;
   border-top-right-radius: 40px;
-    border-bottom-right-radius: 40px;
-  width: 60%;
-  height: 500px;
+  border-bottom-right-radius: 40px;
+  width: 100%;
   padding : 30px;
   color: #4169E1;
   font-weight: 600;
@@ -75,20 +89,15 @@ body {
   display: inline-block;
 }
 
+/*footer=================*/
 .footer {
-    position : absolute;
     left : 0;
     right : 0;
     bottom : 0;
     width : 100%;
+    margin-text:auto;
     padding-right : 15px;
     text-align : center;
 }
 
-.content {
-    margin-bottom : 100%;
-    margin-top : 50px;
-    margin-left : 200px;
-    margin-right : 200px;
-}
 

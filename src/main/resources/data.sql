@@ -43,9 +43,10 @@ INSERT INTO Student (student_id, student_name, birth, gender, address, phone, de
 INSERT INTO Subject (subject_id, subject_name, professor_id, classroom_id, subject_type, credit, academic_year, semester, day_of_week, start_time, end_time, max_student, total_student) VALUES
 (10001, 'Computer Science', 240001, 1, 'major', 3, 2024, 1, 'Mon', '09:00:00', '11:00:00', 30, 25),
 (10002, 'Biology', 240002, 3, 'general', 2, 2024, 1, 'Wed', '13:00:00', '15:00:00', 25, 20);
+--(10003, 'Chemistry', 240001, 2, 'general', 2, 2024, 1, 'Fri', '14:00:00', '16:00:00', 23, 23);
 
+-- Users 테이블에 데이터 삽입 +
+INSERT INTO Users (user_id, password, role) VALUES
+(2024000001, '1111', 'STUDENT'),
+(2024000002, '2222', 'STUDENT');
 
--- StudentSubject 테이블에 데이터 삽입 (수강 내역 테이블)
-
-
--- StudentGrade 테이블에 데이터 삽입 (성적 테이블)
