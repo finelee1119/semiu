@@ -52,7 +52,7 @@ public class SubjectController {
         subject.setClassroom(subject.getClassroom());
         log.info(subject.toString());
         subjectService.insertSubject(subject);
-        return "/subject";
+        return "redirect:/semi/subject/show";
     }
 
     @GetMapping("/updateSubject")
@@ -71,7 +71,7 @@ public class SubjectController {
         subject.setClassroom(subject.getClassroom());
         log.info(subject.toString());
         subjectService.updateSubject(subject);
-        return "redirect:/semi/subject";
+        return "redirect:/semi/subject/show";
     }
 
     @PostMapping("/deleteSubjects")
@@ -79,6 +79,6 @@ public class SubjectController {
         for (Integer id : selectedIds) {
             subjectService.deleteSubject(id);
         }
-        return "redirect:/semi/subject";
+        return "redirect:/semi/subject/show";
     }
 }
