@@ -40,4 +40,9 @@ public class SubjectService {
     public void deleteSubject(int id){
         subjectRepository.deleteById(id);
     }
+
+    //수강신청 : 과목 정보 +
+    public List<Subject> showSubject() {
+        return subjectRepository.findAll();
+    }
 }

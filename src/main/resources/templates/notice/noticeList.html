@@ -6,8 +6,8 @@
 </head>
 <body>
     <h2>공지사항</h2>
-    <a href="/notice/insert" class="btn btn-primary">등록하기</a>
-    <form th:action="@{/notice/insert}" method="get">
+    <a href="/semi/notice/insert" class="btn btn-primary">등록하기</a>
+    <form th:action="@{/semi/notice/insertForm}" method="get">
         <table border="1">
             <tr>
                 <th>번호</th>
@@ -21,12 +21,12 @@
                 <td th:text="${notice.title}"></td>
                 <td th:text="${#dates.format(notice.createdTime, 'yyyy-MM-dd HH:mm')}"></td>
                 <td>
-                    <form th:action="@{/notice/update/{id}(id=${notice.id})}" method="get">
+                    <form th:action="@{/semi/notice/update/{id}(id=${notice.id})}" method="get">
                         <input type="submit" value="수정하기">
                     </form>
                 </td>
                 <td>
-                    <form th:action="@{/notice/delete/{id}(id=${notice.id})}" method="post">
+                    <form th:action="@{/semi/notice/delete/{id}(id=${notice.id})}" method="post">
                         <input type="submit" value="삭제하기">
                     </form>
                 </td>
