@@ -17,7 +17,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
-@RequestMapping("/semi/notice")
+@RequestMapping("semi/notice")
 public class NoticeController {
     NoticeService noticeService;
 
@@ -25,14 +25,14 @@ public class NoticeController {
         this.noticeService = noticeService;
     }
 
-    @GetMapping("/insertForm")
+    @GetMapping("/show")
     public String noticeList(Model model){
         List<NoticeDto> notices = noticeService.findAllNotice();
         model.addAttribute("notices", notices);
-        return "notice/noticeList";
+        return "/notice/noticeList";
     }
 
-    @GetMapping("/insert")
+    @GetMapping("/insertForm")
     public String noticeForm(Model model){
         model.addAttribute("noticeDto", new NoticeDto());
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
@@ -40,40 +40,42 @@ public class NoticeController {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
         String formattedDateTime = dateTime.format(formatter); // "yyyy-MM-ddTHH:mm"
         model.addAttribute("currentDateTime", formattedDateTime);
-        return "notice/noticeInsert";
+        return "/notice/noticeInsert";
     }
 
-    @PostMapping("insert")
+    @PostMapping("insertForm")
     public String notice(@Valid @ModelAttribute("noticeDto")NoticeDto noticeDto,
                          BindingResult bindingResult){
         if (bindingResult.hasErrors()){
-            return "notice/noticeInsert";
+            return "/notice/noticeInsert";
         }
         noticeService.insertNotice(noticeDto);
-        return "redirect:/semi/notice/insertForm";
+        return "redirect:/semi/notice/show";
     }
 
-    @PostMapping("/delete/{deleteId}")
-    public String deleteNotice(@PathVariable("deleteId")Integer id){
-        noticeService.deleteNotice(id);
-        return "redirect:/semi/notice/insertForm";
+    @PostMapping("/delete")
+    public String deleteNotice(@RequestParam("selectedIds")Integer[] selectedIds){
+        for (Integer id : selectedIds) {
+            noticeService.deleteNotice(id);
+        }
+        return "redirect:/semi/notice/show";
     }
 
     @GetMapping("/update/{updateId}")
     public String updateForm(@PathVariable("updateId") Integer id, Model model) {
         NoticeDto noticeDto = noticeService.getNoticeById(id);
         model.addAttribute("noticeDto", noticeDto);
-        return "notice/noticeUpdate";
+        return "/notice/noticeUpdate";
     }
 
 
-    @PostMapping("update")
+    @PostMapping("/update")
     public String update(@Valid @ModelAttribute("noticeDto") NoticeDto dto,
                          BindingResult bindingResult){
         if (bindingResult.hasErrors()){
-            return "notice/noticeUpdate";
+            return "/notice/noticeUpdate";
         }
         noticeService.updateNotice(dto);
-        return "redirect:/semi/notice/insertForm";
+        return "redirect:/semi/notice/show";
     }
 }

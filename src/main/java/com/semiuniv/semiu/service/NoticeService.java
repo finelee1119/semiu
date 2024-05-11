@@ -26,9 +26,8 @@ public class NoticeService {
         noticeRepository.save(notice);
     }
 
-    public NoticeDto deleteNotice(Integer id) {
+    public void deleteNotice(Integer id) {
         noticeRepository.deleteById(id);
-        return null;
     }
 
     public NoticeDto getNoticeById(Integer id) {
@@ -55,7 +54,8 @@ public class NoticeService {
                 notice.getId(),
                 notice.getTitle(),
                 notice.getContent(),
-                notice.getCreatedTime()
+                notice.getCreatedTime(),
+                notice.getUpdatedTime()
                 );
     }
 }

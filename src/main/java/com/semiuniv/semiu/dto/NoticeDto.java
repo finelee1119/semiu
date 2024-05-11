@@ -14,10 +14,11 @@ public class NoticeDto {
     private String title;
     private String content;
     private Timestamp createdTime;
+    private Timestamp updatedTime;
 
     public static NoticeDto fromNoticeEntity(Notice notice){
         return new NoticeDto(
-                notice.getId(), notice.getTitle(), notice.getContent(), notice.getCreatedTime()
+                notice.getId(), notice.getTitle(), notice.getContent(), notice.getCreatedTime(), notice.getUpdatedTime()
         );
     }
 
@@ -27,6 +28,7 @@ public class NoticeDto {
         notice.setTitle(noticeDto.getTitle());
         notice.setContent(noticeDto.getContent());
         notice.setCreatedTime(noticeDto.getCreatedTime());
+        notice.setUpdatedTime(noticeDto.getUpdatedTime());
         return notice;
     }
 
