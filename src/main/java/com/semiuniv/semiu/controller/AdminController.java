@@ -43,18 +43,28 @@ public class AdminController {
         return "redirect:/semi/admin/show";
     }
 
-    //조회
-//    @GetMapping("/show")
-//    public String showAll(Model model) {
-//        List<AdminDto> adminDtoList = adminService.showAllAdmins();
-//        model.addAttribute("adminDto", adminDtoList);
-//        return "admins/showAdmins";
-//    }
-
+    //조회 + 검색
     @GetMapping("/show")
-    public String showAll(Model model, @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
-        Page<AdminDto> adminDtoList = adminService.showAllAdmins(pageable);
-        model.addAttribute("adminDto", adminDtoList);
+    public String showAll(Model model,
+                          @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable,
+                          @RequestParam(value = "keyword", defaultValue = "") String keyword) {
+
+        Page<AdminDto> adminDto = null;
+
+        if (keyword == null || keyword.isEmpty()) {
+            adminDto = adminService.showAllAdmins(pageable);
+        } else {
+            try {
+                int id = Integer.parseInt(keyword);
+                // 키워드가 숫자로 변환될 수 있으면 ID로 검색
+                adminDto = adminService.searchAdminById(id, pageable);
+            } catch (NumberFormatException e) {
+                // 숫자로 변환되지 않는 경우 이름으로 검색
+                adminDto = adminService.searchAdminByName(keyword, pageable);
+            }
+        }
+
+        model.addAttribute("adminDto", adminDto);
         return "admins/showAdmins";
     }
 

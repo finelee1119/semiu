@@ -1,6 +1,7 @@
 package com.semiuniv.semiu.service;
 
 import com.semiuniv.semiu.dto.ProfessorDto;
+import com.semiuniv.semiu.dto.StudentDto;
 import com.semiuniv.semiu.entity.Professor;
 import com.semiuniv.semiu.repository.ProfessorRepository;
 import org.springframework.data.domain.Page;
@@ -35,6 +36,17 @@ public class ProfessorService {
         return professorRepository.findById(id)
                 .map(ProfessorDto::fromProfessorEntity)
                 .orElse(null);
+    }
+
+    //검색
+    public Page<ProfessorDto> searchProfessorById(Integer id, Pageable pageable) {
+        return professorRepository.findById(id, pageable)
+                .map(ProfessorDto::fromProfessorEntity);
+    }
+
+    public Page<ProfessorDto> searchProfessorByName(String name, Pageable pageable) {
+        return professorRepository.findByNameContaining(name, pageable)
+                .map(ProfessorDto::fromProfessorEntity);
     }
 
     //수정

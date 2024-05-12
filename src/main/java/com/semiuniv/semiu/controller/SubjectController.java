@@ -28,21 +28,7 @@ public class SubjectController {
     private final ProfessorService professorService;
     private final ClassroomRepository classroomRepository;
 
-
-//    @GetMapping("/show")
-//    public String showSubject(Model model) {
-//        List<SubjectDto> subjectDto = subjectService.findSubject();
-//        model.addAttribute("subjects", subjectDto);
-//        return "subjects/showSubjectList";
-//    }
-
-    @GetMapping("/show")
-    public String showSubject(Model model, @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
-        Page<SubjectDto> subjectDto = subjectService.findSubject(pageable);
-        model.addAttribute("subjects", subjectDto);
-        return "subjects/showSubjectList";
-    }
-
+    //등록
     @GetMapping("/insertForm")
     public String insertSubjectForm(Model model, Pageable pageable){
         List<Integer> classrooms = classroomRepository.findAllIds();
@@ -68,6 +54,32 @@ public class SubjectController {
         return "redirect:/semi/subject/show";
     }
 
+    //조회 + 검색
+    @GetMapping("/show")
+    public String showSubject(Model model,
+                              @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable,
+                              @RequestParam(value = "keyword", defaultValue = "") String keyword) {
+
+        Page<SubjectDto> subjectDto = null;
+
+        if (keyword == null || keyword.isEmpty()) {
+            subjectDto = subjectService.findSubject(pageable);
+        } else {
+            try {
+                int id = Integer.parseInt(keyword);
+                // 키워드가 숫자로 변환될 수 있으면 강의코드로 검색
+                subjectDto = subjectService.searchSubjectById(id, pageable);
+            } catch (NumberFormatException e) {
+                // 숫자로 변환되지 않는 경우 강의명으로 검색
+                subjectDto = subjectService.searchSubjectBySubjectName(keyword, pageable);
+            }
+        }
+
+        model.addAttribute("subjects", subjectDto);
+        return "subjects/showSubjectList";
+    }
+
+    //수정
     @GetMapping("/updateSubject")
     public String updateSubjectForm(@RequestParam("updateId")int id, Model model, Pageable pageable) {
         List<Integer> classrooms = classroomRepository.findAllIds();
@@ -88,7 +100,8 @@ public class SubjectController {
         subjectService.updateSubject(subject);
         return "redirect:/semi/subject/show";
     }
-
+    
+    //삭제
     @PostMapping("/deleteSubjects")
     public String deleteSubjects(@RequestParam("selectedIds") Integer[] selectedIds) {
         for (Integer id : selectedIds) {

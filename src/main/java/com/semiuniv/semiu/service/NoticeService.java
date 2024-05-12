@@ -1,6 +1,7 @@
 package com.semiuniv.semiu.service;
 
 import com.semiuniv.semiu.dto.NoticeDto;
+import com.semiuniv.semiu.dto.StudentDto;
 import com.semiuniv.semiu.entity.Notice;
 import com.semiuniv.semiu.repository.NoticeRepository;
 import org.springframework.data.domain.Page;
@@ -17,6 +18,7 @@ public class NoticeService {
         this.noticeRepository = noticeRepository;
     }
 
+    //등록
     public void insertNotice(NoticeDto dto) {
         Notice notice = NoticeDto.toNoticeEntity(dto);
         Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
@@ -24,6 +26,7 @@ public class NoticeService {
         noticeRepository.save(notice);
     }
 
+    //조회
     public Page<NoticeDto> findAllNotice(Pageable pageable) {
         return noticeRepository.findAll(pageable)
                 .map(NoticeDto::fromNoticeEntity);
@@ -35,6 +38,13 @@ public class NoticeService {
                 .orElse(null);
     }
 
+    //검색
+    public Page<NoticeDto> searchNoticeByTitle(String title, Pageable pageable) {
+        return noticeRepository.findByTitleContaining(title, pageable)
+                .map(NoticeDto::fromNoticeEntity);
+    }
+
+    //수정
     public void updateNotice(NoticeDto dto) {
         Notice notice = noticeRepository.findById(dto.getId())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid notice Id:" + dto.getId()));
@@ -43,16 +53,8 @@ public class NoticeService {
         noticeRepository.save(notice);
     }
 
+    //삭제
     public void deleteNotice(Integer id) {
         noticeRepository.deleteById(id);
     }
-
-    //    private NoticeDto convertToDto(Notice notice) {
-//        return new NoticeDto(
-//                notice.getId(),
-//                notice.getTitle(),
-//                notice.getContent(),
-//                notice.getCreatedTime()
-//                );
-//    }
 }

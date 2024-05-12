@@ -47,10 +47,20 @@ public class NoticeController {
         return "redirect:/semi/notice/show";
     }
 
-    //조회
+    //조회 + 검색
     @GetMapping("/show")
-    public String showAll(Model model, @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable){
-        Page<NoticeDto> noticeDto = noticeService.findAllNotice(pageable);
+    public String showAll(Model model,
+                          @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+                          @RequestParam(value = "keyword", defaultValue = "") String keyword){
+
+        Page<NoticeDto> noticeDto = null;
+
+        if (keyword == null || keyword.isEmpty()) {
+            noticeDto = noticeService.findAllNotice(pageable);
+        } else {
+            noticeDto = noticeService.searchNoticeByTitle(keyword, pageable);
+        }
+
         model.addAttribute("noticeDto", noticeDto);
         return "notices/showNotice";
     }
