@@ -17,16 +17,19 @@ public class NoticeDto {
 
     public static NoticeDto fromNoticeEntity(Notice notice){
         return new NoticeDto(
-                notice.getId(), notice.getTitle(), notice.getContent(), notice.getCreatedTime()
+                notice.getId(),
+                notice.getTitle(),
+                notice.getContent(),
+                notice.getCreatedTime()
         );
     }
 
-    public Notice fromNoticeDto(NoticeDto noticeDto) {
+    public static Notice toNoticeEntity(NoticeDto dto) {
         Notice notice = new Notice();
-        notice.setId(noticeDto.getId());
-        notice.setTitle(noticeDto.getTitle());
-        notice.setContent(noticeDto.getContent());
-        notice.setCreatedTime(noticeDto.getCreatedTime());
+        notice.setId(dto.getId());
+        notice.setTitle(dto.getTitle());
+        notice.setContent(dto.getContent());
+        notice.setCreatedTime(dto.getCreatedTime());
         return notice;
     }
 

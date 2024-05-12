@@ -10,29 +10,29 @@
 <body>
     <div class="content" layout:fragment="content">
          <h1 style="text-align: center;" >Subject List</h1> <br>
-            <form id="deleteForm" th:action="@{/semi/subject/deleteSubjects}" method="post">
-                <div style="text-align: right;">
-                    <button type="button" class="btn btn-outline-danger btn-sm" onclick="deleteSelectedSubjects()" >선택 항목 삭제</button>
-                </div>
-                <table class="table" border="1">
+        <form id="deleteForm" th:action="@{/semi/subject/deleteSubjects}" method="post">
+            <div style="text-align: right;">
+                <button type="button" class="btn btn-outline-danger btn-sm" onclick="deleteSelectedSubjects()" >선택 항목 삭제</button>
+            </div>
+            <table class="table" border="1">
                 <thead>
-                <tr style="text-align: center;">
-                    <th><input type="checkbox" id="selectAllCheckbox" onclick="allSelected()"></th>
-                    <th>강의코드</th>
-                    <th>강의명</th>
-                    <th>교수</th>
-                    <th>강의실</th>
-                    <th>강의 구분</th>
-                    <th>이수학점</th>
-                    <th>연도</th>
-                    <th>학기</th>
-                    <th>요일</th>
-                    <th>시작시간</th>
-                    <th>종료시간</th>
-                    <th>수강정원</th>
-                    <th>현재인원</th>
-                    <th>수정</th>
-                </tr>
+                    <tr style="text-align: center;">
+                        <th><input type="checkbox" id="selectAllCheckbox" onclick="allSelected()"></th>
+                        <th>강의코드</th>
+                        <th>강의명</th>
+                        <th>교수</th>
+                        <th>강의실</th>
+                        <th>강의 구분</th>
+                        <th>이수학점</th>
+                        <th>연도</th>
+                        <th>학기</th>
+                        <th>요일</th>
+                        <th>시작시간</th>
+                        <th>종료시간</th>
+                        <th>수강정원</th>
+                        <th>현재인원</th>
+                        <th>수정</th>
+                    </tr>
                 </thead>
                 <tr th:each="subject : ${subjects}" th:object="${subject}" style="text-align: center;">
                     <td><input class="form-check-input" type="checkbox" th:value="*{id}" name="selectedIds" id="flexCheckDefault"></td>
@@ -54,7 +54,35 @@
                     </td>
                 </tr>
             </table>
+
+            <!-- 페이징 처리 -->
+            <div aria-label="Page navigation" th:if="${!subjects.isEmpty()}">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item" th:classappend="${!subjects.hasPrevious()} ? 'disabled'">
+                        <a class="page-link" th:href="@{|?page=${subjects.number - 1}|}">
+                            <span>이전</span>
+                        </a>
+                    </li>
+
+                    <li th:each="page: ${#numbers.sequence(0, subjects.totalPages - 1)}"
+                        th:if="${page >= subjects.number - 5 and page <= subjects.number + 5}"
+                        th:classappend="${page == subjects.number} ? 'active'"
+                        class="page-item">
+                        <a th:text="${page + 1}" class="page-link" th:href="@{|?page=${page}|}"></a>
+                    </li>
+
+
+                    <li class="page-item" th:classappend="${!subjects.hasNext} ? 'disabled'">
+                        <a class="page-link" th:href="@{|?page=${subjects.number + 1}|}">
+                            <span>다음</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </form>
+
+        <a th:href="@{/semi/subject/insertForm}" class="btn btn-primary me-2">등록</a>
+        <a th:href="@{/semi}" class="btn btn-primary">메인 화면으로 돌아가기</a>
     </div>
 
 </body>

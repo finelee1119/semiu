@@ -5,6 +5,8 @@ import com.semiuniv.semiu.entity.Department;
 import com.semiuniv.semiu.entity.Student;
 import com.semiuniv.semiu.repository.DepartmentRepository;
 import com.semiuniv.semiu.repository.StudentRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,12 +30,9 @@ public class StudentService {
     }
 
     //조회
-    public List<StudentDto> showAllStudents() {
-        List<StudentDto> studentDtoList = new ArrayList<>();
-        return studentRepository.findAll()
-                .stream()
-                .map(StudentDto::fromStudentEntity)
-                .toList();
+    public Page<StudentDto> showAllStudents(Pageable pageable) {
+        return studentRepository.findAll(pageable)
+                .map(StudentDto::fromStudentEntity);
     }
 
     public StudentDto showOneStudent(Integer id) {

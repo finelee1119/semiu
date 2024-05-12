@@ -3,6 +3,8 @@ package com.semiuniv.semiu.service;
 import com.semiuniv.semiu.dto.ProfessorDto;
 import com.semiuniv.semiu.entity.Professor;
 import com.semiuniv.semiu.repository.ProfessorRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,12 +26,9 @@ public class ProfessorService {
     }
 
     //조회
-    public List<ProfessorDto> showAllProfessors() {
-        List<ProfessorDto> ProfessorDtoList = new ArrayList<>();
-        return professorRepository.findAll()
-                .stream()
-                .map(ProfessorDto::fromProfessorEntity)
-                .toList();
+    public Page<ProfessorDto> showAllProfessors(Pageable pageable) {
+        return professorRepository.findAll(pageable)
+                .map(ProfessorDto::fromProfessorEntity);
     }
 
     public ProfessorDto showOneProfessor(Integer id) {

@@ -5,6 +5,10 @@ import com.semiuniv.semiu.entity.Department;
 import com.semiuniv.semiu.repository.DepartmentRepository;
 import com.semiuniv.semiu.service.ProfessorService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -47,8 +51,8 @@ public class ProfessorController {
 
     //조회
     @GetMapping("/show")
-    public String showAll(Model model) {
-        List<ProfessorDto> professorDtoList = professorService.showAllProfessors();
+    public String showAll(Model model, @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
+        Page<ProfessorDto> professorDtoList = professorService.showAllProfessors(pageable);
         model.addAttribute("professorDto", professorDtoList);
         return "professors/showProfessors";
     }
