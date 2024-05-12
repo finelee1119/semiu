@@ -1,17 +1,13 @@
 package com.semiuniv.semiu.service;
 
 import com.semiuniv.semiu.dto.StudentDto;
-import com.semiuniv.semiu.entity.Department;
 import com.semiuniv.semiu.entity.Student;
-import com.semiuniv.semiu.repository.DepartmentRepository;
 import com.semiuniv.semiu.repository.StudentRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,7 +15,8 @@ public class StudentService {
 
     private final StudentRepository studentRepository;
 
-    public StudentService(StudentRepository studentRepository, DepartmentRepository departmentRepository) {
+    @Autowired
+    public StudentService(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
     }
 
@@ -39,6 +36,17 @@ public class StudentService {
         return studentRepository.findById(id)
                 .map(StudentDto::fromStudentEntity)
                 .orElse(null);
+    }
+
+    //검색
+    public Page<StudentDto> searchStudentById(Integer id, Pageable pageable) {
+        return studentRepository.findById(id, pageable)
+                .map(StudentDto::fromStudentEntity);
+    }
+
+    public Page<StudentDto> searchStudentByName(String name, Pageable pageable) {
+        return studentRepository.findByNameContaining(name, pageable)
+                .map(StudentDto::fromStudentEntity);
     }
 
     //수정
