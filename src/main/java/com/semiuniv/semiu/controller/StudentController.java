@@ -8,6 +8,10 @@ import com.semiuniv.semiu.service.StudentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,7 +42,7 @@ public class StudentController {
         List<Department> departments = departmentRepository.findAll();
         model.addAttribute("departments", departments);
         model.addAttribute("studentDto", new StudentDto());
-        return  "students/insertStudentForm";
+        return "students/insertStudent";
     }
 
     @PostMapping("/insert")
@@ -46,7 +50,7 @@ public class StudentController {
                          BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
-            return "students/insertStudentForm";
+            return "students/insertStudent";
         }
 
         studentService.insertStudent(dto);
@@ -55,9 +59,9 @@ public class StudentController {
 
     //조회
     @GetMapping("/show")
-    public String showAll(Model model) {
-        List<StudentDto> studentDtoList = studentService.showAllStudents();
-        model.addAttribute("studentDto", studentDtoList);
+    public String showAll(Model model, @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
+        Page<StudentDto> studentDto = studentService.showAllStudents(pageable);
+        model.addAttribute("studentDto", studentDto);
         return "students/showStudents";
     }
 
@@ -69,7 +73,7 @@ public class StudentController {
 
         StudentDto studentDto = studentService.showOneStudent(id);
         model.addAttribute("studentDto", studentDto);
-        return "students/updateStudentForm";
+        return "students/updateStudent";
     }
 
     @PostMapping("/update")
@@ -77,7 +81,7 @@ public class StudentController {
                          BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
-            return "students/updateStudentForm";
+            return "students/updateStudent";
         }
 
         studentService.updateStudent(dto);

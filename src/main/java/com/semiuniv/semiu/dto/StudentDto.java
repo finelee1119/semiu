@@ -15,27 +15,19 @@ import java.time.LocalDate;
 public class StudentDto {
 
     private Integer id; //학번
-
     private String name; //성명
-
     private LocalDate birth; //생년월일
-
     private Gender gender; //성별
-
     private String address; //주소
-
     private String phone; //연락처
 
-    //    private Department department; // 학과
     private Integer departmentId; // 학과 ID
     private String departmentName; // 학과 이름
 
     private Integer academicYear; //학년
-
     private Integer semester; //학기
 
     private LocalDate entranceDate; //입학일
-
     private LocalDate graduationDate; //졸업일
 
     // Entity -> Dto

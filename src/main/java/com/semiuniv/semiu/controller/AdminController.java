@@ -3,6 +3,10 @@ package com.semiuniv.semiu.controller;
 import com.semiuniv.semiu.dto.AdminDto;
 import com.semiuniv.semiu.service.AdminService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -40,9 +44,16 @@ public class AdminController {
     }
 
     //조회
+//    @GetMapping("/show")
+//    public String showAll(Model model) {
+//        List<AdminDto> adminDtoList = adminService.showAllAdmins();
+//        model.addAttribute("adminDto", adminDtoList);
+//        return "admins/showAdmins";
+//    }
+
     @GetMapping("/show")
-    public String showAll(Model model) {
-        List<AdminDto> adminDtoList = adminService.showAllAdmins();
+    public String showAll(Model model, @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
+        Page<AdminDto> adminDtoList = adminService.showAllAdmins(pageable);
         model.addAttribute("adminDto", adminDtoList);
         return "admins/showAdmins";
     }

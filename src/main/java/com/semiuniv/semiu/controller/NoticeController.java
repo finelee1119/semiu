@@ -1,20 +1,20 @@
 package com.semiuniv.semiu.controller;
 
 import com.semiuniv.semiu.dto.NoticeDto;
-import com.semiuniv.semiu.entity.Notice;
-import com.semiuniv.semiu.repository.NoticeRepository;
 import com.semiuniv.semiu.service.NoticeService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 @Controller
 @RequestMapping("/semi/notice")
@@ -25,55 +25,58 @@ public class NoticeController {
         this.noticeService = noticeService;
     }
 
+    //등록
     @GetMapping("/insertForm")
-    public String noticeList(Model model){
-        List<NoticeDto> notices = noticeService.findAllNotice();
-        model.addAttribute("notices", notices);
-        return "notice/noticeList";
-    }
-
-    @GetMapping("/insert")
-    public String noticeForm(Model model){
+    public String insertForm(Model model){
         model.addAttribute("noticeDto", new NoticeDto());
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         LocalDateTime dateTime = timestamp.toLocalDateTime();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
         String formattedDateTime = dateTime.format(formatter); // "yyyy-MM-ddTHH:mm"
         model.addAttribute("currentDateTime", formattedDateTime);
-        return "notice/noticeInsert";
+        return "notices/insertNotice";
     }
 
-    @PostMapping("insert")
-    public String notice(@Valid @ModelAttribute("noticeDto")NoticeDto noticeDto,
+    @PostMapping("/insert")
+    public String insert(@Valid @ModelAttribute("noticeDto")NoticeDto dto,
                          BindingResult bindingResult){
         if (bindingResult.hasErrors()){
-            return "notice/noticeInsert";
+            return "notices/insertNotice";
         }
-        noticeService.insertNotice(noticeDto);
-        return "redirect:/semi/notice/insertForm";
+        noticeService.insertNotice(dto);
+        return "redirect:/semi/notice/show";
     }
 
-    @PostMapping("/delete/{deleteId}")
-    public String deleteNotice(@PathVariable("deleteId")Integer id){
-        noticeService.deleteNotice(id);
-        return "redirect:/semi/notice/insertForm";
+    //조회
+    @GetMapping("/show")
+    public String showAll(Model model, @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable){
+        Page<NoticeDto> noticeDto = noticeService.findAllNotice(pageable);
+        model.addAttribute("noticeDto", noticeDto);
+        return "notices/showNotice";
     }
 
-    @GetMapping("/update/{updateId}")
+    //수정
+    @GetMapping("/updateForm/{updateId}")
     public String updateForm(@PathVariable("updateId") Integer id, Model model) {
         NoticeDto noticeDto = noticeService.getNoticeById(id);
         model.addAttribute("noticeDto", noticeDto);
-        return "notice/noticeUpdate";
+        return "notices/updateNotice";
     }
-
 
     @PostMapping("update")
     public String update(@Valid @ModelAttribute("noticeDto") NoticeDto dto,
                          BindingResult bindingResult){
         if (bindingResult.hasErrors()){
-            return "notice/noticeUpdate";
+            return "notices/updateNotice";
         }
         noticeService.updateNotice(dto);
-        return "redirect:/semi/notice/insertForm";
+        return "redirect:/semi/notice/show";
+    }
+
+    //삭제
+    @PostMapping("/delete/{deleteId}")
+    public String delete(@PathVariable("deleteId") Integer id){
+        noticeService.deleteNotice(id);
+        return "redirect:/semi/notice/show";
     }
 }

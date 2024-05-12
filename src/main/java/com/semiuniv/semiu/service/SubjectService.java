@@ -4,6 +4,8 @@ import com.semiuniv.semiu.dto.SubjectDto;
 import com.semiuniv.semiu.entity.Subject;
 import com.semiuniv.semiu.repository.SubjectRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,11 +19,18 @@ public class SubjectService {
 
     private final SubjectRepository subjectRepository;
 
-    public List<SubjectDto> findSubject() {
-        List<SubjectDto> subjectDtoList = subjectRepository.findAll()
-                .stream().map(x -> SubjectDto.fromSubjectEntity(x)).collect(Collectors.toList());
-        return subjectDtoList;
+//    public List<SubjectDto> findSubject() {
+//        return subjectRepository.findAll()
+//                .stream()
+//                .map(SubjectDto::fromSubjectEntity)
+//                .collect(Collectors.toList());
+//    }
+
+    public Page<SubjectDto> findSubject(Pageable pageable) {
+        return subjectRepository.findAll(pageable)
+                .map(SubjectDto::fromSubjectEntity);
     }
+
     public void insertSubject(SubjectDto subjectDto){
         Subject subject = subjectDto.fromSubjectDto(subjectDto);
         subjectRepository.save(subject);

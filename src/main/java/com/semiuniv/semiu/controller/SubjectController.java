@@ -9,6 +9,10 @@ import com.semiuniv.semiu.service.ProfessorService;
 import com.semiuniv.semiu.service.SubjectService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -25,19 +29,28 @@ public class SubjectController {
     private final ClassroomRepository classroomRepository;
 
 
+//    @GetMapping("/show")
+//    public String showSubject(Model model) {
+//        List<SubjectDto> subjectDto = subjectService.findSubject();
+//        model.addAttribute("subjects", subjectDto);
+//        return "subjects/showSubjectList";
+//    }
+
     @GetMapping("/show")
-    public String showSubject(Model model) {
-        List<SubjectDto> subjectDto = subjectService.findSubject();
+    public String showSubject(Model model, @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
+        Page<SubjectDto> subjectDto = subjectService.findSubject(pageable);
         model.addAttribute("subjects", subjectDto);
         return "subjects/showSubjectList";
     }
 
     @GetMapping("/insertForm")
-    public String insertSubjectForm(Model model){
+    public String insertSubjectForm(Model model, Pageable pageable){
         List<Integer> classrooms = classroomRepository.findAllIds();
         model.addAttribute("classrooms", classrooms);
-        List<ProfessorDto> professors = professorService.showAllProfessors();
+
+        Page<ProfessorDto> professors = professorService.showAllProfessors(pageable);
         model.addAttribute("professors", professors);
+
         // 새로운 Subject 객체를 생성하고 모델에 추가합니다.
         SubjectDto subjectDto = new SubjectDto();
         model.addAttribute("subject", subjectDto);
@@ -56,11 +69,13 @@ public class SubjectController {
     }
 
     @GetMapping("/updateSubject")
-    public String updateSubjectForm(@RequestParam("updateId")int id, Model model) {
+    public String updateSubjectForm(@RequestParam("updateId")int id, Model model, Pageable pageable) {
         List<Integer> classrooms = classroomRepository.findAllIds();
         model.addAttribute("classrooms", classrooms);
-        List<ProfessorDto> professors = professorService.showAllProfessors();
+
+        Page<ProfessorDto> professors = professorService.showAllProfessors(pageable);
         model.addAttribute("professors", professors);
+
         // 새로운 Subject 객체를 생성하고 모델에 추가합니다.
         SubjectDto subject = subjectService.findSubjectId(id);
         model.addAttribute("subject", subject);
