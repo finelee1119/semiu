@@ -16,5 +16,6 @@ public interface StudentGradeRepository extends JpaRepository<StudentGrade, Inte
     @Query(value = "SELECT * FROM semiuniv.student_grade where student_id = :studentId and subject_id = :subjectId", nativeQuery = true)
     StudentGrade findByStudentAndSubject(@Param("studentId")Integer studentId, @Param("subjectId")Integer subjectId);
 
+    StudentGrade findBySubjectId(Integer subjectId);
 }
 

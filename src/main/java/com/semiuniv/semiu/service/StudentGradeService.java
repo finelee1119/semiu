@@ -2,8 +2,10 @@ package com.semiuniv.semiu.service;
 
 import com.semiuniv.semiu.dto.GradeDto;
 import com.semiuniv.semiu.dto.StudentGradeDto;
+import com.semiuniv.semiu.dto.SubjectDto;
 import com.semiuniv.semiu.entity.StudentGrade;
 import com.semiuniv.semiu.entity.StudentSubject;
+import com.semiuniv.semiu.entity.Subject;
 import com.semiuniv.semiu.repository.StudentGradeRepository;
 import com.semiuniv.semiu.repository.StudentSubjectRepository;
 import jakarta.persistence.EntityManager;
@@ -25,7 +27,10 @@ import java.util.stream.Collectors;
 public class StudentGradeService {
     @Autowired
     StudentGradeRepository studentGradeRepository;
-
+    @Autowired
+    StudentService studentService;
+    @Autowired
+    SubjectService subjectService;
     @Autowired
     StudentSubjectRepository subjectRepository;
 
@@ -42,7 +47,6 @@ public class StudentGradeService {
 
     public List<GradeDto> getProfessorGrades(Integer professorId) {
         List<StudentGrade> subjects = studentGradeRepository.findBySubjectProfessorId(professorId).stream().collect(Collectors.toList());
-        log.info(subjects.toString());
         List<GradeDto> gradeDtoList = new ArrayList<>();
         for(StudentGrade subject : subjects){
             GradeDto gradeDto = new GradeDto();
@@ -57,7 +61,6 @@ public class StudentGradeService {
             gradeDto.setGrade(subject.getGrade());
             gradeDtoList.add(gradeDto);
         }
-        log.info(gradeDtoList.toString());
         return gradeDtoList;
     }
 
@@ -72,11 +75,16 @@ public class StudentGradeService {
     }
 
     public void insertGrade (StudentGradeDto gradeDto){
-        StudentGrade grade = gradeDto.fromStudentGradeDto(gradeDto);
-        studentGradeRepository.save(grade);
-    }
-
-    public void insertGrade2 (StudentGradeDto gradeDto){
+        List<StudentGrade> studentGrade = studentGradeRepository.findAll();
+        for(StudentGrade grade : studentGrade){
+            if(grade.getStudent().getId().equals(gradeDto.getStudent().getId())){
+                gradeDto.setStudent(grade.getStudent());
+            }
+            if(grade.getSubject().getId().equals(gradeDto.getSubject().getId())){
+                gradeDto.setSubject(grade.getSubject());
+            }
+        }
+        log.info(gradeDto.toString());
         StudentGrade existingStudentGrade = studentGradeRepository.findByStudentAndSubject(gradeDto.getStudent().getId(), gradeDto.getSubject().getId());
 
         if (existingStudentGrade != null) {
@@ -98,6 +106,24 @@ public class StudentGradeService {
         StudentGradeDto gradeDto = StudentGradeDto.fromStudentGradeEntity(grade);
         return gradeDto;
     }
+
+    public boolean findBySubjectId(Integer id){
+        SubjectDto dto = subjectService.findSubjectId(id);
+        Subject subject = dto.fromSubjectDto(dto);
+        StudentGrade grade = studentGradeRepository.findBySubjectId(subject.getId());
+        boolean empty = false;
+        if(grade == null) {
+            empty = true;
+        } else {
+            empty = false;
+        }
+        return empty;
+    }
+
+//    public StudentGradeDto findByStudentId(Integer subjectId){
+//        StudentGrade grade = studentGradeRepository.findBySubjectId(subjectId);
+//        return grade;
+//    }
 }
 
 
