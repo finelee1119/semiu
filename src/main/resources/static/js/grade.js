@@ -24,31 +24,45 @@ function toggleEdit(buttonElement) {
             }
         }
     }
+    if (spanElement == null) {
+        if (selectElement.style.display === "none") {
+            selectElement.style.display = "inline-block";
+            buttonElement.style.display = "none";
+
+            var saveButton = parentTd.querySelector('.save-button');
+            if (saveButton) {
+                saveButton.style.display = "inline-block";
+            }
+        } else {
+            selectElement.style.display = "none";
+            spanElement.style.display = "inline-block";
+
+            var saveButton = parentTd.querySelector('.save-button');
+            if (saveButton) {
+                saveButton.style.display = "none";
+            }
+        }
+    }
 }
 
 
 function saveValue(buttonElement) {
-    var parentTd = buttonElement.parentElement; // 해당 버튼의 부모 td 요소를 찾음
-    var selectElement = parentTd.querySelector('select');
-    var gradeInput = document.getElementById('grade'); // hidden 요소에 대한 참조
+    var parentTr = buttonElement.closest('tr'); // 버튼이 속한 tr 찾기
+    var parentForm = parentTr.querySelector('form'); // 폼 찾기
+    var gradeInput = parentTr.querySelector('input[name="grade"]'); // grade 값 저장할 input (Hidden) 찾기
+    var selectElement = parentTr.querySelector('select');
+    var spanElement = parentTr.querySelector('span');
 
     if (selectElement && gradeInput) {
         var selectedOption = selectElement.options[selectElement.selectedIndex];
-        var selectedValue = selectedOption.value; // 선택된 옵션의 값 가져오기
+        var selectedValue = selectedOption.value;
 
-        // 선택된 값이 없는 경우에 대한 처리 추가
         if (!selectedValue) {
             alert("성적을 선택해주세요.");
             return;
         }
 
-        // hidden 요소에 선택된 값 설정
         gradeInput.value = selectedValue;
-
-        // 폼 제출
-        var insertForm = document.getElementById('insertForm');
-        insertForm.submit();
+        parentForm.submit();
     }
 }
-
-

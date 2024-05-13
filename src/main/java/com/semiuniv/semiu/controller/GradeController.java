@@ -27,25 +27,22 @@ public class GradeController {
         List<GradeDto> gradeDtoList = studentGradeService.getProfessorGrades(id);
 //        model.addAttribute("gradeDto", new StudentGradeDto());
         model.addAttribute("gradeList", gradeDtoList);
-        model.addAttribute("gradeInputList", gradeInputList );
+        model.addAttribute("gradeInputList", gradeInputList);
         model.addAttribute("id", id);
         return "grade/showGrade";
     }
-//@ModelAttribute("gradeList")
+
     @PostMapping("/insertForm/{id}")
     public String insertSubject(@PathVariable("id") Integer id,
                                 @RequestParam("studentId") Integer studentId,
                                 @RequestParam("subjectId") Integer subjectId,
                                 @RequestParam("grade") Grade grade){
-        log.info("==========================================================");
-        log.info(grade.toString());
-        log.info("==========================================================");
 
         StudentGradeDto studentGradeDto = studentGradeService.findByStudentIdAndSubjectId(studentId, subjectId);
         log.info(studentGradeDto.toString());
         if(studentGradeDto != null) {
             studentGradeDto.setGrade(grade);
-            studentGradeService.insertGrade2(studentGradeDto);}
+            studentGradeService.insertGrade(studentGradeDto);}
         log.info(studentGradeDto.toString());
         return "redirect:/semi/grade/" + id;
     }
