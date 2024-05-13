@@ -4,6 +4,7 @@ import com.semiuniv.semiu.dto.NoticeDto;
 import com.semiuniv.semiu.dto.StudentDto;
 import com.semiuniv.semiu.entity.Notice;
 import com.semiuniv.semiu.repository.NoticeRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -35,7 +36,7 @@ public class NoticeService {
     public NoticeDto getNoticeById(Integer id) {
         return noticeRepository.findById(id)
                 .map(NoticeDto::fromNoticeEntity)
-                .orElse(null);
+                .orElseThrow(() -> new EntityNotFoundException("Notice not found with id " + id));
     }
 
     //검색
