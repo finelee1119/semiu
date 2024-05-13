@@ -11,6 +11,9 @@ import static jakarta.persistence.FetchType.LAZY;
 public class StudentGrade {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer no;
+
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "student_id")
     private Student student;

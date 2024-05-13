@@ -1,6 +1,8 @@
 package com.semiuniv.semiu.controller;
 
+import com.semiuniv.semiu.entity.Professor;
 import com.semiuniv.semiu.entity.Student;
+import com.semiuniv.semiu.service.ProfessorService;
 import com.semiuniv.semiu.service.StudentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,9 +18,11 @@ import java.util.Optional;
 public class MainController {
 
     private final StudentService studentService;
+    private final ProfessorService professorService;
 
-    public MainController(StudentService studentService) {
+    public MainController(StudentService studentService, ProfessorService professorService) {
         this.studentService = studentService;
+        this.professorService = professorService;
     }
 
     @GetMapping("")
@@ -33,10 +37,21 @@ public class MainController {
     public String login(Principal principal, Model model){
         Integer loginId = Integer.valueOf(principal.getName());
         Optional<Student> student = studentService.show_student(loginId);
-        Student studentLogin = student.get();
-        System.out.println(studentLogin.toString());
-        model.addAttribute("principal", principal.getName());
-        model.addAttribute("studentLogin", studentLogin);
+        Optional<Professor> professor = professorService.show_professor(loginId);
+
+        if (student.isPresent()){   // 로그인 아이디를 확인하기 위한 검증 추가 ( Role 을 사용해야 하는데...)
+            Student studentLogin = student.get();
+            System.out.println(studentLogin.toString());
+            model.addAttribute("principal", principal.getName());
+            model.addAttribute("studentLogin", studentLogin);
+            return "index";
+        } else if (professor.isPresent()) {
+            Professor professorLogin = professor.get();
+            System.out.println(professorLogin.toString());
+            model.addAttribute("principal", principal.getName());
+            model.addAttribute("professorLogin", professorLogin);
+            return "index";
+        }
         return "index";
     }
 
