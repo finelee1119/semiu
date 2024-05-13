@@ -61,7 +61,6 @@ public class SubjectController {
         model.addAttribute("classrooms", classrooms);
         List<ProfessorDto> professors = professorService.showAllProfessors();
         model.addAttribute("professors", professors);
-        // 새로운 Subject 객체를 생성하고 모델에 추가합니다.
         SubjectDto subject = subjectService.findSubjectId(id);
         model.addAttribute("subject", subject);
         return "subjects/updateSubject";

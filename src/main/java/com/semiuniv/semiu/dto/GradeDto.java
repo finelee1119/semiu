@@ -3,13 +3,16 @@ package com.semiuniv.semiu.dto;
 import com.semiuniv.semiu.constant.Grade;
 import com.semiuniv.semiu.constant.SubjectType;
 import com.semiuniv.semiu.entity.StudentGrade;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
-@AllArgsConstructor
+import java.util.ArrayList;
+import java.util.List;
+
+@Getter
+@Setter
+@ToString
 @NoArgsConstructor
+@AllArgsConstructor
 public class GradeDto {
 //    연도	학기	학번	이름	과목명	점수
 
@@ -18,7 +21,6 @@ public class GradeDto {
     private Integer semester;
     private Integer subjectId;
     private String subjectName;
-    private Integer professorId;
     private SubjectType subjectType;
     private Integer credit; //이수학점(전공 3학점, 교양1~2학점 등)
 
@@ -28,14 +30,13 @@ public class GradeDto {
 
     private Grade grade;
 
-    public StudentGrade fromStudentGradeDto(GradeDto dto){
+
+    public static StudentGrade fromStudentGradeDto(GradeDto dto){
         StudentGrade studentGrade = new StudentGrade();
         studentGrade.getStudent().setId(dto.getStudentId());
         studentGrade.getSubject().setId(dto.getSubjectId());
         studentGrade.setGrade(dto.getGrade());
         return studentGrade;
     }
-
-
 }
 

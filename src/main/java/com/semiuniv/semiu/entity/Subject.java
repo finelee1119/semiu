@@ -6,6 +6,7 @@ import lombok.Data;
 
 import java.time.LocalTime;
 
+import static jakarta.persistence.FetchType.EAGER;
 import static jakarta.persistence.FetchType.LAZY;
 
 @Entity

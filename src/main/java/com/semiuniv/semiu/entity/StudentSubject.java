@@ -3,6 +3,7 @@ package com.semiuniv.semiu.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import static jakarta.persistence.FetchType.EAGER;
 import static jakarta.persistence.FetchType.LAZY;
 
 @Entity
