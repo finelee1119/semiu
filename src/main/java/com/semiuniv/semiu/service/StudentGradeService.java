@@ -7,15 +7,19 @@ import com.semiuniv.semiu.entity.StudentSubject;
 import com.semiuniv.semiu.repository.StudentGradeRepository;
 import com.semiuniv.semiu.repository.StudentSubjectRepository;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceUnit;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.query.NativeQuery;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 @Slf4j
 @Service
 public class StudentGradeService {
@@ -37,7 +41,7 @@ public class StudentGradeService {
 
 
     public List<GradeDto> getProfessorGrades(Integer professorId) {
-        List<StudentGrade> subjects = studentGradeRepository.findBySubjectProfessorId(professorId);
+        List<StudentGrade> subjects = studentGradeRepository.findBySubjectProfessorId(professorId).stream().collect(Collectors.toList());
         log.info(subjects.toString());
         List<GradeDto> gradeDtoList = new ArrayList<>();
         for(StudentGrade subject : subjects){
@@ -72,8 +76,27 @@ public class StudentGradeService {
         studentGradeRepository.save(grade);
     }
 
+    public void insertGrade2 (StudentGradeDto gradeDto){
+        StudentGrade existingStudentGrade = studentGradeRepository.findByStudentAndSubject(gradeDto.getStudent().getId(), gradeDto.getSubject().getId());
+
+        if (existingStudentGrade != null) {
+            // 이미 있는 데이터인 경우에는 성적을 업데이트
+            existingStudentGrade.setGrade(gradeDto.getGrade());
+            studentGradeRepository.save(existingStudentGrade);
+        }
+    }
+
     public List<StudentGradeDto> findAll() {
-        return studentGradeRepository.findAll().stream().map(x -> StudentGradeDto.fromStudentGradeEntity(x)).toList();
+        return studentGradeRepository.findAll()
+                .stream()
+                .map(x -> StudentGradeDto.fromStudentGradeEntity(x))
+                .collect(Collectors.toList());
+    }
+
+    public StudentGradeDto findByStudentIdAndSubjectId(@Param("studentId")Integer studentId, @Param("subjectId")Integer subjectId){
+        StudentGrade grade = studentGradeRepository.findByStudentAndSubject(studentId, subjectId);
+        StudentGradeDto gradeDto = StudentGradeDto.fromStudentGradeEntity(grade);
+        return gradeDto;
     }
 }
 
