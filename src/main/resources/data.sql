@@ -297,3 +297,9 @@ INSERT INTO Notice (notice_id, title, content, created_time) VALUES
 (48, '인턴십 모집 안내', '2024년도 여름방학 인턴십 모집이 시작됩니다. 귀하는 새로운 경험을 만들어보세요!', '2024-06-27 12:30:00'),
 (49, '학생회장 취임식', '2024년도 학생회장 취임식이 열립니다. 새로운 학생회장에게 응원의 박수를 보내주세요!', '2024-06-28 14:45:00'),
 (50, '장학금 신청 안내', '2024년도 2학기 장학금 신청 접수기간이 시작되었습니다. 관심 있는 학생들은 서둘러 신청해주세요.', '2024-06-29 10:20:00');
+
+INSERT INTO Users (user_id, password, role) VALUES
+(2024000001, '1111', 'STUDENT');
+
+INSERT INTO Users (user_id, password, role) VALUES
+(240001, '2222', 'PROFESSOR');
