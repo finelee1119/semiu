@@ -62,13 +62,8 @@ public class ProfessorService {
         professorRepository.deleteById(id);
     }
 
-    //MyPageController에서 사용
-
+    // 로그인 정보
     public Optional<Professor> show_professor(Integer loginId) {
         return professorRepository.findById(loginId);
-    }
-
-    public Optional<Professor> findById(Integer id) {
-        return professorRepository.findById(id);
     }
 }

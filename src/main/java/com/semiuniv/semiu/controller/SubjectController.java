@@ -100,7 +100,7 @@ public class SubjectController {
         subjectService.updateSubject(subject);
         return "redirect:/semi/subject/show";
     }
-    
+
     //삭제
     @PostMapping("/deleteSubjects")
     public String deleteSubjects(@RequestParam("selectedIds") Integer[] selectedIds) {

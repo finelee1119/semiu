@@ -65,6 +65,18 @@ public class NoticeController {
         return "notices/showNotice";
     }
 
+    @GetMapping("/show/detail")
+    public String showDetail(@RequestParam("id") Integer id, Model model) {
+        NoticeDto noticeDto = noticeService.getNoticeById(id);
+
+        if (noticeDto == null) {
+            return "redirect:/semi/notice/show";
+        }
+
+        model.addAttribute("noticeDto", noticeDto);
+        return "notices/showNoticeDetail";
+    }
+
     //수정
     @GetMapping("/updateForm/{updateId}")
     public String updateForm(@PathVariable("updateId") Integer id, Model model) {
