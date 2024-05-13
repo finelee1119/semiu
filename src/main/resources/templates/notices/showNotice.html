@@ -23,7 +23,12 @@
             <tbody>
                 <tr th:each="noticeDto : ${noticeDto}">
                     <td th:text="${noticeDto.id}"></td>
-                    <td th:text="${noticeDto.title}"></td>
+<!--                    <td th:text="${noticeDto.title}"></td>-->
+
+                    <td>
+                        <a th:href="@{/semi/notice/show/detail(id=${noticeDto.id})}" th:text="${noticeDto.title}">${noticeDto.title}</a>
+                    </td>
+
                     <td th:text="${#dates.format(noticeDto.createdTime, 'yyyy-MM-dd HH:mm')}"></td>
                     <td>
                         <!-- 편집 버튼 -->
