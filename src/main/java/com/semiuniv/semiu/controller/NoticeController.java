@@ -1,23 +1,23 @@
 package com.semiuniv.semiu.controller;
 
 import com.semiuniv.semiu.dto.NoticeDto;
-import com.semiuniv.semiu.entity.Notice;
-import com.semiuniv.semiu.repository.NoticeRepository;
 import com.semiuniv.semiu.service.NoticeService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 @Controller
-@RequestMapping("semi/notice")
+@RequestMapping("/semi/notice")
 public class NoticeController {
     NoticeService noticeService;
 
@@ -25,57 +25,68 @@ public class NoticeController {
         this.noticeService = noticeService;
     }
 
-    @GetMapping("/show")
-    public String noticeList(Model model){
-        List<NoticeDto> notices = noticeService.findAllNotice();
-        model.addAttribute("notices", notices);
-        return "/notice/noticeList";
-    }
-
+    //등록
     @GetMapping("/insertForm")
-    public String noticeForm(Model model){
+    public String insertForm(Model model){
         model.addAttribute("noticeDto", new NoticeDto());
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         LocalDateTime dateTime = timestamp.toLocalDateTime();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
         String formattedDateTime = dateTime.format(formatter); // "yyyy-MM-ddTHH:mm"
         model.addAttribute("currentDateTime", formattedDateTime);
-        return "/notice/noticeInsert";
+        return "notices/insertNotice";
     }
 
-    @PostMapping("insertForm")
-    public String notice(@Valid @ModelAttribute("noticeDto")NoticeDto noticeDto,
+    @PostMapping("/insert")
+    public String insert(@Valid @ModelAttribute("noticeDto")NoticeDto dto,
                          BindingResult bindingResult){
         if (bindingResult.hasErrors()){
-            return "/notice/noticeInsert";
+            return "notices/insertNotice";
         }
-        noticeService.insertNotice(noticeDto);
+        noticeService.insertNotice(dto);
         return "redirect:/semi/notice/show";
     }
 
-    @PostMapping("/delete")
-    public String deleteNotice(@RequestParam("selectedIds")Integer[] selectedIds){
-        for (Integer id : selectedIds) {
-            noticeService.deleteNotice(id);
+    //조회 + 검색
+    @GetMapping("/show")
+    public String showAll(Model model,
+                          @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+                          @RequestParam(value = "keyword", defaultValue = "") String keyword){
+
+        Page<NoticeDto> noticeDto = null;
+
+        if (keyword == null || keyword.isEmpty()) {
+            noticeDto = noticeService.findAllNotice(pageable);
+        } else {
+            noticeDto = noticeService.searchNoticeByTitle(keyword, pageable);
         }
-        return "redirect:/semi/notice/show";
+
+        model.addAttribute("noticeDto", noticeDto);
+        return "notices/showNotice";
     }
 
-    @GetMapping("/update/{updateId}")
+    //수정
+    @GetMapping("/updateForm/{updateId}")
     public String updateForm(@PathVariable("updateId") Integer id, Model model) {
         NoticeDto noticeDto = noticeService.getNoticeById(id);
         model.addAttribute("noticeDto", noticeDto);
-        return "/notice/noticeUpdate";
+        return "notices/updateNotice";
     }
 
-
-    @PostMapping("/update")
+    @PostMapping("update")
     public String update(@Valid @ModelAttribute("noticeDto") NoticeDto dto,
                          BindingResult bindingResult){
         if (bindingResult.hasErrors()){
-            return "/notice/noticeUpdate";
+            return "notices/updateNotice";
         }
         noticeService.updateNotice(dto);
+        return "redirect:/semi/notice/show";
+    }
+
+    //삭제
+    @PostMapping("/delete/{deleteId}")
+    public String delete(@PathVariable("deleteId") Integer id){
+        noticeService.deleteNotice(id);
         return "redirect:/semi/notice/show";
     }
 }

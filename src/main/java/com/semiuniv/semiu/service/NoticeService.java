@@ -1,14 +1,14 @@
 package com.semiuniv.semiu.service;
 
 import com.semiuniv.semiu.dto.NoticeDto;
+import com.semiuniv.semiu.dto.StudentDto;
 import com.semiuniv.semiu.entity.Notice;
 import com.semiuniv.semiu.repository.NoticeRepository;
-import lombok.Data;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class NoticeService {
@@ -18,44 +18,43 @@ public class NoticeService {
         this.noticeRepository = noticeRepository;
     }
 
-    public void insertNotice(NoticeDto noticeDto) {
+    //등록
+    public void insertNotice(NoticeDto dto) {
+        Notice notice = NoticeDto.toNoticeEntity(dto);
         Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
-        Notice notice = noticeDto.fromNoticeDto(noticeDto);
         notice.setCreatedTime(currentTimestamp);
-
         noticeRepository.save(notice);
     }
 
-    public void deleteNotice(Integer id) {
-        noticeRepository.deleteById(id);
+    //조회
+    public Page<NoticeDto> findAllNotice(Pageable pageable) {
+        return noticeRepository.findAll(pageable)
+                .map(NoticeDto::fromNoticeEntity);
     }
 
     public NoticeDto getNoticeById(Integer id) {
         return noticeRepository.findById(id)
-                .map(this::convertToDto)
+                .map(NoticeDto::fromNoticeEntity)
                 .orElse(null);
     }
 
-    public void updateNotice(NoticeDto noticeDto) {
-        Notice notice = noticeRepository.findById(noticeDto.getId())
-                .orElseThrow(() -> new IllegalArgumentException("Invalid notice Id:" + noticeDto.getId()));
-        notice.setTitle(noticeDto.getTitle());
-        notice.setContent(noticeDto.getContent());
-        noticeRepository.save(notice);
-    }
-    public List<NoticeDto> findAllNotice() {
-        return noticeRepository.findAll().stream()
-                .map(this::convertToDto)
-                .collect(Collectors.toList());
+    //검색
+    public Page<NoticeDto> searchNoticeByTitle(String title, Pageable pageable) {
+        return noticeRepository.findByTitleContaining(title, pageable)
+                .map(NoticeDto::fromNoticeEntity);
     }
 
-    private NoticeDto convertToDto(Notice notice) {
-        return new NoticeDto(
-                notice.getId(),
-                notice.getTitle(),
-                notice.getContent(),
-                notice.getCreatedTime(),
-                notice.getUpdatedTime()
-                );
+    //수정
+    public void updateNotice(NoticeDto dto) {
+        Notice notice = noticeRepository.findById(dto.getId())
+                .orElseThrow(() -> new IllegalArgumentException("Invalid notice Id:" + dto.getId()));
+        notice.setTitle(dto.getTitle());
+        notice.setContent(dto.getContent());
+        noticeRepository.save(notice);
+    }
+
+    //삭제
+    public void deleteNotice(Integer id) {
+        noticeRepository.deleteById(id);
     }
 }

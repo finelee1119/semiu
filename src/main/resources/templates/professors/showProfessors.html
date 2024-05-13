@@ -1,61 +1,90 @@
 <!-- showProfessorForm.html -->
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default_layout}">
 <head>
     <meta charset="UTF-8">
     <title>교수 목록</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<!-- 헤더 fragment -->
-<th:block th:replace="~{fragments/header :: header}"></th:block>
+    <div class="container" layout:fragment="content">
+        <h1>교수 목록</h1>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>교번</th>
+                <th>이름</th>
+                <th>생년월일</th>
+                <th>성별</th>
+                <th>주소</th>
+                <th>연락처</th>
+                <th>학과</th>
+                <th>입사일</th>
+                <th>퇴사일</th>
+                <th>편집</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="professorDto : ${professorDto}">
+                <td th:text="${professorDto.id}"></td>
+                <td th:text="${professorDto.name}"></td>
+                <td th:text="${professorDto.birth}"></td>
+                <td th:text="${professorDto.gender}"></td>
+                <td th:text="${professorDto.address}"></td>
+                <td th:text="${professorDto.phone}"></td>
+                <td th:text="${professorDto.departmentName}"></td>
+                <td th:text="${professorDto.hireDate}"></td>
+                <td th:text="${professorDto.terminationDate}"></td>
+                <td>
+                    <!-- 편집 버튼 -->
+                    <a th:href="@{/semi/professor/updateForm/{id}(id=${professorDto.id})}" class="btn btn-primary btn-sm">편집</a>
 
-<!-- 컨텐츠 -->
-<div class="container">
-    <h1>교수 목록</h1>
-    <table class="table">
-        <thead>
-        <tr>
-            <th>교번</th>
-            <th>이름</th>
-            <th>생년월일</th>
-            <th>성별</th>
-            <th>주소</th>
-            <th>연락처</th>
-            <th>학과</th>
-            <th>입사일</th>
-            <th>퇴사일</th>
-            <th>편집</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="professorDto : ${professorDto}">
-            <td th:text="${professorDto.id}"></td>
-            <td th:text="${professorDto.name}"></td>
-            <td th:text="${professorDto.birth}"></td>
-            <td th:text="${professorDto.gender}"></td>
-            <td th:text="${professorDto.address}"></td>
-            <td th:text="${professorDto.phone}"></td>
-            <td th:text="${professorDto.departmentName}"></td>
-            <td th:text="${professorDto.hireDate}"></td>
-            <td th:text="${professorDto.terminationDate}"></td>
-            <td>
-                <!-- 편집 버튼 -->
-                <a th:href="@{/semi/professor/updateForm/{id}(id=${professorDto.id})}" class="btn btn-primary btn-sm">편집</a>
+                    <!-- 삭제 버튼 -->
+                    <form th:action="@{/semi/professor/delete/{id}(id=${professorDto.id})}" method="post" style="display: inline;">
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('정말로 이 교수를 삭제하시겠습니까?')">삭제</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
 
-                <!-- 삭제 버튼 -->
-                <form th:action="@{/semi/professor/delete/{id}(id=${professorDto.id})}" method="post" style="display: inline;">
-                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('정말로 이 교수를 삭제하시겠습니까?')">삭제</button>
-                </form>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+        <!-- 페이징 처리 -->
+        <div aria-label="Page navigation" th:if="${!professorDto.isEmpty()}">
+            <ul class="pagination justify-content-center">
+                <li class="page-item" th:classappend="${!professorDto.hasPrevious()} ? 'disabled'">
+                    <a class="page-link" th:href="@{|?page=${professorDto.number - 1}|}">
+                        <span>이전</span>
+                    </a>
+                </li>
 
-    <a th:href="@{/semi}" class="btn btn-primary">메인 화면으로 돌아가기</a>
-</div>
+                <li th:each="page: ${#numbers.sequence(0, professorDto.totalPages - 1)}"
+                    th:if="${page >= professorDto.number - 5 and page <= professorDto.number + 5}"
+                    th:classappend="${page == professorDto.number} ? 'active'"
+                    class="page-item">
+                    <a th:text="${page + 1}" class="page-link" th:href="@{|?page=${page}|}"></a>
+                </li>
 
-<!-- 푸터 fragment -->
-<th:block th:replace="~{fragments/footer :: footer}"></th:block>
+
+                <li class="page-item" th:classappend="${!professorDto.hasNext} ? 'disabled'">
+                    <a class="page-link" th:href="@{|?page=${professorDto.number + 1}|}">
+                        <span>다음</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- 검색 처리 -->
+        <form th:action="@{/semi/professor/show}" method="get">
+            <div class="input-group mb-3">
+                <input type="text" name="keyword" class="form-control" placeholder="검색어 입력">
+                <button class="btn btn-outline-secondary" type="submit">검색</button>
+            </div>
+        </form>
+
+        <a th:href="@{/semi/professor/insertForm}" class="btn btn-primary me-2">등록</a>
+        <a th:href="@{/semi}" class="btn btn-primary">메인 화면으로 돌아가기</a>
+    </div>
 </body>
 </html>
