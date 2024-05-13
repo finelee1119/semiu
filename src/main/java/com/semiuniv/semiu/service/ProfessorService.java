@@ -2,11 +2,13 @@ package com.semiuniv.semiu.service;
 
 import com.semiuniv.semiu.dto.ProfessorDto;
 import com.semiuniv.semiu.entity.Professor;
+import com.semiuniv.semiu.entity.Student;
 import com.semiuniv.semiu.repository.ProfessorRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProfessorService {
@@ -47,5 +49,15 @@ public class ProfessorService {
     //삭제
     public void deleteProfessor(Integer id) {
         professorRepository.deleteById(id);
+    }
+
+    //MyPageController에서 사용
+
+    public Optional<Professor> show_professor(Integer loginId) {
+        return professorRepository.findById(loginId);
+    }
+
+    public Optional<Professor> findById(Integer id) {
+        return professorRepository.findById(id);
     }
 }
