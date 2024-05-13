@@ -2,22 +2,18 @@ package com.semiuniv.semiu.controller;
 
 import com.semiuniv.semiu.dto.StudentDto;
 import com.semiuniv.semiu.entity.Department;
-import com.semiuniv.semiu.entity.Student;
 import com.semiuniv.semiu.repository.DepartmentRepository;
 import com.semiuniv.semiu.service.StudentService;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -38,7 +34,7 @@ public class StudentController {
         List<Department> departments = departmentRepository.findAll();
         model.addAttribute("departments", departments);
         model.addAttribute("studentDto", new StudentDto());
-        return  "students/insertStudentForm";
+        return "students/insertStudent";
     }
 
     @PostMapping("/insert")
@@ -46,18 +42,35 @@ public class StudentController {
                          BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
-            return "students/insertStudentForm";
+            return "students/insertStudent";
         }
 
         studentService.insertStudent(dto);
         return "redirect:/semi/student/show";
     }
 
-    //조회
+    //조회 + 검색
     @GetMapping("/show")
-    public String showAll(Model model) {
-        List<StudentDto> studentDtoList = studentService.showAllStudents();
-        model.addAttribute("studentDto", studentDtoList);
+    public String showAll(Model model,
+                          @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable,
+                          @RequestParam(value = "keyword", defaultValue = "") String keyword) {
+
+        Page<StudentDto> studentDto = null;
+
+        if (keyword == null || keyword.isEmpty()) {
+            studentDto = studentService.showAllStudents(pageable);
+        } else {
+            try {
+                int id = Integer.parseInt(keyword);
+                // 키워드가 숫자로 변환될 수 있으면 ID로 검색
+                studentDto = studentService.searchStudentById(id, pageable);
+            } catch (NumberFormatException e) {
+                // 숫자로 변환되지 않는 경우 이름으로 검색
+                studentDto = studentService.searchStudentByName(keyword, pageable);
+            }
+        }
+
+        model.addAttribute("studentDto", studentDto);
         return "students/showStudents";
     }
 
@@ -69,7 +82,7 @@ public class StudentController {
 
         StudentDto studentDto = studentService.showOneStudent(id);
         model.addAttribute("studentDto", studentDto);
-        return "students/updateStudentForm";
+        return "students/updateStudent";
     }
 
     @PostMapping("/update")
@@ -77,7 +90,7 @@ public class StudentController {
                          BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
-            return "students/updateStudentForm";
+            return "students/updateStudent";
         }
 
         studentService.updateStudent(dto);
