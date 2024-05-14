@@ -2,9 +2,6 @@ package com.semiuniv.semiu.dto;
 
 import com.semiuniv.semiu.constant.UserRole;
 import com.semiuniv.semiu.entity.Users;
-import jakarta.persistence.Column;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
