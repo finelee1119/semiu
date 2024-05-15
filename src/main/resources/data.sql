@@ -314,3 +314,9 @@ INSERT INTO users (user_id, password, role) VALUES
 (240002, 1111, 'PROFESSOR'),
 (240003, 1111, 'PROFESSOR');
 
+INSERT INTO student_grade (student_id, subject_id, grade) VALUES
+(2024000001, 10001, 'A_PLUS'),
+(2024000001, 10002, 'B_PLUS'),
+(2024000002, 10001, 'B_ZERO'),
+(2024000003, 10001, NULL);
+
