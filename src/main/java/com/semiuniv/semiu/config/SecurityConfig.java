@@ -20,15 +20,16 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests((request)->request
                         .requestMatchers("/css/**","/js/**", "/images/**").permitAll()
-                        //main:indexView에서 시작 (일단)
-                       .requestMatchers("/").permitAll()
-                        .requestMatchers("/**").permitAll())
+                        .requestMatchers("/").permitAll()
+                        .requestMatchers("/**").permitAll()
+                        .requestMatchers("/semi/admin").hasRole("ADMIN")
+                        .requestMatchers("/semi/student").hasRole("STUDENT")
+                        .requestMatchers("/semi/professor").hasRole("PROFESSOR"))
 //                        .anyRequest().authenticated())
 
                 .formLogin((form)->form
                         .loginPage("/")
                         .loginProcessingUrl("/login")
-//                        .usernameParameter("email")
                         .defaultSuccessUrl("/semi/login", true))
 
                 .logout((out)->out
