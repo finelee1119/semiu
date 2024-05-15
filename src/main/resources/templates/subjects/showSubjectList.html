@@ -10,7 +10,8 @@
 <body>
     <div class="content" layout:fragment="content">
          <h1 style="text-align: center;" >강의 목록</h1> <br>
-        <form id="deleteForm" th:action="@{/semi/subject/deleteSubjects}" method="post">
+        <form id="deleteForm" th:action="@{/semi/subject/deleteSubjects}" method="post" th:object="${subjects}">
+            <div th:replace="~{fragments/form_errors :: formErrorsFragment}"></div>
             <div style="text-align: right;">
                 <button type="button" class="btn btn-outline-danger btn-sm" onclick="deleteSelectedSubjects()" >선택 항목 삭제</button>
             </div>
@@ -80,7 +81,6 @@
                 </ul>
             </div>
         </form>
-
         <!-- 검색 처리 -->
         <form th:action="@{/semi/subject/show}" method="get">
             <div class="input-group mb-3">

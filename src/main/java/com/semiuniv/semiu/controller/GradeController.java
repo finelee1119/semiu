@@ -1,5 +1,6 @@
 package com.semiuniv.semiu.controller;
 
+import com.semiuniv.semiu.constant.Grade;
 import com.semiuniv.semiu.dto.GradeDto;
 import com.semiuniv.semiu.dto.StudentGradeDto;
 import com.semiuniv.semiu.service.StudentGradeService;
@@ -24,18 +25,25 @@ public class GradeController {
         List<StudentGradeDto> gradeInputList = studentGradeService.findAll();
 //        studentGradeService.SubjectGradeInput();
         List<GradeDto> gradeDtoList = studentGradeService.getProfessorGrades(id);
-        model.addAttribute("gradeDto", new StudentGradeDto());
+//        model.addAttribute("gradeDto", new StudentGradeDto());
         model.addAttribute("gradeList", gradeDtoList);
-//        model.addAttribute("gradeInputList", gradeInputList );
+        model.addAttribute("gradeInputList", gradeInputList);
         model.addAttribute("id", id);
         return "grade/showGrade";
     }
-//@ModelAttribute("gradeList")
-    @PostMapping("/insertForm/{id}")
-    public String insertSubject(@ModelAttribute("gradeDto") StudentGradeDto gradeDto,
-                                @PathVariable("id") Integer id){
 
-        studentGradeService.insertGrade(gradeDto);
+    @PostMapping("/insertForm/{id}")
+    public String insertSubject(@PathVariable("id") Integer id,
+                                @RequestParam("studentId") Integer studentId,
+                                @RequestParam("subjectId") Integer subjectId,
+                                @RequestParam("grade") Grade grade){
+
+        StudentGradeDto studentGradeDto = studentGradeService.findByStudentIdAndSubjectId(studentId, subjectId);
+        log.info(studentGradeDto.toString());
+        if(studentGradeDto != null) {
+            studentGradeDto.setGrade(grade);
+            studentGradeService.insertGrade(studentGradeDto);}
+        log.info(studentGradeDto.toString());
         return "redirect:/semi/grade/" + id;
     }
 }

@@ -14,15 +14,14 @@
 </head>
 <body>
 <div class="content" layout:fragment="content">
-    <h1 style="text-align: center;" >Subject List</h1> <br>
-    <form id="insertForm" th:action="@{/semi/grade/insertForm/{id}(id=*{id})}" method="post">
+    <h1 style="text-align: center;">Subject List</h1><br>
         <div style="text-align: right;">
-            <input type="hidden" th:value="*{id}" name="id" >
-            <button type="submit" class="btn btn-outline-danger btn-sm" >저장</button>
+            <input type="hidden" th:value="*{id}" name="id">
         </div>
         <table class="table" border="1">
             <thead>
             <tr style="text-align: center;">
+                <th>No</th>
                 <th>강의코드</th>
                 <th>강의명</th>
                 <th>강의 구분</th>
@@ -31,40 +30,46 @@
                 <th>학기</th>
                 <th>학번</th>
                 <th>이름</th>
-                <th>성적    </th>
-<!--                <th>수정</th>-->
-<!--                <th>저장</th>-->
+                <th>성적</th>
             </tr>
             </thead>
-            <tr th:each="gradeList, iterStat : ${gradeList}"style="text-align: center;">
-                <td>
-                    <span th:text="${gradeList.subjectId}"></span>
-                    <input type="hidden" th:field="*{gradeDto.subject.id}"name="gradeDto.subject.id" th:value="${gradeList.subjectId}" />
-                </td>
-                <td th:text="${gradeList.subjectName}"></td>
-                <td th:text="${gradeList.subjectType}"></td>
-                <td th:text="${gradeList.credit}"></td>
-                <td th:text="${gradeList.academicYear}"></td>
-                <td th:text="${gradeList.semester}"></td>
-                <td >
-                    <span th:text="${gradeList.studentId}"></span>
-                    <input type="hidden" th:field="*{gradeDto.student.id}" name="gradeDto.student.id" th:value="${gradeList.studentId}" />
-                </td>
-                <td th:text="${gradeList.studentName}"></td>
-                <td th:field="${gradeList.grade}">
-                    <span th:if="${gradeList.grade != null}" th:id="displayedGrade" th:text="${gradeList.grade}" style="display: inline-block;"></span>
-                    <input type="text" style="display: none;" />
-                    <span th:if="${gradeList.grade == null}" style="display: inline-block;"></span>
-                    <input th:if="${gradeList.grade == null}" type="text" id="inputGrade"/>
-                    <button th:if="${gradeList.grade != null}" type="button" class="btn btn-primary edit-button" onclick="toggleEdit(this)">수정</button>
-                    <button th:if="${gradeList.grade == null}" type="button" class="btn btn-primary edit-button" onclick="toggleInput(this)">입력</button>
-                    <button type="button" class="btn btn-primary edit-button save-button" style="display: none;" onclick="saveValue(this)">저장</button>
-                    <input type="hidden" th:field="*{gradeDto.grade}" name="gradeDto.grade" th:value="${gradeList.grade}" />
-                </td>
-            </tr>
-        </table>
+            <tbody>
+            <tr th:each="gradeList, iterstat : ${gradeList}" style="text-align: center;">
+                <form th:action="@{/semi/grade/insertForm/{id}(id=*{id})}" method="post"
+                      th:id="'insertForm_' + ${gradeList.studentId} + '_' + ${gradeList.subjectId}">
+                    <td th:text="${iterstat.index+1}"></td>
+                    <td>
+                        <span th:text="${gradeList.subjectId}"></span>
+                        <input type="hidden" name="subjectId" th:value="${gradeList.subjectId}"/>
+                    </td>
+                    <td th:text="${gradeList.subjectName}"></td>
+                    <td th:text="${gradeList.subjectType}"></td>
+                    <td th:text="${gradeList.credit}"></td>
+                    <td th:text="${gradeList.academicYear}"></td>
+                    <td th:text="${gradeList.semester}"></td>
+                    <td>
+                        <span th:text="${gradeList.studentId}"></span>
+                        <input type="hidden" name="studentId" th:value="${gradeList.studentId}"/>
+                    </td>
+                    <td th:text="${gradeList.studentName}"></td>
+                    <td>
+                        <span th:text="${gradeList.grade}" style="display: inline-block;"></span>
+                        <select th:name="${gradeList.grade}" th:value="${gradeList.grade}" style="display: none;">
+                            <option value="">선택</option>
+                            <option th:each="grade : ${T(com.semiuniv.semiu.constant.Grade).values()}"
+                                    th:value="${grade}" th:text="${grade}"></option>
+                        </select>
+                        <input type="hidden" name="grade" id="grade" th:value="${gradeList.grade}"/>
 
-    </form>
+                        <button type="button" class="btn btn-primary edit-button"
+                                onclick="toggleEdit(this)">수정</button>
+                        <button type="button" style="display: none;" class="btn btn-primary save-button"
+                                onclick="saveValue(this)">저장</button>
+                    </td>
+                </form>
+            </tr>
+            </tbody>
+    </table>
 </div>
 </body>
 </html>

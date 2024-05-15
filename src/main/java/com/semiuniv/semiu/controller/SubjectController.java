@@ -6,7 +6,9 @@ import com.semiuniv.semiu.entity.Professor;
 import com.semiuniv.semiu.repository.ClassroomRepository;
 import com.semiuniv.semiu.repository.ProfessorRepository;
 import com.semiuniv.semiu.service.ProfessorService;
+import com.semiuniv.semiu.service.StudentGradeService;
 import com.semiuniv.semiu.service.SubjectService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -15,6 +17,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,10 +30,11 @@ public class SubjectController {
     private final SubjectService subjectService;
     private final ProfessorService professorService;
     private final ClassroomRepository classroomRepository;
+    private final StudentGradeService studentGradeService;
 
     //등록
     @GetMapping("/insertForm")
-    public String insertSubjectForm(Model model, Pageable pageable){
+    public String insertSubjectForm(Model model, Pageable pageable) {
         List<Integer> classrooms = classroomRepository.findAllIds();
         model.addAttribute("classrooms", classrooms);
 
@@ -44,7 +48,7 @@ public class SubjectController {
     }
 
     @PostMapping("/insertForm")
-    public String insertSubject (@ModelAttribute("subject") SubjectDto subject){
+    public String insertSubject(@ModelAttribute("subject") SubjectDto subject) {
 //        // 사용자 입력 : 교수 이름, subject 테이블 내 professor_id 저장을 위한 코드
 //        Professor professor = professorRepository.findByName(subject.getProfessor().getName());
 //        subject.setProfessor(professor);
@@ -81,7 +85,7 @@ public class SubjectController {
 
     //수정
     @GetMapping("/updateSubject")
-    public String updateSubjectForm(@RequestParam("updateId")int id, Model model, Pageable pageable) {
+    public String updateSubjectForm(@RequestParam("updateId") int id, Model model, Pageable pageable) {
         List<Integer> classrooms = classroomRepository.findAllIds();
         model.addAttribute("classrooms", classrooms);
 
@@ -93,8 +97,9 @@ public class SubjectController {
         model.addAttribute("subject", subject);
         return "subjects/updateSubject";
     }
+
     @PostMapping("/updateSubject")
-    public String updateSubject (@ModelAttribute("subject") SubjectDto subject){
+    public String updateSubject(@ModelAttribute("subject") SubjectDto subject) {
         subject.setClassroom(subject.getClassroom());
         log.info(subject.toString());
         subjectService.updateSubject(subject);
@@ -103,10 +108,16 @@ public class SubjectController {
 
     //삭제
     @PostMapping("/deleteSubjects")
-    public String deleteSubjects(@RequestParam("selectedIds") Integer[] selectedIds) {
-        for (Integer id : selectedIds) {
-            subjectService.deleteSubject(id);
-        }
+    public String deleteSubjects(@Valid @ModelAttribute("selectedIds") Integer[] selectedIds, BindingResult bindingResult) {
+        try {
+            for (Integer id : selectedIds) {
+                boolean answer = studentGradeService.findBySubjectId(id);
+                if (answer == true) {
+                    subjectService.deleteSubject(id);
+                }
+            }
+        }  catch (Exception e) {
+                bindingResult.reject("deleteFailed", "수강/성적 데이터가 존재하여 삭제가 불가능합니다."); }
         return "redirect:/semi/subject/show";
     }
 }
