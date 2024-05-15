@@ -70,64 +70,14 @@ public class MyPageController {
         }
         return "errorPage";
     }
-    //------------------------------------------------------------------------------------------------------------------
 
-    //        @GetMapping("/updateProfileForm/{updateId}")
-//    public String updateProfileForm(@PathVariable("updateId") Integer id, Model model) {
-//        List<Department> departments = departmentRepository.findAll();
-//        model.addAttribute("departments", departments);
-//
-//        StudentDto studentDto = studentService.showOneStudent(id);
-//        model.addAttribute("studentDto", studentDto);
-//        return "profile/updateStudentProfile";
-//
-//        ProfessorDto professorDto = professorService.showOneProfessor(id);
-//        model.addAttribute("professorDto", professorDto);
-//        return "profile/professorProfileUpdate";
-//    }
-//
-//
-//    @GetMapping("/updateProfile/{id}")
-//    public String updateProfileView(@PathVariable("id") Integer id, Model model) {
-//        System.out.println(id);
-//        List<Department> departments = departmentRepository.findAll();
-//        model.addAttribute("departments", departments);
-//
-//        StudentDto studentDto = studentService.showOneStudent(id);
-//        model.addAttribute("studentDto", studentDto);
-//        System.out.println(studentDto.toString());
-//        return "profile/updateStudentProfile";
-//
-//        ProfessorDto professorDto = professorService.showOneProfessor(id);
-//        model.addAttribute("professorDto", professorDto);
-//        System.out.println(professorDto.toString());
-//        return "profile/professorProfileUpdate";
-//    }
-//
-//    @PostMapping("/updateProfile")
-//    public String update(@Valid @ModelAttribute("studentDto") StudentDto studentDto, ProfessorDto professorDto
-//                         BindingResult bindingResult) {
-//        if (bindingResult.hasErrors()) {
-//            return "profile/updateStudentProfile";
-//        }
-//
-//        if (bindingResult.hasErrors()) {
-//            return "profile/professorProfileUpdate";
-//        }
-//
-//        studentService.updateStudent(studentDto);
-//        return "redirect:/semi/profile/show";
-//
-//        professorService.updateProfessor(professorDto);
-//        return "redirect:/semi/profile/show";
-//    }
-//}
-//--------------------------------------------------------------------------------------------------------------------
-    //학생 마이페이지 수정
+    // 학생 마이페이지 수정
     @GetMapping("/updateForm/{updateId}")
     public String updateForm(@PathVariable("updateId") Integer id, Model model) {
         StudentDto studentDto = studentService.showOneStudent(id);
         model.addAttribute("studentDto", studentDto);
+        List<Department> departments = departmentRepository.findAll();
+        model.addAttribute("departments", departments);
         return "profile/updateStudentProfile";
     }
 
@@ -146,6 +96,8 @@ public class MyPageController {
     public String updateProfileForm(@PathVariable("updateId") Integer id, Model model) {
         ProfessorDto professorDto = professorService.showOneProfessor(id);
         model.addAttribute("professorDto", professorDto);
+        List<Department> departments = departmentRepository.findAll();
+        model.addAttribute("departments", departments);
         return "profile/professorProfileUpdate";
     }
 
