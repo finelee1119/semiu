@@ -30,8 +30,11 @@
             <li sec:authorize="isAuthenticated()" th:each="student : ${studentLogin}" th:object="${student}">
                 <a th:href="@{/semi/application/{id}(id=*{id})}" class="nav-link px-2">수강</a>
             </li>
-            <li sec:authorize="isAuthenticated()" th:each="professor : ${professorLogin}" th:object="${professor}">
+            <li sec:authorize="isAuthenticated()" th:each="student : ${studentLogin}" th:object="${student}">
                 <a th:href="@{/semi/grade/{id}(id=*{id})}" class="nav-link px-2">성적</a>
+            </li>
+            <li sec:authorize="isAuthenticated()" th:each="professor : ${professorLogin}" th:object="${professor}">
+                <a th:href="@{/semi/grade/professor/{id}(id=*{id})}" class="nav-link px-2">성적</a>
             </li>
             <li><a th:href="@{/semi/main}" class="nav-link px-2">기능모음</a></li>
         </ul>

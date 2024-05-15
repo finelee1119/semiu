@@ -3,6 +3,7 @@ package com.semiuniv.semiu.dto;
 import com.semiuniv.semiu.constant.Grade;
 import com.semiuniv.semiu.constant.SubjectType;
 import com.semiuniv.semiu.entity.StudentGrade;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ public class GradeDto {
 //    연도	학기	학번	이름	과목명	점수
 
     // 과목 테이블
-    private Integer academicYear;
+    private Integer gradeYear;
     private Integer semester;
     private Integer subjectId;
     private String subjectName;
@@ -27,7 +28,10 @@ public class GradeDto {
     // 학생 테이블
     private Integer studentId;
     private String studentName;
+    private String department;
+    private Integer academicYear;
 
+    private Integer no;
     private Grade grade;
 
 

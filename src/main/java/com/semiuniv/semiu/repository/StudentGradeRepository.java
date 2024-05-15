@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Collection;
 import java.util.List;
 
 public interface StudentGradeRepository extends JpaRepository<StudentGrade, Integer> {
@@ -17,5 +18,7 @@ public interface StudentGradeRepository extends JpaRepository<StudentGrade, Inte
     StudentGrade findByStudentAndSubject(@Param("studentId")Integer studentId, @Param("subjectId")Integer subjectId);
 
     StudentGrade findBySubjectId(Integer subjectId);
+
+    List<StudentGrade> findByStudentId(Integer studentId);
 }
 
