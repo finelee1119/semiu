@@ -13,6 +13,12 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
+    private final CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
+
+    public SecurityConfig(CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler) {
+        this.customAuthenticationSuccessHandler = customAuthenticationSuccessHandler;
+    }
+
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
@@ -34,7 +40,8 @@ public class SecurityConfig {
                 .formLogin((form)->form
                         .loginPage("/login") // 로그인 페이지 URL
                         .loginProcessingUrl("/login") // 로그인 처리 URL
-                        .defaultSuccessUrl("/semi/login", true) // 로그인 성공 후 이동할 URL
+                        .successHandler(customAuthenticationSuccessHandler)
+//                        .defaultSuccessUrl("/semi/login", true) // 로그인 성공 후 이동할 URL
                         .permitAll() // 로그인 페이지는 모든 사용자 접근 허용
                 )
 
