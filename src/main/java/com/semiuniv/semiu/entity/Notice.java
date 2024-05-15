@@ -21,4 +21,12 @@ public class Notice {
 
     @Column(name = "created_time")
     private Timestamp createdTime;
+
+    @Column(name = "updated_time")
+    private Timestamp updatedTime;
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedTime = new Timestamp(System.currentTimeMillis());
+    }
 }

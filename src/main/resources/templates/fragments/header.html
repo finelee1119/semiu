@@ -47,10 +47,15 @@
             <a role="button" id="signup" class="btn btn-outline-primary me-2"
                sec:authorize="isAnonymous()"
                th:href="@{/semi/signup}">Sign-up</a>
+            <a role="button" id="profile" class="btn btn-outline-primary me-2"
+               sec:authorize="isAuthenticated()"
+               th:href="@{/semi/profile/show}">마이페이지</a>
             <a role="button" id="loginout" class="btn btn-outline-primary me-2"
                sec:authorize="isAuthenticated()"
                th:href="@{/logout}">Logout</a>
         </div>
+
+
 
     </header>
     <th:block th:if="${msg} != null">
