@@ -1,9 +1,15 @@
 package com.semiuniv.semiu.controller;
 
+import com.semiuniv.semiu.entity.Users;
+import com.semiuniv.semiu.service.UserDetailService;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.security.Principal;
 
 @Controller
 @RequestMapping("/semi")
@@ -23,12 +29,16 @@ public class HomeController {
     }
 
     @GetMapping("/student/home")
-    public String studentHome() {
+    public String studentHome(Model model,
+                              Principal principal) {
+        model.addAttribute("users", principal.getName());
         return "home/studentHome";
     }
 
     @GetMapping("/professor/home")
-    public String professorHome() {
+    public String professorHome(Model model,
+                                Principal principal) {
+        model.addAttribute("users", principal.getName());
         return "home/professorHome";
     }
 

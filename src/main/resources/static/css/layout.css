@@ -89,6 +89,10 @@ body {
   display: inline-block;
 }
 
+.content .custom-table{
+  background-color: #c0d3c5;
+}
+
 /*footer=================*/
 .footer {
     left : 0;
@@ -99,5 +103,6 @@ body {
     padding-right : 15px;
     text-align : center;
 }
+
 
 

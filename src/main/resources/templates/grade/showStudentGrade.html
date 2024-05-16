@@ -14,9 +14,9 @@
 </head>
 <body>
     <div class="content" layout:fragment="content">
-        <h1 style="text-align: center;">학생 정보</h1><br>
-        <table class="table" border="1">
-            <thead>
+        <h3 ><b>학생 정보</b></h3><br>
+        <table class="table table-bordered table-sm">
+            <thead class="table-light">
             <tr style="text-align: center;">
                 <th>학번</th>
                 <th>이름</th>
@@ -25,7 +25,7 @@
                 <th>학기</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody >
             <tr th:each="gradeList, iterstat : ${gradeList}" th:if="${iterstat.index == 0}" style="text-align: center;">
                 <td th:text="${gradeList.studentId}"></td>
                 <td th:text="${gradeList.studentName}"></td>
@@ -35,9 +35,10 @@
             </tr>
             </tbody>
         </table>
-        <h1 style="text-align: center;">성적 정보</h1><br>
-            <table class="table" border="1">
-                <thead>
+        <br><br><br><br>
+        <h3 ><b>성적 조회</b></h3><br>
+            <table class="table table-bordered" border="1">
+                <thead class="table-light">
                 <tr style="text-align: center;">
                     <th>No</th>
                     <th>강의코드</th>
@@ -49,7 +50,7 @@
                     <th>성적</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody class="table-group-divider">
                     <tr th:each="gradeList, iterstat : ${gradeList}" style="text-align: center;">
                             <td th:text="${iterstat.index+1}"></td>
                             <td th:text="${gradeList.subjectId}"></td>
