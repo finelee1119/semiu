@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<!-- footer Fragment-->
+
 <div class="header" th:fragment="header">
     <!--    <h1>HEADER</h1>-->
     <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-
         <!--로고 | 페이지 이름-->
         <div class="col-md-3 mb-2 mb-md-0">
             <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
@@ -15,38 +14,31 @@
                 </svg>
                 <a class="navbar-brand" th:href="@{/}">
                     <span class="fs-4">
-                    semi-Univ
+                    SEMI-UNIV
                     </span>
                 </a>
             </a>
         </div>
 
         <!--nav : home | 수강 | 성적 : 페이지 이동-->
-        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-            <li><a href="#" class="nav-link px-2 link-secondary">Home</a></li>
-            <li sec:authorize="isAnonymous()">
-                <a th:href="@{/semi/application}" class="nav-link px-2">수강</a>
-            </li>
-            <li sec:authorize="isAuthenticated()" th:each="student : ${studentLogin}" th:object="${student}">
-                <a th:href="@{/semi/application/{id}(id=*{id})}" class="nav-link px-2">수강</a>
-            </li>
-            <li sec:authorize="isAuthenticated()" th:each="student : ${studentLogin}" th:object="${student}">
-                <a th:href="@{/semi/grade/{id}(id=*{id})}" class="nav-link px-2">성적</a>
-            </li>
-            <li sec:authorize="isAuthenticated()" th:each="professor : ${professorLogin}" th:object="${professor}">
-                <a th:href="@{/semi/grade/professor/{id}(id=*{id})}" class="nav-link px-2">성적</a>
-            </li>
-            <li><a th:href="@{/semi/main}" class="nav-link px-2">기능모음</a></li>
-        </ul>
+<!--        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">-->
+<!--            <li><a href="#" class="nav-link px-2 link-secondary">Home</a></li>-->
+<!--            <li sec:authorize="isAnonymous()">-->
+<!--                <a th:href="@{/semi/application}" class="nav-link px-2">수강</a>-->
+<!--            </li>-->
+<!--            <li sec:authorize="isAuthenticated()" th:each="student : ${studentLogin}" th:object="${student}">-->
+<!--                <a th:href="@{/semi/application/{id}(id=*{id})}" class="nav-link px-2">수강</a>-->
+<!--            </li>-->
+<!--            <li sec:authorize="isAuthenticated()" th:each="student : ${studentLogin}" th:object="${student}">-->
+<!--                <a th:href="@{/semi/grade/{id}(id=*{id})}" class="nav-link px-2">성적</a>-->
+<!--            </li>-->
+<!--            <li sec:authorize="isAuthenticated()" th:each="professor : ${professorLogin}" th:object="${professor}">-->
+<!--                <a th:href="@{/semi/grade/professor/{id}(id=*{id})}" class="nav-link px-2">성적</a>-->
+<!--            </li>-->
+<!--            <li><a th:href="@{/semi/main}" class="nav-link px-2">기능모음</a></li>-->
+<!--        </ul>-->
 
-        <!--로그인 | 회원가입 | 로그아웃 : 로그인, 로그아웃 상황일 때 다르게 보여진다.-->
         <div class="col-md-3 text-end">
-            <a role="button" id="login" class="btn btn-outline-primary me-2"
-               sec:authorize="isAnonymous()"
-               th:href="@{/semi/login}">Login</a>
-            <a role="button" id="signup" class="btn btn-outline-primary me-2"
-               sec:authorize="isAnonymous()"
-               th:href="@{/semi/signup}">Sign-up</a>
             <a role="button" id="profile" class="btn btn-outline-primary me-2"
                sec:authorize="isAuthenticated()"
                th:href="@{/semi/profile/show}">마이페이지</a>
@@ -55,14 +47,6 @@
                th:href="@{/logout}">Logout</a>
         </div>
 
-
-
     </header>
-    <th:block th:if="${msg} != null">
-        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-            <strong th:text="${msg}">Holy guacamole!</strong>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    </th:block>
 </div>
 </html>
