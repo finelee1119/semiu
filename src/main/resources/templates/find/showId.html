@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>아이디 찾기</title>
+    <style>
+        h1 {text-align : center}
+    </style>
+</head>
+<body>
+    <h1>아이디 찾기</h1>
+    <form th:action="@{/semi/find/showId}" method="get">
+        <a th:href="@{/semi/find/showStudentId}" style="text-align : left">학생 아이디 찾기</a>
+        <a th:href="@{/semi/find/showProfessorId}" style="text-align : right">교수 아이디 찾기</a>
+    </form>
+</body>
+</html>

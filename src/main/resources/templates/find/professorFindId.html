@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>교수 아이디 찾기</title>
+    <style>
+        *{text-align : center}
+    </style>
+</head>
+<body>
+    <h1>교수 아이디 찾기</h1>
+    <form th:action="@{/semi/find/professorId}" method="post" class="container">
+        <div class="mb3">
+            <label>성명 : </label>
+            <input type="text" id="name" name="name">
+            <br>
+            <label>생년월일 : </label>
+            <input type="date" id="date" name="date">
+        </div>
+        <button type="submit">확인하기</button>
+    </form>
+</body>
+</html>
