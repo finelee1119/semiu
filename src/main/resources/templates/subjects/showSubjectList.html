@@ -10,8 +10,11 @@
 <body>
     <div class="content" layout:fragment="content">
          <h1 style="text-align: center;" >강의 목록</h1> <br>
-        <form id="deleteForm" th:action="@{/semi/subject/deleteSubjects}" method="post" th:object="${subjects}">
-            <div th:replace="~{fragments/form_errors :: formErrorsFragment}"></div>
+        <form id="deleteForm" th:action="@{/semi/subject/deleteSubjects}" method="post" >
+            <div class="alert alert-danger alert-dismissible fade show" th:if="${#fields.hasErrors('selectedIds')}" role="alert">
+                <span th:each="error : ${#fields.errors('selectedIds')}" th:text="${error}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" onclick="goBack()"></button>
+            </div>
             <div style="text-align: right;">
                 <button type="button" class="btn btn-outline-danger btn-sm" onclick="deleteSelectedSubjects()" >선택 항목 삭제</button>
             </div>
@@ -41,7 +44,7 @@
                     <td th:text="*{name}"></td>
                     <td th:text="*{professor.name}"></td>
                     <td th:text="*{classroom.id} +  '&nbsp;강의실'"></td>
-                    <td th:text="*{subjectType}"></td>
+                    <td th:text="*{subjectType.value}"></td>
                     <td th:text="*{credit}"></td>
                     <td th:text="*{academicYear}"></td>
                     <td th:text="*{semester}"></td>
@@ -57,7 +60,7 @@
             </table>
 
             <!-- 페이징 처리 -->
-            <div aria-label="Page navigation" th:if="${!subjects.isEmpty()}">
+            <div aria-label="Page navigation" th:if="${subjects?.isEmpty()}">
                 <ul class="pagination justify-content-center">
                     <li class="page-item" th:classappend="${!subjects.hasPrevious()} ? 'disabled'">
                         <a class="page-link" th:href="@{|?page=${subjects.number - 1}|}">
@@ -92,6 +95,5 @@
         <a th:href="@{/semi/subject/insertForm}" class="btn btn-primary me-2">등록</a>
         <a th:href="@{/semi}" class="btn btn-primary">메인 화면으로 돌아가기</a>
     </div>
-
 </body>
 </html>

@@ -11,7 +11,7 @@
     <div class="content" layout:fragment="content">
          <h1 style="text-align: center;" >성적 목록</h1> <br>
         <form id="deleteForm" th:action="@{/semi/grade/deleteGrade}" method="post" th:object="${gradeList}">
-            <div th:replace="~{fragments/form_errors :: formErrorsFragment}"></div>
+<!--            <div th:replace="~{fragments/form_errors :: formErrorsFragment}"></div>-->
             <div style="text-align: right;">
                 <button type="button" class="btn btn-outline-danger btn-sm" onclick="deleteSelectedSubjects()" >선택 항목 삭제</button>
             </div>
@@ -45,7 +45,40 @@
                     <td th:text="${gradeList.grade}"></td>
                 </tr>
             </table>
+            <!-- 페이징 처리 -->
+            <div aria-label="Page navigation" th:if="${gradeList?.isEmpty()}">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item" th:classappend="${!gradeList.hasPrevious()} ? 'disabled'">
+                        <a class="page-link" th:href="@{|?page=${gradeList.number - 1}|}">
+                            <span>이전</span>
+                        </a>
+                    </li>
+
+                    <li th:each="page: ${#numbers.sequence(0, gradeList.totalPages - 1)}"
+                        th:if="${page >= gradeList.number - 5 and page <= gradeList.number + 5}"
+                        th:classappend="${page == gradeList.number} ? 'active'"
+                        class="page-item">
+                        <a th:text="${page + 1}" class="page-link" th:href="@{|?page=${page}|}"></a>
+                    </li>
+
+
+                    <li class="page-item" th:classappend="${!gradeList.hasNext} ? 'disabled'">
+                        <a class="page-link" th:href="@{|?page=${gradeList.number + 1}|}">
+                            <span>다음</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </form>
+        <!-- 검색 처리 -->
+        <form th:action="@{/semi/grade/show}" method="get">
+            <div class="input-group mb-3">
+                <input type="text" name="keyword" class="form-control" placeholder="검색어 입력">
+                <button class="btn btn-outline-secondary" type="submit">검색</button>
+            </div>
+        </form>
+        <a th:href="@{/semi/grade/show}" class="btn btn-primary">검색 초기화</a>
+        <a th:href="@{/semi}" class="btn btn-primary">메인 화면으로 돌아가기</a>
     </div>
 </body>
 </html>
