@@ -14,50 +14,34 @@
             <img src="https://cdn.pixabay.com/photo/2020/02/06/20/01/university-library-4825366_1280.jpg" id="img1">
         </div>
         <div class="middleItem" >
-        <div class="middleItemLogin" sec:authorize="isAnonymous()">
-            <h4>통합로그인</h4>
-            <form id="frm" th:action="@{/login}" method="post" class="container">
-                <div class="mb3">
-                    <label class="form-label">사용자ID</label>
-                    <input id="username" name="username" type="text" class="form-control">
-                </div>
-                <div class="mb3">
-                    <label class="form-label">비밀번호</label>
-                    <input id="password" name="password" type="password" class="form-control">
-                </div>
-                <input type="submit" value="로그인" class="btn btn-primary" >
-                <input type="button" value="다시" class="btn btn-primary" >
-            </form>
-        </div>
-        <div class="middleItemLogin" sec:authorize="isAuthenticated()">
-            <h4>로그인 성공</h4>
-            <!-- 가져온 회원정보 보여주기 -->
-            <span th:if="${studentLogin != null}" th:text="${studentLogin.name + '님 로그인'}"></span>
-            <span class="nav-item" sec:authorize="hasRole('STUDENT')">
-                STUDENT 입니다.
-            </span>
+            <div class="middleItemLogin" sec:authorize="isAnonymous()">
+                <h4>통합로그인</h4>
+                <form id="frm" th:action="@{/login}" method="post" class="container">
+                    <div class="mb3">
+                        <label class="form-label">사용자ID</label>
+                        <input id="username" name="username" type="text" class="form-control">
+                    </div>
+                    <div class="mb3">
+                        <label class="form-label">비밀번호</label>
+                        <input id="password" name="password" type="password" class="form-control">
+                    </div>
+                    <input type="submit" value="로그인" class="btn btn-primary" >
+                    <input type="button" value="다시" class="btn btn-primary" >
+                </form>
+            </div>
+            <div class="middleItemLogin" sec:authorize="isAuthenticated()">
+                <h4>로그인 성공</h4>
+                <!-- 가져온 회원정보 보여주기 -->
+                <span th:if="${studentLogin != null}" th:text="${studentLogin.name + '님 로그인'}"></span>
+                <span class="nav-item" sec:authorize="hasRole('STUDENT')">
+                    STUDENT 입니다.
+                </span>
 
-            <span th:if="${professorLogin != null}" th:text="${professorLogin.name + '님 로그인'}"></span>
-            <span class="nav-item" sec:authorize="hasRole('PROFESSOR')">
-                PROFESSOR 입니다.
-            </span>
-        </div>
-            <table class="table">
-                <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">공지사항</th>
-                    <th scope="col">Last</th>
-                    <th scope="col">Handle</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                </tr>
-                </tbody>
-            </table>
+                <span th:if="${professorLogin != null}" th:text="${professorLogin.name + '님 로그인'}"></span>
+                <span class="nav-item" sec:authorize="hasRole('PROFESSOR')">
+                    PROFESSOR 입니다.
+                </span>
+            </div>
         </div>
     </div>
 </div>

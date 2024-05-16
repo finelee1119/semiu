@@ -27,8 +27,8 @@ public class MainController {
 
     @GetMapping("")
     //RequestMapping 주소 : localhost:8080/semi(main) +
-    public String index() {
-        return "index";
+    public String welcome() {
+        return "welcome";
     }
 
     // .defaultSuccessUrl : 로그인 성공 시 GetUrl > main.html
@@ -39,20 +39,20 @@ public class MainController {
         Optional<Student> student = studentService.show_student(loginId);
         Optional<Professor> professor = professorService.show_professor(loginId);
 
-        if (student.isPresent()){   // 로그인 아이디를 확인하기 위한 검증 추가 ( Role 을 사용해야 하는데...)
+        if (student.isPresent()){
             Student studentLogin = student.get();
             System.out.println(studentLogin.toString());
             model.addAttribute("principal", principal.getName());
             model.addAttribute("studentLogin", studentLogin);
-            return "index";
+            return "welcome";
         } else if (professor.isPresent()) {
             Professor professorLogin = professor.get();
             System.out.println(professorLogin.toString());
             model.addAttribute("principal", principal.getName());
             model.addAttribute("professorLogin", professorLogin);
-            return "index";
+            return "welcome";
         }
-        return "index";
+        return "welcome";
     }
 
     @GetMapping("/main")
