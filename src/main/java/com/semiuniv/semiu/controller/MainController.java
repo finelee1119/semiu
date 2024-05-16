@@ -1,7 +1,9 @@
 package com.semiuniv.semiu.controller;
 
+import com.semiuniv.semiu.entity.Admin;
 import com.semiuniv.semiu.entity.Professor;
 import com.semiuniv.semiu.entity.Student;
+import com.semiuniv.semiu.service.AdminService;
 import com.semiuniv.semiu.service.ProfessorService;
 import com.semiuniv.semiu.service.StudentService;
 import org.springframework.stereotype.Controller;
@@ -19,10 +21,12 @@ public class MainController {
 
     private final StudentService studentService;
     private final ProfessorService professorService;
+    private final AdminService adminService;
 
-    public MainController(StudentService studentService, ProfessorService professorService) {
+    public MainController(StudentService studentService, ProfessorService professorService, AdminService adminService) {
         this.studentService = studentService;
         this.professorService = professorService;
+        this.adminService = adminService;
     }
 
     @GetMapping
@@ -38,6 +42,7 @@ public class MainController {
         Integer loginId = Integer.valueOf(principal.getName());
         Optional<Student> student = studentService.show_student(loginId);
         Optional<Professor> professor = professorService.show_professor(loginId);
+        Optional<Admin> admin = adminService.show_admin(loginId);
 
         if (student.isPresent()){
             Student studentLogin = student.get();
@@ -51,12 +56,17 @@ public class MainController {
             model.addAttribute("principal", principal.getName());
             model.addAttribute("professorLogin", professorLogin);
             return "welcome";
+        } else if (admin.isPresent()) {
+            Admin adminLogin = admin.get();
+            System.out.println(adminLogin.toString());
+            model.addAttribute("principal", principal.getName());
+            model.addAttribute("adminLogin", adminLogin);
+            return "welcome";
         }
         return "welcome";
     }
 
     @GetMapping("/main")
-    //RequestMapping 주소 : localhost:8080/semi(main) +
     public String main() {
         return "main";
     }

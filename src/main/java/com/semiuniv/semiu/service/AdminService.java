@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AdminService {
@@ -59,6 +60,11 @@ public class AdminService {
     //삭제
     public void deleteAdmin(Integer id) {
         adminRepository.deleteById(id);
+    }
+
+    //로그인 후 관리자 정보
+    public Optional<Admin> show_admin(Integer loginId) {
+        return adminRepository.findById(loginId);
     }
 
 }
