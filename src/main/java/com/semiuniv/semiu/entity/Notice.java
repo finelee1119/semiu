@@ -17,6 +17,7 @@ public class Notice {
     private String title;
 
     @Lob
+    @Column(columnDefinition = "text")
     private String content;
 
     @Column(name = "created_time")
