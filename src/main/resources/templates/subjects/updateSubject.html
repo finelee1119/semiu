@@ -42,7 +42,7 @@
                 <select th:field="*{subjectType}"  id="subjectType" >
                     <option value="">선택</option>
                     <option th:each="subjectType : ${T(com.semiuniv.semiu.constant.SubjectType).values()}" th:value="${subjectType}"
-                            th:text="${subjectType}"></option>
+                            th:text="${subjectType.value}"></option>
                 </select>
             </div>
             <div class="border border-top-0">

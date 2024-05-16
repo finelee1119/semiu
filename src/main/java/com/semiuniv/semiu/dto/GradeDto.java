@@ -34,6 +34,22 @@ public class GradeDto {
     private Integer no;
     private Grade grade;
 
+    public static GradeDto fromStudentGradeEntity(StudentGrade studentGrade){
+            GradeDto gradeDto = new GradeDto();
+            gradeDto.setGradeYear(studentGrade.getSubject().getAcademicYear());
+            gradeDto.setSemester(studentGrade.getSubject().getSemester());
+            gradeDto.setSubjectId(studentGrade.getSubject().getId());
+            gradeDto.setSubjectName(studentGrade.getSubject().getName());
+            gradeDto.setSubjectType(studentGrade.getSubject().getSubjectType());
+            gradeDto.setCredit(studentGrade.getSubject().getCredit());
+            gradeDto.setStudentId(studentGrade.getStudent().getId());
+            gradeDto.setStudentName(studentGrade.getStudent().getName());
+            gradeDto.setDepartment(studentGrade.getStudent().getDepartment().getName());
+            gradeDto.setAcademicYear(studentGrade.getStudent().getAcademicYear());
+            gradeDto.setGrade(studentGrade.getGrade());
+            return gradeDto;
+    }
+
 
     public static StudentGrade fromStudentGradeDto(GradeDto dto){
         StudentGrade studentGrade = new StudentGrade();

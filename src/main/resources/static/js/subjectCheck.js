@@ -122,6 +122,11 @@ function check(){
         return false;}
     }
 
+     function goBack() {
+            window.history.back();
+        }
+
+
     function updateSubject(subjectId) {
         var updateForm = document.createElement("form");
         updateForm.setAttribute("method", "get");
