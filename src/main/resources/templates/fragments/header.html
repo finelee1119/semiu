@@ -2,25 +2,47 @@
 <html xmlns:th="www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<div class="header" th:fragment="header">
-    <!--    <h1>HEADER</h1>-->
-    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-        <!--로고 | 페이지 이름-->
-        <div class="col-md-3 mb-2 mb-md-0">
-            <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-buildings" viewBox="0 0 16 16">
-                    <path d="M14.763.075A.5.5 0 0 1 15 .5v15a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5V14h-1v1.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V10a.5.5 0 0 1 .342-.474L6 7.64V4.5a.5.5 0 0 1 .276-.447l8-4a.5.5 0 0 1 .487.022M6 8.694 1 10.36V15h5zM7 15h2v-1.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5V15h2V1.309l-7 3.5z"/>
-                    <path d="M2 11h1v1H2zm2 0h1v1H4zm-2 2h1v1H2zm2 0h1v1H4zm4-4h1v1H8zm2 0h1v1h-1zm-2 2h1v1H8zm2 0h1v1h-1zm2-2h1v1h-1zm0 2h1v1h-1zM8 7h1v1H8zm2 0h1v1h-1zm2 0h1v1h-1zM8 5h1v1H8zm2 0h1v1h-1zm2 0h1v1h-1zm0-2h1v1h-1z"/>
-                </svg>
-                <a class="navbar-brand" th:href="@{/}">
-                    <span class="fs-4">
-                    SEMI-UNIV
-                    </span>
-                </a>
-            </a>
-        </div>
+<head>
+    <style>
+        .custom-font {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            color: #6c757d; /* 살짝 회색 */
+            font-weight: 700;
+        }
+    </style>
+</head>
 
-        <!--nav : home | 수강 | 성적 : 페이지 이동-->
+<body>
+    <div class="header" th:fragment="header">
+        <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+
+            <div class="col-md-3 mb-2 mb-md-0">
+                <div class="d-inline-flex link-body-emphasis text-decoration-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#007bff" class="bi bi-buildings" viewBox="0 0 16 16">
+                        <path d="M14.763.075A.5.5 0 0 1 15 .5v15a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5V14h-1v1.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V10a.5.5 0 0 1 .342-.474L6 7.64V4.5a.5.5 0 0 1 .276-.447l8-4a.5.5 0 0 1 .487.022M6 8.694 1 10.36V15h5zM7 15h2v-1.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5V15h2V1.309l-7 3.5z"/>
+                        <path d="M2 11h1v1H2zm2 0h1v1H4zm-2 2h1v1H2zm2 0h1v1H4zm4-4h1v1H8zm2 0h1v1h-1zm-2 2h1v1H8zm2 0h1v1h-1zm2-2h1v1h-1zm0 2h1v1h-1zM8 7h1v1H8zm2 0h1v1h-1zm2 0h1v1h-1zM8 5h1v1H8zm2 0h1v1h-1zm2 0h1v1h-1zm0-2h1v1h-1z"/>
+                    </svg>
+                    <div class="navbar-brand custom-font">
+                        <span class="fs-4">SEMI-UNIV</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 text-end">
+                <a role="button" id="profile" class="btn btn-outline-primary me-2"
+                   sec:authorize="isAuthenticated()"
+                   th:href="@{/semi/profile/show}">마이페이지</a>
+                <a role="button" id="loginout" class="btn btn-outline-primary me-2"
+                   sec:authorize="isAuthenticated()"
+                   th:href="@{/logout}">로그아웃</a>
+            </div>
+        </header>
+    </div>
+</body>
+</html>
+
+
+<!--nav : home | 수강 | 성적 : 페이지 이동-->
 <!--        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">-->
 <!--            <li><a href="#" class="nav-link px-2 link-secondary">Home</a></li>-->
 <!--            <li sec:authorize="isAnonymous()">-->
@@ -37,16 +59,3 @@
 <!--            </li>-->
 <!--            <li><a th:href="@{/semi/main}" class="nav-link px-2">기능모음</a></li>-->
 <!--        </ul>-->
-
-        <div class="col-md-3 text-end">
-            <a role="button" id="profile" class="btn btn-outline-primary me-2"
-               sec:authorize="isAuthenticated()"
-               th:href="@{/semi/profile/show}">마이페이지</a>
-            <a role="button" id="loginout" class="btn btn-outline-primary me-2"
-               sec:authorize="isAuthenticated()"
-               th:href="@{/logout}">Logout</a>
-        </div>
-
-    </header>
-</div>
-</html>
