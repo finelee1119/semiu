@@ -5,6 +5,8 @@ import com.semiuniv.semiu.dto.StudentDto;
 import com.semiuniv.semiu.dto.UserDto;
 import com.semiuniv.semiu.entity.Professor;
 import com.semiuniv.semiu.entity.Student;
+import com.semiuniv.semiu.entity.Users;
+import com.semiuniv.semiu.repository.UserRepository;
 import com.semiuniv.semiu.service.ProfessorService;
 import com.semiuniv.semiu.service.StudentService;
 import com.semiuniv.semiu.service.UserDetailService;
@@ -27,10 +29,12 @@ public class FindController {
     private final StudentService studentService;
     private final ProfessorService professorService;
     private final UserDetailService userDetailService;
-    public FindController(StudentService studentService, ProfessorService professorService, UserDetailService userDetailService) {
+    private final UserRepository userRepository;
+    public FindController(StudentService studentService, ProfessorService professorService, UserDetailService userDetailService, UserRepository userRepository) {
         this.studentService = studentService;
         this.professorService = professorService;
         this.userDetailService = userDetailService;
+        this.userRepository = userRepository;
     }
 
     //아이디 찾기
@@ -98,9 +102,12 @@ public class FindController {
     public String findPassword(@RequestParam("id") Integer id, Model model) {
         String userIdString = String.valueOf(id);
         UserDetails userDetails = userDetailService.loadUserByUsername(userIdString);
-
+        Optional<Users> user = userRepository.findById(userIdString);
+        Users userAccount = user.get();
         // 조회된 사용자 정보가 null이 아니고, ID와 사용자 이름이 같은지 확인합니다.
         if (userDetails != null && userDetails.getUsername().equals(userIdString)) {
+            userAccount.setPassword(userIdString);
+            userRepository.save(userAccount);
             model.addAttribute("password", userDetails.getPassword());
             return "find/password";
         } else {
