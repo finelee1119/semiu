@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 @Service
@@ -69,5 +70,17 @@ public class StudentService {
     //수강 신청 페이지 이동 시 가져올 로그인 한 학생 정보 : 수강 신청 +
     public Optional<Student> findById(Integer id) {
         return studentRepository.findById(id);
+    }
+
+    public Optional<Student> findByName(String name) {
+        return studentRepository.findByName(name);
+    }
+
+    public Optional<Student> findByBirth(LocalDate birth) {
+        return studentRepository.findByBirth(birth);
+    }
+
+    public Optional<Student> findByPhone(String phone) {
+        return studentRepository.findByPhone(phone);
     }
 }
