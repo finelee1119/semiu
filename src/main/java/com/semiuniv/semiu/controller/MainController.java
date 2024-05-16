@@ -15,7 +15,6 @@ import java.security.Principal;
 import java.util.Optional;
 
 @Controller
-//로그인 페이지로 이동이 안되서 RequestMapping을 위로 올림 +
 @RequestMapping("/semi")
 public class MainController {
 
@@ -30,13 +29,10 @@ public class MainController {
     }
 
     @GetMapping
-    //RequestMapping 주소 : localhost:8080/semi(main) +
     public String login() {
         return "welcome";
     }
 
-    // .defaultSuccessUrl : 로그인 성공 시 GetUrl > main.html
-    // :로그인 후 다시 main:Index 페이지에 돌아왔을 때 로그인 정보와 같은 학생 정보 가져오기 +
     @GetMapping("/login-success")
     public String loginSuccess(Principal principal, Model model){
         Integer loginId = Integer.valueOf(principal.getName());
@@ -64,10 +60,5 @@ public class MainController {
             return "welcome";
         }
         return "welcome";
-    }
-
-    @GetMapping("/main")
-    public String main() {
-        return "main";
     }
 }

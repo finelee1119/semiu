@@ -62,7 +62,7 @@ public class StudentService {
     }
 
 
-    //로그인 후 학생 정보 : main.html +
+    //로그인 후 학생 정보
     public Optional<Student> show_student(Integer loginId) {
         return studentRepository.findById(loginId);
     }
