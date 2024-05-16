@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -65,5 +66,17 @@ public class ProfessorService {
     // 로그인 정보
     public Optional<Professor> show_professor(Integer loginId) {
         return professorRepository.findById(loginId);
+    }
+
+    public Optional<Professor> findByName(String name) {
+        return professorRepository.findByName(name);
+    }
+
+    public Optional<Professor> findByBirth(LocalDate birth) {
+        return professorRepository.findByBirth(birth);
+    }
+
+    public Optional<Professor> findByPhone(String phone){
+        return professorRepository.findByPhone(phone);
     }
 }
