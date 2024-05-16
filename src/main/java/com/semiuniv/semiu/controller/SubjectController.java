@@ -11,6 +11,7 @@ import com.semiuniv.semiu.service.SubjectService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -41,7 +42,6 @@ public class SubjectController {
         Page<ProfessorDto> professors = professorService.showAllProfessors(pageable);
         model.addAttribute("professors", professors);
 
-        // 새로운 Subject 객체를 생성하고 모델에 추가합니다.
         SubjectDto subjectDto = new SubjectDto();
         model.addAttribute("subject", subjectDto);
         return "subjects/insertSubject";
@@ -49,9 +49,6 @@ public class SubjectController {
 
     @PostMapping("/insertForm")
     public String insertSubject(@ModelAttribute("subject") SubjectDto subject) {
-//        // 사용자 입력 : 교수 이름, subject 테이블 내 professor_id 저장을 위한 코드
-//        Professor professor = professorRepository.findByName(subject.getProfessor().getName());
-//        subject.setProfessor(professor);
         subject.setClassroom(subject.getClassroom());
         log.info(subject.toString());
         subjectService.insertSubject(subject);
@@ -78,7 +75,7 @@ public class SubjectController {
                 subjectDto = subjectService.searchSubjectBySubjectName(keyword, pageable);
             }
         }
-
+        model.addAttribute("selectedIds", new Integer[]{});
         model.addAttribute("subjects", subjectDto);
         return "subjects/showSubjectList";
     }
@@ -92,7 +89,6 @@ public class SubjectController {
         Page<ProfessorDto> professors = professorService.showAllProfessors(pageable);
         model.addAttribute("professors", professors);
 
-        // 새로운 Subject 객체를 생성하고 모델에 추가합니다.
         SubjectDto subject = subjectService.findSubjectId(id);
         model.addAttribute("subject", subject);
         return "subjects/updateSubject";
@@ -111,13 +107,13 @@ public class SubjectController {
     public String deleteSubjects(@Valid @ModelAttribute("selectedIds") Integer[] selectedIds, BindingResult bindingResult) {
         try {
             for (Integer id : selectedIds) {
-                boolean answer = studentGradeService.findBySubjectId(id);
-                if (answer == true) {
-                    subjectService.deleteSubject(id);
-                }
+                subjectService.deleteSubject(id);
             }
         }  catch (Exception e) {
-                bindingResult.reject("deleteFailed", "수강/성적 데이터가 존재하여 삭제가 불가능합니다."); }
+            bindingResult.reject("deleteFailed","수강/성적 데이터가 존재하여 삭제가 불가능합니다.");
+            return "subjects/showSubjectList";
+        }
         return "redirect:/semi/subject/show";
     }
+
 }

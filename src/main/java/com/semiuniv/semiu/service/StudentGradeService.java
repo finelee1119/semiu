@@ -15,6 +15,8 @@ import jakarta.persistence.TypedQuery;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.query.NativeQuery;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
@@ -36,25 +38,25 @@ public class StudentGradeService {
 
 
     // 강사 성적 조회/입력/수정 (강사 아이디로 데이터 조회)
-    public List<GradeDto> getProfessorGrades(Integer professorId) {
-        List<StudentGrade> subjects = studentGradeRepository.findBySubjectProfessorId(professorId).stream().collect(Collectors.toList());
-        List<GradeDto> gradeDtoList = new ArrayList<>();
-        for (StudentGrade subject : subjects) {
+    public Page<GradeDto> getProfessorGrades(Integer professorId, Pageable pageable) {
+        Page<StudentGrade> studentGradePage = studentGradeRepository.findBySubjectProfessorId(professorId, pageable);
+        Page<GradeDto> gradeDtoPage = studentGradePage.map(studentGrade -> {
             GradeDto gradeDto = new GradeDto();
-            gradeDto.setGradeYear(subject.getSubject().getAcademicYear());
-            gradeDto.setSemester(subject.getSubject().getSemester());
-            gradeDto.setSubjectId(subject.getSubject().getId());
-            gradeDto.setSubjectName(subject.getSubject().getName());
-            gradeDto.setSubjectType(subject.getSubject().getSubjectType());
-            gradeDto.setCredit(subject.getSubject().getCredit());
-            gradeDto.setStudentId(subject.getStudent().getId());
-            gradeDto.setStudentName(subject.getStudent().getName());
-            gradeDto.setDepartment(subject.getStudent().getDepartment().getName());
-            gradeDto.setAcademicYear(subject.getStudent().getAcademicYear());
-            gradeDto.setGrade(subject.getGrade());
-            gradeDtoList.add(gradeDto);
-        }
-        return gradeDtoList;
+            gradeDto.setNo(studentGrade.getNo());
+            gradeDto.setGradeYear(studentGrade.getSubject().getAcademicYear());
+            gradeDto.setSemester(studentGrade.getSubject().getSemester());
+            gradeDto.setSubjectId(studentGrade.getSubject().getId());
+            gradeDto.setSubjectName(studentGrade.getSubject().getName());
+            gradeDto.setSubjectType(studentGrade.getSubject().getSubjectType());
+            gradeDto.setCredit(studentGrade.getSubject().getCredit());
+            gradeDto.setStudentId(studentGrade.getStudent().getId());
+            gradeDto.setStudentName(studentGrade.getStudent().getName());
+            gradeDto.setDepartment(studentGrade.getStudent().getDepartment().getName());
+            gradeDto.setAcademicYear(studentGrade.getStudent().getAcademicYear());
+            gradeDto.setGrade(studentGrade.getGrade());
+            return gradeDto;
+        });
+        return gradeDtoPage;
     }
 
     // 강사 성적 등록
@@ -79,26 +81,29 @@ public class StudentGradeService {
     }
 
     // 성적 전체 조회 (관리자용)
-    public List<GradeDto> findAll() {
-        List<StudentGrade> grades = studentGradeRepository.findAll().stream().collect(Collectors.toList());
-        List<GradeDto> gradeDtoList = new ArrayList<>();
-        for (StudentGrade grade : grades) {
+    public Page<GradeDto> findAll(Pageable pageable) {
+        // 페이징된 데이터 가져오기
+        Page<StudentGrade> studentGradePage = studentGradeRepository.findAll(pageable);
+
+        // StudentGrade를 GradeDto로 변환
+        Page<GradeDto> gradeDtoPage = studentGradePage.map(studentGrade -> {
             GradeDto gradeDto = new GradeDto();
-            gradeDto.setNo(grade.getNo());
-            gradeDto.setGradeYear(grade.getSubject().getAcademicYear());
-            gradeDto.setSemester(grade.getSubject().getSemester());
-            gradeDto.setSubjectId(grade.getSubject().getId());
-            gradeDto.setSubjectName(grade.getSubject().getName());
-            gradeDto.setSubjectType(grade.getSubject().getSubjectType());
-            gradeDto.setCredit(grade.getSubject().getCredit());
-            gradeDto.setStudentId(grade.getStudent().getId());
-            gradeDto.setStudentName(grade.getStudent().getName());
-            gradeDto.setDepartment(grade.getStudent().getDepartment().getName());
-            gradeDto.setAcademicYear(grade.getStudent().getAcademicYear());
-            gradeDto.setGrade(grade.getGrade());
-            gradeDtoList.add(gradeDto);
-        }
-        return gradeDtoList;
+            gradeDto.setNo(studentGrade.getNo());
+            gradeDto.setGradeYear(studentGrade.getSubject().getAcademicYear());
+            gradeDto.setSemester(studentGrade.getSubject().getSemester());
+            gradeDto.setSubjectId(studentGrade.getSubject().getId());
+            gradeDto.setSubjectName(studentGrade.getSubject().getName());
+            gradeDto.setSubjectType(studentGrade.getSubject().getSubjectType());
+            gradeDto.setCredit(studentGrade.getSubject().getCredit());
+            gradeDto.setStudentId(studentGrade.getStudent().getId());
+            gradeDto.setStudentName(studentGrade.getStudent().getName());
+            gradeDto.setDepartment(studentGrade.getStudent().getDepartment().getName());
+            gradeDto.setAcademicYear(studentGrade.getStudent().getAcademicYear());
+            gradeDto.setGrade(studentGrade.getGrade());
+            return gradeDto;
+        });
+
+        return gradeDtoPage;
     }
 
     // 성적 데이터 삭제 (관리자용)
@@ -107,25 +112,26 @@ public class StudentGradeService {
     }
 
 
-    public List<GradeDto> getStudentGrades(Integer StudentId) {
-        List<StudentGrade> grade = studentGradeRepository.findByStudentId(StudentId).stream().collect(Collectors.toList());
-        List<GradeDto> gradeDtoList = new ArrayList<>();
-        for (StudentGrade subject : grade) {
+    public Page<GradeDto> getStudentGrades(Integer studentId, Pageable pageable) {
+        Page<StudentGrade> studentGradePage = studentGradeRepository.findByStudentId(studentId, pageable);
+        log.info(studentGradePage.toString());
+        Page<GradeDto> gradeDtoPage = studentGradePage.map(studentGrade -> {
             GradeDto gradeDto = new GradeDto();
-            gradeDto.setGradeYear(subject.getSubject().getAcademicYear());
-            gradeDto.setSemester(subject.getSubject().getSemester());
-            gradeDto.setSubjectId(subject.getSubject().getId());
-            gradeDto.setSubjectName(subject.getSubject().getName());
-            gradeDto.setSubjectType(subject.getSubject().getSubjectType());
-            gradeDto.setCredit(subject.getSubject().getCredit());
-            gradeDto.setStudentId(subject.getStudent().getId());
-            gradeDto.setStudentName(subject.getStudent().getName());
-            gradeDto.setDepartment(subject.getStudent().getDepartment().getName());
-            gradeDto.setAcademicYear(subject.getStudent().getAcademicYear());
-            gradeDto.setGrade(subject.getGrade());
-            gradeDtoList.add(gradeDto);
-        }
-        return gradeDtoList;
+            gradeDto.setNo(studentGrade.getNo());
+            gradeDto.setGradeYear(studentGrade.getSubject().getAcademicYear());
+            gradeDto.setSemester(studentGrade.getSubject().getSemester());
+            gradeDto.setSubjectId(studentGrade.getSubject().getId());
+            gradeDto.setSubjectName(studentGrade.getSubject().getName());
+            gradeDto.setSubjectType(studentGrade.getSubject().getSubjectType());
+            gradeDto.setCredit(studentGrade.getSubject().getCredit());
+            gradeDto.setStudentId(studentGrade.getStudent().getId());
+            gradeDto.setStudentName(studentGrade.getStudent().getName());
+            gradeDto.setDepartment(studentGrade.getStudent().getDepartment().getName());
+            gradeDto.setAcademicYear(studentGrade.getStudent().getAcademicYear());
+            gradeDto.setGrade(studentGrade.getGrade());
+            return gradeDto;
+        });
+        return gradeDtoPage;
     }
 
 
@@ -148,6 +154,20 @@ public class StudentGradeService {
         }
         return empty;
     }
+
+    public Page<GradeDto> searchSubjectById(int id, Pageable pageable) {
+        return studentGradeRepository.findBySubjectId(id, pageable)
+                .map(GradeDto::fromStudentGradeEntity);
+    }
+
+    public Page<GradeDto> searchStudentById(int id, Pageable pageable) {
+        return studentGradeRepository.findByStudentId(id, pageable)
+                .map(GradeDto::fromStudentGradeEntity);
+    }
+//    public Page<GradeDto> searchSubjectBySubjectName(String keyword, Pageable pageable) {
+//        return subjectRepository.findByNameContaining(keyword, pageable)
+//                .map(GradeDto::fromStudentGradeEntity);
+//    }
 }
 
 

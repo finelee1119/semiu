@@ -7,6 +7,10 @@ import com.semiuniv.semiu.service.StudentGradeService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,21 +27,48 @@ public class GradeController {
 
     // 학생 로그인 후 학생 성적 조회 화면 진입
     @GetMapping("/{id}")
-    public String showStudentGrade(@PathVariable("id") Integer id, Model model) {
-        List<GradeDto> gradeDtoList = studentGradeService.getStudentGrades(id);
+    public String showStudentGrade(@PathVariable("id") Integer id, Model model,
+                                   @PageableDefault(page = 0, size = 5, sort = "no", direction = Sort.Direction.ASC) Pageable pageable,
+                                   @RequestParam(value = "keyword", defaultValue = "") String keyword) {
+        Page<GradeDto> gradeDtoList = null;
+        if (keyword == null || keyword.isEmpty()) {
+            gradeDtoList = studentGradeService.getStudentGrades(id, pageable);
+        }else {
+            try {
+                int key = Integer.parseInt(keyword);
+                gradeDtoList = studentGradeService.searchSubjectById(key, pageable);
+            } catch (NumberFormatException e) {
+            }
+        }
+        log.info(gradeDtoList.toString());
         model.addAttribute("gradeList", gradeDtoList);
         return "grade/showStudentGrade";
     }
 
+
     // 강사 로그인 후 강사 성적 화면 진입
     @GetMapping("professor/{id}")
-    public String showGrade(@PathVariable("id") Integer id, Model model) {
-//        List<StudentGradeDto> gradeInputList = studentGradeService.findAll();
-//        studentGradeService.SubjectGradeInput();
-        List<GradeDto> gradeDtoList = studentGradeService.getProfessorGrades(id);
-//        model.addAttribute("gradeDto", new StudentGradeDto());
+    public String showGrade(@PathVariable("id") Integer id, Model model,
+                            @PageableDefault(page = 0, size = 10, sort = "no", direction = Sort.Direction.ASC) Pageable pageable,
+                            @RequestParam(value = "keyword", defaultValue = "") String keyword) {
+        Page<GradeDto> gradeDtoList = null;
+        if (keyword == null || keyword.isEmpty()) {
+            gradeDtoList = studentGradeService.getProfessorGrades(id, pageable);
+        }else {
+            try {
+                int key = Integer.parseInt(keyword);
+                // subjectId로 검색 시도
+                gradeDtoList = studentGradeService.searchSubjectById(key, pageable);
+                if (gradeDtoList.isEmpty()) {
+                    // subjectId로 검색한 결과가 없을 경우 studentId로 검색 시도
+                    gradeDtoList = studentGradeService.searchStudentById(key, pageable);
+                }
+            } catch (NumberFormatException e) {
+                // keyword가 숫자가 아닐 경우 studentId로 검색
+                gradeDtoList = studentGradeService.searchStudentById(Integer.parseInt(keyword), pageable);
+            }
+        }
         model.addAttribute("gradeList", gradeDtoList);
-//        model.addAttribute("gradeInputList", gradeInputList);
         model.addAttribute("id", id);
         return "grade/showProfessorGrade";
     }
@@ -60,8 +91,26 @@ public class GradeController {
 
     // 관리자 성적 데이터 관리
     @GetMapping("/show")
-    public String showGrade(Model model) {
-        List<GradeDto> gradeDtoList = studentGradeService.findAll();
+    public String showGrade(Model model,
+                            @PageableDefault(page = 0, size = 10, sort = "no", direction = Sort.Direction.ASC) Pageable pageable,
+                            @RequestParam(value = "keyword", defaultValue = "") String keyword){
+        Page<GradeDto> gradeDtoList = null;
+        if (keyword == null || keyword.isEmpty()) {
+            gradeDtoList = studentGradeService.findAll(pageable);
+        } else {
+            try {
+                int id = Integer.parseInt(keyword);
+                // subjectId로 검색 시도
+                gradeDtoList = studentGradeService.searchSubjectById(id, pageable);
+                if (gradeDtoList.isEmpty()) {
+                    // subjectId로 검색한 결과가 없을 경우 studentId로 검색 시도
+                    gradeDtoList = studentGradeService.searchStudentById(id, pageable);
+                }
+            } catch (NumberFormatException e) {
+                // keyword가 숫자가 아닐 경우 studentId로 검색
+                gradeDtoList = studentGradeService.searchStudentById(Integer.parseInt(keyword), pageable);
+            }
+        }
         model.addAttribute("gradeList", gradeDtoList);
         return "grade/showAdminGrade";
     }
