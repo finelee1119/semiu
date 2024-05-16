@@ -46,7 +46,7 @@ public class SecurityConfig {
                 )
 
                 .logout((out)->out
-                        .logoutSuccessUrl("/") // 로그아웃 성공 후 이동할 URL
+                        .logoutSuccessUrl("/semi") // 로그아웃 성공 후 이동할 URL
                         .logoutUrl("/logout")
                         .permitAll() // 로그아웃 페이지는 모든 사용자 접근 허용
                 )
