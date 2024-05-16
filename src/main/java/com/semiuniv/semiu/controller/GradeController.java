@@ -55,7 +55,7 @@ public class GradeController {
             studentGradeDto.setGrade(grade);
             studentGradeService.insertGrade(studentGradeDto);}
         log.info(studentGradeDto.toString());
-        return "redirect:/semi/grade/professor" + id;
+        return "redirect:/semi/grade/professor/" + id;
     }
 
     // 관리자 성적 데이터 관리
