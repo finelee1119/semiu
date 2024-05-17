@@ -125,6 +125,7 @@ public class MyPageController {
         if (bindingResult.hasErrors()) {
             return "profile/professorProfileUpdate";
         }
+        userDto.setId(professorDto.getId());
         professorService.updateProfessor(professorDto);
         emailService.updatePassword(userDto);
         return "redirect:/semi/profile/show";
