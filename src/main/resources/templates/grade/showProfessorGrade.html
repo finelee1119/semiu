@@ -18,8 +18,8 @@
         <div style="text-align: right;">
             <input type="hidden" th:value="*{id}" name="id">
         </div>
-        <table class="table" border="1">
-            <thead>
+        <table class="table table-bordered" >
+            <thead class="table-light">
             <tr style="text-align: center;">
                 <th>No</th>
                 <th>강의코드</th>
@@ -33,7 +33,7 @@
                 <th>성적</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody class="table-group-divider">
             <tr th:each="gradeList, iterstat : ${gradeList}" style="text-align: center;">
                 <form th:action="@{/semi/grade/insertForm/{id}(id=*{id})}" method="post"
                       th:id="'insertForm_' + ${gradeList.studentId} + '_' + ${gradeList.subjectId}">
@@ -71,7 +71,7 @@
             </tbody>
     </table>
     <!-- 페이징 처리 -->
-    <div aria-label="Page navigation" th:if="${gradeList?.isEmpty()}">
+    <div aria-label="Page navigation" th:if="${!gradeList.isEmpty()}">
         <ul class="pagination justify-content-center">
             <li class="page-item" th:classappend="${!gradeList.hasPrevious()} ? 'disabled'">
                 <a class="page-link" th:href="@{|?page=${gradeList.number - 1}|}">
