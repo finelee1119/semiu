@@ -8,9 +8,11 @@
     <h1>아이디는</h1>
     <form method="get">
         <div>
-            <h3 th:text="${studentId}"></h3>
+            <h2 th:text="${studentId}"></h2>
             <h3>입니다.</h3>
         </div>
     </form>
+    <h3>비밀번호가 기억나지 않는다면?</h3>
+    <a th:href="@{/semi/find/showPassword}">비밀번호 찾기</a>
 </body>
 </html>

@@ -17,4 +17,7 @@ public class Users {
 
     @Enumerated(EnumType.STRING)
     private UserRole role;
+
+    @Column(length = 100)
+    private String email;
 }
