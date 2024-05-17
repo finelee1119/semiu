@@ -28,7 +28,7 @@ public class GradeController {
     // 학생 로그인 후 학생 성적 조회 화면 진입
     @GetMapping("/{id}")
     public String showStudentGrade(@PathVariable("id") Integer id, Model model,
-                                   @PageableDefault(page = 0, size = 5, sort = "no", direction = Sort.Direction.ASC) Pageable pageable,
+                                   @PageableDefault(page = 0, size = 10, sort = "no", direction = Sort.Direction.ASC) Pageable pageable,
                                    @RequestParam(value = "keyword", defaultValue = "") String keyword) {
         Page<GradeDto> gradeDtoList = null;
         if (keyword == null || keyword.isEmpty()) {

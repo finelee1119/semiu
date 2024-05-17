@@ -8,7 +8,7 @@
     <script type="text/javascript" th:src="@{/js/subjectCheck.js}"></script>
 </head>
 <body>
-    <div class="content" layout:fragment="content">
+    <div class="container" layout:fragment="content">
          <h1 style="text-align: center;" >강의 목록</h1> <br>
         <form id="deleteForm" th:action="@{/semi/subject/deleteSubjects}" method="post" >
             <div class="alert alert-danger alert-dismissible fade show" th:if="${#fields.hasErrors('selectedIds')}" role="alert">
