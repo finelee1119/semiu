@@ -60,7 +60,7 @@
             </table>
 
             <!-- 페이징 처리 -->
-            <div aria-label="Page navigation" th:if="${subjects?.isEmpty()}">
+            <div aria-label="Page navigation" th:if="${!subjects.isEmpty()}">
                 <ul class="pagination justify-content-center">
                     <li class="page-item" th:classappend="${!subjects.hasPrevious()} ? 'disabled'">
                         <a class="page-link" th:href="@{|?page=${subjects.number - 1}|}">
@@ -92,8 +92,8 @@
             </div>
         </form>
 
-        <a th:href="@{/semi/subject/insertForm}" class="btn btn-primary me-2">등록</a>
-        <a th:href="@{/semi}" class="btn btn-primary">메인 화면으로 돌아가기</a>
+        <a th:href="@{/semi/subject/insertForm}" class="btn btn-outline-primary me-2">등록</a>
+        <a th:href="@{/semi/admin/home}" class="btn btn-outline-primary me-2">메인 화면으로 돌아가기</a>
     </div>
 </body>
 </html>
