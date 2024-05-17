@@ -11,7 +11,9 @@ import static jakarta.persistence.FetchType.LAZY;
 public class StudentSubject {
 
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "student_subject_seq")
+//    @SequenceGenerator(name = "student_subject_seq", sequenceName = "student_subject_sequence", allocationSize = 1)
     private Integer no;
 
     @ManyToOne(fetch = LAZY)

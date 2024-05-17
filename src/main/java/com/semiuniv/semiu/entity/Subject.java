@@ -14,7 +14,8 @@ import static jakarta.persistence.FetchType.LAZY;
 public class Subject {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "subject_seq")
+    @SequenceGenerator(name = "subject_seq", sequenceName = "subject_sequence", allocationSize = 1)
     @Column(name = "subject_id")
     private Integer id;
 

@@ -3,6 +3,9 @@ INSERT INTO College (college_id, college_name) VALUES
 (1, '인문대'), (2, '자연과학대'), (3, '사회과학대'), (4, '경영대'), (5, '공학대'),
 (6, '의과대'), (7, '예술대'), (8, '법학대'), (9, '교육대'), (10, '농업대');
 
+-- 시퀀스 값을 최대값 다음으로 설정
+SELECT setval('college_sequence', (SELECT MAX(college_id) FROM college));
+
 -- Department 테이블에 데이터 삽입 (학과: 101부터 시작)
 INSERT INTO Department (dept_id, dept_name, college_id) VALUES
 (101, '국어국문학과', 1), (102, '영어영문학과', 1), (103, '일어일문학과', 1), (104, '사학과', 1), (105, '철학과', 1),
@@ -16,6 +19,8 @@ INSERT INTO Department (dept_id, dept_name, college_id) VALUES
 (141, '교육학과', 9), (142, '한국어교육과', 9), (143, '영어교육과', 9), (144, '수학교육과', 9), (145, '과학교육과', 9),
 (146, '식품공학과', 10), (147, '축산학과', 10), (148, '원예학과', 10), (149, '산림학과', 10), (150, '환경보호학과', 10);
 
+-- 시퀀스 값을 최대값 다음으로 설정
+SELECT setval('dept_sequence', (SELECT MAX(dept_id) FROM department));
 
 -- Admin 테이블에 데이터 삽입
 INSERT INTO Admin (admin_id, admin_name) VALUES
@@ -73,6 +78,9 @@ INSERT INTO Professor (professor_id, professor_name, birth, gender, address, pho
 (240048, '이주원', '1980-03-19', 'F', '서울특별시 도봉구', '010-6456-7230', 148, '2009-02-14'),
 (240049, '김민재', '1987-06-09', 'M', '서울특별시 강동구', '010-4347-8421', 149, '2012-08-21'),
 (240050, '한서영', '1978-11-24', 'F', '서울특별시 성북구', '010-5348-9011', 150, '2016-10-30');
+
+-- 시퀀스 값을 최대값 다음으로 설정
+SELECT setval('professor_sequence', (SELECT MAX(professor_id) FROM professor));
 
 -- Student 테이블에 데이터 삽입(학생: 2024000001부터 시작)
 INSERT INTO Student (student_id, student_name, birth, gender, address, phone, dept_id, academic_year, semester, entrance_date) VALUES
@@ -177,6 +185,8 @@ INSERT INTO Student (student_id, student_name, birth, gender, address, phone, de
 (2024000099, '조은지', '2002-01-02', 'M', '서울특별시 노원구', '010-5148-0693', 149, 3, 1, '2023-03-01'),
 (2024000100, '오하늘', '2001-06-05', 'F', '서울특별시 도봉구', '010-5349-1134', 150, 3, 2, '2023-08-01');
 
+-- 시퀀스 값을 최대값 다음으로 설정
+SELECT setval('student_sequence', (SELECT MAX(student_id) FROM student));
 
 -- Classroom 테이블에 데이터 삽입
 INSERT INTO Classroom (classroom_id, college_id) VALUES
@@ -240,6 +250,8 @@ INSERT INTO Subject (subject_id, subject_name, professor_id, classroom_id, subje
 (10049, '디자인의 세계', 240049, 204, 'major', 3, 2024, 1, '금', '13:00:00', '15:00:00', 30, 27),
 (10050, '법과 사회', 240050, 205, 'major', 3, 2024, 1, '월', '13:00:00', '15:00:00', 30, 30);
 
+-- 시퀀스 값을 최대값 다음으로 설정
+SELECT setval('subject_sequence', (SELECT MAX(subject_id) FROM subject));
 
 -- Notice 테이블에 데이터 삽입 (공지: 1부터 시작)
 INSERT INTO Notice (notice_id, title, content, created_time) VALUES
@@ -293,6 +305,9 @@ INSERT INTO Notice (notice_id, title, content, created_time) VALUES
 (48, '인턴십 모집 안내', '2024년도 여름방학 인턴십 모집이 시작됩니다. 귀하는 새로운 경험을 만들어보세요!', '2024-06-27 12:30:00'),
 (49, '학생회장 취임식', '2024년도 학생회장 취임식이 열립니다. 새로운 학생회장에게 응원의 박수를 보내주세요!', '2024-06-28 14:45:00'),
 (50, '장학금 신청 안내', '2024년도 2학기 장학금 신청 접수기간이 시작되었습니다. 관심 있는 학생들은 서둘러 신청해주세요.', '2024-06-29 10:20:00');
+
+-- 시퀀스 값을 최대값 다음으로 설정
+SELECT setval('notice_sequence', (SELECT MAX(notice_id) FROM notice));
 
 INSERT INTO student_subject (student_id, subject_id) VALUES
 (2024000001, 10001), (2024000001, 10002), (2024000001, 10005), (2024000001, 10009),
@@ -356,8 +371,6 @@ INSERT INTO student_subject (student_id, subject_id) VALUES
 (2024000054, 10040), (2024000046, 10020), (2024000097, 10034), (2024000026, 10050),
 (2024000087, 10007), (2024000057, 10025), (2024000043, 10033), (2024000010, 10039),
 (2024000068, 10046);
-
-
 
 INSERT INTO users (user_id, password, role) VALUES
 (1111, 1111, 'ADMIN'),

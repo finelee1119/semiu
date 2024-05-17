@@ -31,15 +31,14 @@
         }
     </style>
 </head>
-
 <body>
 <div class="content" layout:fragment="content">
     <p class="header-title">성적 관리</p><br>
         <div style="text-align: right;">
             <input type="hidden" th:value="*{id}" name="id">
         </div>
-        <table class="table table-bordered" border="1">
-            <thead class="table-light" >
+        <table class="table table-bordered" >
+            <thead class="table-light">
             <tr style="text-align: center;">
                 <th>No</th>
                 <th>강의코드</th>
@@ -93,7 +92,7 @@
             </tbody>
     </table>
     <!-- 페이징 처리 -->
-    <div aria-label="Page navigation" th:if="${gradeList?.isEmpty()}">
+    <div aria-label="Page navigation" th:if="${!gradeList.isEmpty()}">
         <ul class="pagination justify-content-center">
             <li class="page-item" th:classappend="${!gradeList.hasPrevious()} ? 'disabled'">
                 <a class="page-link" th:href="@{|?page=${gradeList.number - 1}|}">
