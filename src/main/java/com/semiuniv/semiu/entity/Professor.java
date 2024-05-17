@@ -13,7 +13,8 @@ import static jakarta.persistence.FetchType.LAZY;
 public class Professor {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "professor_seq")
+    @SequenceGenerator(name = "professor_seq", sequenceName = "professor_sequence", allocationSize = 1)
     @Column(name = "professor_id")
     private Integer id;
 
