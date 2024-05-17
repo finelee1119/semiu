@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="www.thymeleaf.org"
+<html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="UTF-8">
@@ -9,11 +9,15 @@
     <link rel="stylesheet" th:href="@{/css/layout.css}">
 </head>
 <body>
-<!-- Header fragment-->
+
+<!-- Default header -->
 <th:block th:replace="~{fragments/header :: header}"></th:block>
+
 <!-- Content fragment-->
 <th:block layout:fragment="content"></th:block>
-<!-- Footer fragment-->
+
+<!-- Default footer -->
 <th:block th:replace="~{fragments/footer :: footer}"></th:block>
+
 </body>
 </html>

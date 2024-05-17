@@ -8,7 +8,7 @@
 </head>
 <body>
     <!-- Header fragment -->
-    <th:block th:replace="~{fragments/header :: header}"></th:block>
+    <th:block th:replace="~{fragments/header_admin :: header}"></th:block>
 
     <!-- Content -->
     <div class="container">
@@ -27,6 +27,7 @@
             </div>
 
             <button type="submit" class="btn btn-primary">수정</button>
+            <a th:href="@{/semi/notice/show}" class="btn btn-primary">이전 화면으로 돌아가기</a>
         </form>
     </div>
 

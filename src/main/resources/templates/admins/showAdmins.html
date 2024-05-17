@@ -1,8 +1,5 @@
-<!-- showAdminForm.html -->
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/default_layout}">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>관리자 목록</title>
@@ -12,19 +9,21 @@
             text-align: center;
             margin-top: 30px;
             margin-bottom: 30px;
-
         }
-        p{
-        padding-top: 10px;
-        font-size: 35px;
-        text-align: center;
-        font-weight: bold;
+        p {
+            padding-top: 10px;
+            font-size: 35px;
+            text-align: center;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <div class="container" layout:fragment="content" style="padding-left: 10px; padding-right: 10px;">
-    <p class="header-title">관리자 목록</p>
+
+    <div th:replace="fragments/header_admin :: header"></div>
+
+    <div class="container" style="padding-left: 10px; padding-right: 10px;">
+        <p class="header-title">관리자 목록</p>
         <table class="table">
             <thead>
             <tr>
@@ -58,14 +57,12 @@
                         <span>이전</span>
                     </a>
                 </li>
-
                 <li th:each="page: ${#numbers.sequence(0, adminDto.totalPages - 1)}"
                     th:if="${page >= adminDto.number - 5 and page <= adminDto.number + 5}"
                     th:classappend="${page == adminDto.number} ? 'active'"
                     class="page-item">
                     <a th:text="${page + 1}" class="page-link" th:href="@{|?page=${page}|}"></a>
                 </li>
-
                 <li class="page-item" th:classappend="${!adminDto.hasNext} ? 'disabled'">
                     <a class="page-link" th:href="@{|?page=${adminDto.number + 1}|}">
                         <span>다음</span>
@@ -82,9 +79,12 @@
             </div>
         </form>
         <div class="button-group">
-        <a th:href="@{/semi/admin/insertForm}" class="btn btn-outline-primary me-2">등록</a>
-        <a th:href="@{/semi/admin/home}" class="btn btn-outline-primary me-2">메인 화면으로 돌아가기</a>
+            <a th:href="@{/semi/admin/insertForm}" class="btn btn-outline-primary me-2">등록</a>
+            <a th:href="@{/semi/admin/home}" class="btn btn-outline-primary me-2">메인 화면으로 돌아가기</a>
         </div>
     </div>
+
+    <th:block th:replace="~{fragments/footer :: footer}"></th:block>
+
 </body>
 </html>
