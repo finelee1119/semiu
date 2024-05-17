@@ -97,7 +97,7 @@ public class MyPageController {
 
     @PostMapping("update")
     public String update(@Valid @ModelAttribute("studentDto") StudentDto studentDto,
-                         @Valid @ModelAttribute("UserDto") UserDto userDto,
+                         @Valid @ModelAttribute("userDto") UserDto userDto,
                          BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "profile/updateStudentProfile";
@@ -120,7 +120,7 @@ public class MyPageController {
 
     @PostMapping("updateProfile")
     public String updateProfile(@Valid @ModelAttribute("professorDto") ProfessorDto professorDto,
-                                @Valid @ModelAttribute("UserDto") UserDto userDto,
+                                @Valid @ModelAttribute("userDto") UserDto userDto,
                          BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "profile/professorProfileUpdate";
