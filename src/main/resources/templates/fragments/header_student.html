@@ -18,9 +18,9 @@
 <body>
 <div class="header" th:fragment="header">
     <header class="container d-flex align-items-center justify-content-between border-bottom" style="height: 100px;">
-        <div class="d-flex align-items-center">
+        <a th:href="@{/semi/student/home}" class="d-flex align-items-center">
             <img th:src="@{/images/semiu_logo1.png}" alt="logo" class="logo-img" style="height: 100px">
-        </div>
+        </a>
 
         <div class="text-end">
             <a role="button" id="profile" class="btn btn-outline-primary me-2"
