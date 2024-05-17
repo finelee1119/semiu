@@ -8,7 +8,7 @@
 </head>
 <body>
     <!-- Header fragment -->
-    <th:block th:replace="~{fragments/header :: header}"></th:block>
+    <th:block th:replace="~{fragments/header_admin :: header}"></th:block>
 
     <!-- Content -->
     <div class="container">
@@ -27,8 +27,7 @@
             <button type="submit" class="btn btn-primary">등록</button>
         </form>
 
-        <a th:href="@{/semi/notice/show}" class="btn btn-primary">공지 목록 보기</a>
-        <a th:href="@{/semi}" class="btn btn-primary">메인화면으로 돌아가기</a>
+        <a th:href="@{/semi/notice/show}" class="btn btn-primary">이전 화면으로 돌아가기</a>
     </div>
 
     <!-- Footer fragment -->
