@@ -13,7 +13,7 @@ public interface SubjectRepository extends JpaRepository<Subject, Integer> {
     Page<Subject> findById(Integer keyword, Pageable pageable);
     Page<Subject> findByNameContaining(String keyword, Pageable pageable);
 
-    List<Subject> findByIdNotIn(List<Integer> subjectIds);
+    Page<Subject> findByIdNotIn(List<Integer> subjectIds, Pageable pageable);
 
     List<Subject> findByIdIn(List<Integer> subjectIds);
 

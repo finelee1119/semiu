@@ -75,33 +75,22 @@ public class SubjectService {
 
     //수강신청 : 과목 정보 + 신청과목 제외 과목 내역
     public Page<Subject> showSubject(Integer id, Pageable pageable) {
-        // studentSubject 전체 : id = student
+        // studentSubject All : id = studentId
         List<StudentSubject> studentSubjects = studentSubjectRepository.findByStudentId(id);
-//        System.out.println(studentSubjects);
+        // id = studentId studentSubject가 없을 경우
         if(studentSubjects.isEmpty()){
+            // studentSubject All
             return subjectRepository.findAll(pageable);
         }else{
-            List<Subject> subjects = new ArrayList<>();
+            // studentSubject All : id = studentId 인 과목 제외 출력 : 쿼리 메소드
+            Page<Subject> subjects;
             List<Integer> subjectIds = new ArrayList<>();
             for (StudentSubject subject : studentSubjects){
                 Integer subjectId = subject.getSubject().getId();
-//                System.out.println(subjectId);
                 subjectIds.add(subjectId);
             }
-//            System.out.println(subjectIds);
-            subjects = subjectRepository.findByIdNotIn(subjectIds);
-//            System.out.println(subjects);
-
-            // 요청으로 들어온 page와 한 page당 원하는 데이터의 갯수 -- 페이징처리
-            PageRequest pageRequest = PageRequest.of( 0, 10);
-            int start = (int) pageRequest.getOffset();
-            System.out.println(start);
-            int end = Math.min((start + pageRequest.getPageSize()), subjects.size());
-            System.out.println(end);
-            System.out.println(subjects.size());
-            Page<Subject> subjectsPage = new PageImpl<>(subjects.subList(start, end), pageRequest, subjects.size());
-            System.out.println(subjectsPage.toString());
-            return subjectsPage;
+            subjects = subjectRepository.findByIdNotIn(subjectIds,pageable);
+            return subjects;
         }
     }
 

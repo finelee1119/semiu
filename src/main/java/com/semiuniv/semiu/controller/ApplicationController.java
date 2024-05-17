@@ -45,7 +45,6 @@ public class ApplicationController {
 
         //과목 목록 : subject : 조건-수강신청 완료한 과목 제외
         Page<Subject> subject = subjectService.showSubject(id,pageable);
-        System.out.println(subject.toString());
         model.addAttribute("subject", subject);
 
         //학생이 신청한 과목 내역 new : studentSubject
