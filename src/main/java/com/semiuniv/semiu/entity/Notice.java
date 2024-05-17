@@ -10,7 +10,8 @@ import java.sql.Timestamp;
 public class Notice {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "notice_seq")
+    @SequenceGenerator(name = "notice_seq", sequenceName = "notice_sequence", allocationSize = 1)
     @Column(name = "notice_id")
     private Integer id;
 

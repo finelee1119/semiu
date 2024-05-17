@@ -10,7 +10,8 @@ import static jakarta.persistence.FetchType.LAZY;
 public class Department {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "dept_seq")
+    @SequenceGenerator(name = "dept_seq", sequenceName = "dept_sequence", allocationSize = 1)
     @Column(name = "dept_id")
     private Integer id;
 
