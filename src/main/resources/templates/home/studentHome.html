@@ -1,6 +1,5 @@
-<!--studentHome.html-->
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +9,7 @@
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js'></script>
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/locales/ko.js'></script>
     <link rel="stylesheet" th:href="@{/css/layout.css}">
+    <link rel="stylesheet" th:href="@{/css/fullcalendar-custom.css}">
     <style>
         body {
             background-color: #f8f9fa;
@@ -39,7 +39,7 @@
             font-size: 1.2em;
         }
         .btn-custom {
-            background: linear-gradient(45deg, #007bff, #00c6ff);
+            background: #0d6efd;
             border: none;
             color: #fff;
             padding: 10px 20px;
@@ -47,7 +47,8 @@
             transition: background 0.3s;
         }
         .btn-custom:hover {
-            background: linear-gradient(45deg, #00c6ff, #007bff);
+            background: #0056b3;
+            color: #fff;
         }
         #calendar {
             max-width: 900px;
@@ -56,74 +57,74 @@
     </style>
 </head>
 <body>
-    <th:block th:replace="~{fragments/header :: header}"></th:block>
-    <!-- Content -->
-    <div class="container">
-        <div class="row justify-content-center"><!-- 중앙 정렬 -->
-            <div class="col-md-3 mb-0">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">공지사항</h5>
-                        <a href="/semi/notice/show" class="btn btn-custom"><i class="bi bi-person-badge"></i> 확인</a>
-                    </div>
+<th:block th:replace="~{fragments/header :: header}"></th:block>
+<!-- Content -->
+<div class="container">
+    <div class="row justify-content-center"><!-- 중앙 정렬 -->
+        <div class="col-md-3 mb-0">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">공지사항</h5>
+                    <a href="/semi/notice/show" class="btn btn-custom"><i class="bi bi-person-badge"></i> 확인</a>
                 </div>
             </div>
-            <div class="col-md-3 mb-0">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">수강</h5>
-                        <!-- 현재 사용자 정보 가져오기 -->
-                        <sec:authorize access="isAuthenticated()">
-                            <a th:if="${#authorization.expression('isAuthenticated()')}"
-                               th:href="@{/semi/application/{id}(id=${users})}"
-                               class="btn btn-custom">
-                                <i class="bi bi-people"></i> 확인
-                            </a>
-                        </sec:authorize>
-                    </div>
+        </div>
+        <div class="col-md-3 mb-0">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">수강</h5>
+                    <!-- 현재 사용자 정보 가져오기 -->
+                    <sec:authorize access="isAuthenticated()">
+                        <a th:if="${#authorization.expression('isAuthenticated()')}"
+                           th:href="@{/semi/application/{id}(id=${users})}"
+                           class="btn btn-custom">
+                            <i class="bi bi-people"></i> 확인
+                        </a>
+                    </sec:authorize>
                 </div>
             </div>
-            <div class="col-md-3 mb-0">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">성적</h5>
-                        <!-- 현재 사용자 정보 가져오기 -->
-                        <sec:authorize access="isAuthenticated()">
-                            <a th:if="${#authorization.expression('isAuthenticated()')}"
-                               th:href="@{/semi/grade/{id}(id=${users})}"
-                               class="btn btn-custom">
-                                <i class="bi bi-people"></i> 확인
-                            </a>
-                        </sec:authorize>
-                    </div>
+        </div>
+        <div class="col-md-3 mb-0">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">성적</h5>
+                    <!-- 현재 사용자 정보 가져오기 -->
+                    <sec:authorize access="isAuthenticated()">
+                        <a th:if="${#authorization.expression('isAuthenticated()')}"
+                           th:href="@{/semi/grade/{id}(id=${users})}"
+                           class="btn btn-custom">
+                            <i class="bi bi-people"></i> 확인
+                        </a>
+                    </sec:authorize>
                 </div>
             </div>
         </div>
     </div>
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-7">
-                <div id='calendar'></div>
-            </div>
+</div>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-7">
+            <div id='calendar'></div>
         </div>
     </div>
+</div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var calendarEl = document.getElementById('calendar');
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth',
-                locale: 'ko', // 한국어 설정
-                headerToolbar: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
-                },
-                events: '/api/events' // 이벤트 데이터를 가져올 URL
-            });
-            calendar.render();
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            locale: 'ko', // 한국어 설정
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek,timeGridDay'
+            },
+            events: '/api/events' // 이벤트 데이터를 가져올 URL
         });
-    </script>
+        calendar.render();
+    });
+</script>
 
 <!-- Footer fragment -->
 <th:block th:replace="~{fragments/footer :: footer}"></th:block>
