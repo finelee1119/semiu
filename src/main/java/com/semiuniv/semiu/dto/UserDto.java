@@ -14,12 +14,14 @@ public class UserDto {
     private Integer id;
     private String password;
     private UserRole role;
+    private String email;
 
     public static UserDto fromUserEntity(Users users) {
         return new UserDto(
                 users.getId(),
                 users.getPassword(),
-                users.getRole()
+                users.getRole(),
+                users.getEmail()
         );
     }
 
@@ -28,6 +30,7 @@ public class UserDto {
         user.setId(dto.getId());
         user.setPassword(dto.getPassword());
         user.setRole(dto.getRole());
+        user.setEmail(dto.getEmail());
         return user;
     }
 }

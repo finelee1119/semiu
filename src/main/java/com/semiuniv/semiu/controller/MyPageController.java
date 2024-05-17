@@ -4,22 +4,29 @@ import com.semiuniv.semiu.constant.UserRole;
 import com.semiuniv.semiu.dto.NoticeDto;
 import com.semiuniv.semiu.dto.ProfessorDto;
 import com.semiuniv.semiu.dto.StudentDto;
+import com.semiuniv.semiu.dto.UserDto;
 import com.semiuniv.semiu.entity.Department;
 import com.semiuniv.semiu.entity.Professor;
 import com.semiuniv.semiu.entity.Student;
+import com.semiuniv.semiu.entity.Users;
 import com.semiuniv.semiu.repository.DepartmentRepository;
+import com.semiuniv.semiu.service.EmailService;
 import com.semiuniv.semiu.service.ProfessorService;
 import com.semiuniv.semiu.service.StudentService;
+import com.semiuniv.semiu.service.UserDetailService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 @Slf4j
@@ -31,10 +38,15 @@ public class MyPageController {
     final StudentService studentService;
     final ProfessorService professorService;
 
-    public MyPageController(DepartmentRepository departmentRepository, StudentService studentService, ProfessorService professorService) {
+    private final EmailService emailService;
+    private final UserDetailService userDetailService;
+
+    public MyPageController(DepartmentRepository departmentRepository, StudentService studentService, ProfessorService professorService, UserDetailService userDetailService, EmailService emailService, UserDetailService userDetailService1) {
         this.departmentRepository = departmentRepository;
         this.studentService = studentService;
         this.professorService = professorService;
+        this.emailService = emailService;
+        this.userDetailService = userDetailService1;
     }
 
     @GetMapping("/show")
@@ -76,18 +88,23 @@ public class MyPageController {
     public String updateForm(@PathVariable("updateId") Integer id, Model model) {
         StudentDto studentDto = studentService.showOneStudent(id);
         model.addAttribute("studentDto", studentDto);
+        UserDto userDto = new UserDto();
+        model.addAttribute("userDto", userDto);
         List<Department> departments = departmentRepository.findAll();
         model.addAttribute("departments", departments);
         return "profile/updateStudentProfile";
     }
 
     @PostMapping("update")
-    public String update(@Valid @ModelAttribute("studentDto") StudentDto dto,
+    public String update(@Valid @ModelAttribute("studentDto") StudentDto studentDto,
+                         @Valid @ModelAttribute("UserDto") UserDto userDto,
                          BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "profile/updateStudentProfile";
         }
-        studentService.updateStudent(dto);
+        userDto.setId(studentDto.getId());
+        studentService.updateStudent(studentDto);
+        emailService.updatePassword(userDto);
         return "redirect:/semi/profile/show";
     }
 
@@ -102,12 +119,15 @@ public class MyPageController {
     }
 
     @PostMapping("updateProfile")
-    public String updateProfile(@Valid @ModelAttribute("professorDto") ProfessorDto dto,
+    public String updateProfile(@Valid @ModelAttribute("professorDto") ProfessorDto professorDto,
+                                @Valid @ModelAttribute("UserDto") UserDto userDto,
                          BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "profile/professorProfileUpdate";
         }
-        professorService.updateProfessor(dto);
+        userDto.setId(professorDto.getId());
+        professorService.updateProfessor(professorDto);
+        emailService.updatePassword(userDto);
         return "redirect:/semi/profile/show";
     }
 }
