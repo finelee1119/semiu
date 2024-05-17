@@ -1,9 +1,10 @@
-let isRun = true;
+
 //수강 신청 선택 과목 내역에 추가
 function add(id,name,professor,classroom,subjectType,credit,dayOfWeek,startTime,endTime,maxStudent,totalStudent, event){
     let result = '';
     const table = document.getElementById('lecture');
     const addLecture = document.getElementById('addLecture');
+    console.log(addLecture);
     const new_row = addLecture.insertRow();
     const cell_length = table.rows[1].cells.length;
     //check 확인
@@ -37,7 +38,7 @@ function add(id,name,professor,classroom,subjectType,credit,dayOfWeek,startTime,
                } else if(i === 10) {
                           temp_html = ` <td>`+ ( Number(totalStudent) +1 )+ `</td>`;
                } else {
-                         temp_html = `<td><button onClick="deleteApplication()" class="btn btn-outline-primary me-2">취소</button></td>`;
+                         temp_html = `<td>신청완료</td>`;
                };
 //                alert(temp_html);
                new_cell.insertAdjacentHTML('beforeend', temp_html);
@@ -45,12 +46,30 @@ function add(id,name,professor,classroom,subjectType,credit,dayOfWeek,startTime,
         }
      }else{
      //check_ID : span_List
+     var applicationItems = null;
      var applicationId = addLecture.querySelectorAll("span");
      for (let i = 0; i < applicationId.length; i++) {
-         var applicationItems = applicationId[i].textContent;
+          applicationItems = applicationId[i].textContent;
      }
-     console.log(applicationItems);
-     addLecture.deleteRow(applicationItems);
+     console.log("id"+applicationItems);
+
+    //수강신청목록 : tr
+    var applicationList = addLecture.querySelectorAll('tr');
+    for (let i = 0; i < applicationList.length; i++) {
+             var applicationListIds = applicationList[i];
+
+             var applicationListId = applicationListIds.querySelector("span").textContent;
+             console.log("text", applicationListId);
+
+             if(applicationItems == applicationListId){
+                console.log(applicationList);
+                console.log(applicationListIds);
+                applicationList[i].remove();
+                return;
+             }else{
+
+             }
+         }
      }
   }
 
