@@ -7,19 +7,39 @@
     <title>Subject List</title>
     <script type="text/javascript" th:src="@{/js/grade.js}"></script>
     <style>
-        .edit-button {
-            margin-left: 20px;
+       body {
+           background-color: #f8f9fa;
+           color: #333;
+       }
+       .content {
+           max-width: 1200px;
+           margin-top: 30px;
+           margin-bottom: 30px;
+           margin-left: 350px;
+       }
+       .header-title {
+           font-weight: bold;
+           color: #3788D8;
+           text-align: center;
+       }
+        p{
+        font-size: 35px
+        }
+        .button-group {
+            text-align: center;
+            margin-top: 20px;
         }
     </style>
 </head>
+
 <body>
 <div class="content" layout:fragment="content">
-    <h1 style="text-align: center;">Subject List</h1><br>
+    <p class="header-title">성적 관리</p><br>
         <div style="text-align: right;">
             <input type="hidden" th:value="*{id}" name="id">
         </div>
-        <table class="table" border="1">
-            <thead>
+        <table class="table table-bordered" border="1">
+            <thead class="table-light" >
             <tr style="text-align: center;">
                 <th>No</th>
                 <th>강의코드</th>
@@ -33,7 +53,7 @@
                 <th>성적</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody class="table-group-divider">
             <tr th:each="gradeList, iterstat : ${gradeList}" style="text-align: center;">
                 <form th:action="@{/semi/grade/insertForm/{id}(id=*{id})}" method="post"
                       th:id="'insertForm_' + ${gradeList.studentId} + '_' + ${gradeList.subjectId}">
@@ -52,19 +72,21 @@
                         <input type="hidden" name="studentId" th:value="${gradeList.studentId}"/>
                     </td>
                     <td th:text="${gradeList.studentName}"></td>
-                    <td>
-                        <span th:text="${gradeList.grade}" style="display: inline-block;"></span>
-                        <select th:name="${gradeList.grade}" th:value="${gradeList.grade}" style="display: none;">
-                            <option value="">선택</option>
-                            <option th:each="grade : ${T(com.semiuniv.semiu.constant.Grade).values()}"
-                                    th:value="${grade}" th:text="${grade}"></option>
-                        </select>
-                        <input type="hidden" name="grade" id="grade" th:value="${gradeList.grade}"/>
-
-                        <button type="button" class="btn btn-primary edit-button"
-                                onclick="toggleEdit(this)">수정</button>
-                        <button type="button" style="display: none;" class="btn btn-primary save-button"
-                                onclick="saveValue(this)">저장</button>
+                    <td style="text-align: center; position: relative; height: 50px;">
+                        <div style="display: flex; justify-content: center; align-items: center;">
+                            <span th:text="${gradeList.grade}" style="display: inline-block; text-align: center; width: 60%;"></span>
+                            <select class="form-select-md mb-3" th:name="${gradeList.grade}" th:value="${gradeList.grade}"
+                                    style="display: none; position: absolute; top: 50%; left: 40%; height: auto; transform: translate(-50%, -50%);">
+                                <option value="">선택</option>
+                                <option th:each="grade : ${T(com.semiuniv.semiu.constant.Grade).values()}"
+                                        th:value="${grade}" th:text="${grade}"></option>
+                            </select>
+                            <input type="hidden" name="grade" id="grade" th:value="${gradeList.grade}"/>
+                            <button type="button" class="btn btn-primary btn-sm edit-button"
+                                    onclick="toggleEdit(this)" style="margin-left: 15px;">수정</button>
+                            <button type="button" class="btn btn-primary btn-sm save-button" style="display: none;  margin-top: 3px; margin-bottom: 14px; position: absolute; top: 10%; right: 7.5%;"
+                                    onclick="saveValue(this)" >저장</button>
+                        </div>
                     </td>
                 </form>
             </tr>
@@ -102,8 +124,10 @@
             <button class="btn btn-outline-secondary" type="submit">검색</button>
         </div>
     </form>
-    <a th:href="@{/semi/grade/professor/{id}(id=*{id})}" class="btn btn-primary">검색 초기화</a>
-    <a th:href="@{/semi}" class="btn btn-primary">메인 화면으로 돌아가기</a>
+    <div class="button-group">
+        <a th:href="@{/semi/grade/professor/{id}(id=*{id})}" class="btn btn-primary">검색 초기화</a>
+        <a th:href="@{/semi}" class="btn btn-primary">메인 화면으로 돌아가기</a>
+    </div>
 </div>
 </body>
 </html>
