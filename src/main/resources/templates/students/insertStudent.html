@@ -51,7 +51,7 @@
 </head>
 <body>
 <!-- Header fragment -->
-<th:block th:replace="~{fragments/header_student :: header}"></th:block>
+<th:block th:replace="~{fragments/header_admin :: header}"></th:block>
 
 <!-- Content -->
 <div class="container">
@@ -136,8 +136,7 @@
         </div>
         <div class="button-group">
             <button class="btn btn-outline-primary me-2" type="submit">등록</button>
-            <a th:href="@{/semi/student/show}" class="btn btn-outline-primary me-2">학생 목록 보기</a>
-            <a th:href="@{/semi}" class="btn btn-outline-primary me-2">메인화면으로 돌아가기</a>
+            <a th:href="@{/semi/student/show}" class="btn btn-outline-primary me-2">이전 화면으로 돌아가기</a>
         </div>
     </form>
 </div>

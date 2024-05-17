@@ -9,7 +9,7 @@
 </head>
 <body>
 
-    <th:block th:replace="~{fragments/header_student :: header}"></th:block>
+    <th:block th:replace="~{fragments/header_admin :: header}"></th:block>
 
     <div class="container">
         <h1>학생 목록</h1>
@@ -89,7 +89,6 @@
         </form>
 
         <a th:href="@{/semi/student/insertForm}" class="btn btn-outline-primary me-2">등록</a>
-        <a th:href="@{/semi/admin/home}" class="btn btn-outline-primary me-2">메인 화면으로 돌아가기</a>
     </div>
 
     <th:block th:replace="~{fragments/footer :: footer}"></th:block>

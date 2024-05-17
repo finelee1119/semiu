@@ -8,7 +8,7 @@
 </head>
 <body>
 <!-- Header fragment -->
-<th:block th:replace="~{fragments/header :: header}"></th:block>
+<th:block th:replace="~{fragments/header_admin :: header}"></th:block>
 
 <!-- Content -->
 <div class="container">
@@ -40,6 +40,7 @@
         <label for="terminationDate">termination Date:</label>
         <input type="date" id="terminationDate" name="terminationDate" th:field="*{terminationDate}" required><br>
         <button type="submit">Submit</button>
+        <a th:href="@{/semi/professor/show}" class="btn btn-outline-primary me-2">이전 화면으로 돌아가기</a>
     </form>
 </div>
 
