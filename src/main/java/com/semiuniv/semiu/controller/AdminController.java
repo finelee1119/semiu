@@ -1,7 +1,9 @@
 package com.semiuniv.semiu.controller;
 
 import com.semiuniv.semiu.dto.AdminDto;
+import com.semiuniv.semiu.dto.UserDto;
 import com.semiuniv.semiu.service.AdminService;
+import com.semiuniv.semiu.service.EmailService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,9 +21,11 @@ import java.util.List;
 public class AdminController {
 
     private final AdminService adminService;
+    private final EmailService emailService;
 
-    public AdminController(AdminService adminService) {
+    public AdminController(AdminService adminService, EmailService emailService) {
         this.adminService = adminService;
+        this.emailService = emailService;
     }
 
     //등록
@@ -73,18 +77,21 @@ public class AdminController {
     public String updateForm(@PathVariable("updateId") Integer id, Model model) {
         AdminDto adminDto = adminService.showOneAdmin(id);
         model.addAttribute("adminDto", adminDto);
+        UserDto userDto = new UserDto();
+        model.addAttribute("userDto", userDto);
         return "admins/updateAdminForm";
     }
 
     @PostMapping("/update")
-    public String update(@Valid @ModelAttribute("adminDto") AdminDto dto,
+    public String update(@Valid @ModelAttribute("adminDto") AdminDto adminDto,
+                         @Valid @ModelAttribute("userDto") UserDto userDto,
                          BindingResult bindingResult) {
-
         if (bindingResult.hasErrors()) {
             return "admins/updateAdminForm";
         }
-
-        adminService.updateAdmin(dto);
+        userDto.setId(adminDto.getId());
+        adminService.updateAdmin(adminDto);
+        emailService.updatePassword(userDto);
         return "redirect:/semi/admin/show";
     }
 
