@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 @Slf4j
 @Controller
-@RequestMapping("/semi/subject")
+@RequestMapping("/semi/admin/subject")
 @RequiredArgsConstructor
 public class SubjectController {
 
@@ -50,9 +50,10 @@ public class SubjectController {
     @PostMapping("/insertForm")
     public String insertSubject(@ModelAttribute("subject") SubjectDto subject) {
         subject.setClassroom(subject.getClassroom());
+        subject.setTotalStudent(0);
         log.info(subject.toString());
         subjectService.insertSubject(subject);
-        return "redirect:/semi/subject/show";
+        return "redirect:/semi/admin/subject/show";
     }
 
     //조회 + 검색
@@ -99,7 +100,7 @@ public class SubjectController {
         subject.setClassroom(subject.getClassroom());
         log.info(subject.toString());
         subjectService.updateSubject(subject);
-        return "redirect:/semi/subject/show";
+        return "redirect:/semi/admin/subject/show";
     }
 
     //삭제
@@ -113,7 +114,7 @@ public class SubjectController {
             bindingResult.reject("deleteFailed","수강/성적 데이터가 존재하여 삭제가 불가능합니다.");
             return "subjects/showSubjectList";
         }
-        return "redirect:/semi/subject/show";
+        return "redirect:/semi/admin/subject/show";
     }
 
 }

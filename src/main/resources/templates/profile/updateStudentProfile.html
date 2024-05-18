@@ -114,7 +114,7 @@
                 <th>학과</th>
                 <td>
                     <span th:text="${studentDto.departmentName}"></span>
-                    <input type="hidden" name="departmentId" th:field="${studentDto.departmentName}" readonly>
+                    <input type="hidden" name="departmentId" th:field="${studentDto.departmentId}" readonly>
                 </td>
             </tr>
             <tr th:if="${studentDto.academicYear != null}">

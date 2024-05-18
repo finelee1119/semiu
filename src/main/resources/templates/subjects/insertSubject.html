@@ -57,7 +57,7 @@
 <!-- Content -->
 <div class="container">
     <p class="header-title">과목 등록</p>
-    <form id="frm" th:action="@{/semi/subject/insertForm}" method="post" th:object="${subject}" class="needs-validation border p-4 bg-white rounded shadow-sm" novalidate>
+    <form id="frm" th:action="@{/semi/admin/subject/insertForm}" method="post" th:object="${subject}" class="needs-validation border p-4 bg-white rounded shadow-sm" novalidate>
         <div class="mb-3">
             <label for="name" class="form-label">강의명</label>
             <input type="text" id="name" th:field="*{name}" class="form-control" required>
@@ -67,14 +67,14 @@
         </div>
         <div class="mb-3">
             <label for="professor" class="form-label">교수</label>
-            <select th:field="*{professor.id}" id="professor" class="form-select" onchange="professorCheck()" required>
+            <select th:field="*{professor.id}" id="professor" class="form-select" required>
                 <option value="">선택</option>
-                <option th:each="professor : ${professors}" th:value="${professor.id}" th:text="${professor.name}"></option>
+                <option th:each="professor : ${professors}" th:value="${professor.id}" th:text="${professor.id + ' ' + professor.name}" th:data-name="${professor.name}"></option>
             </select>
             <div class="invalid-feedback">
                 교수를 선택해 주세요.
             </div>
-            <span id="selectedProfessorName"></span>
+            <b><span id="selectedProfessorName"></span></b>
         </div>
         <div class="mb-3">
             <label for="classroom" class="form-label">강의실</label>
@@ -90,7 +90,7 @@
             <label for="subjectType" class="form-label">강의 구분</label>
             <select th:field="*{subjectType}" id="subjectType" class="form-select" required>
                 <option value="">선택</option>
-                <option th:each="subjectType : ${T(com.semiuniv.semiu.constant.SubjectType).values()}" th:value="${subjectType.value}" th:text="${subjectType.value}"></option>
+                <option th:each="subjectType : ${T(com.semiuniv.semiu.constant.SubjectType).values()}" th:value="${subjectType}" th:text="${subjectType.value}"></option>
             </select>
             <div class="invalid-feedback">
                 강의 구분을 선택해 주세요.
