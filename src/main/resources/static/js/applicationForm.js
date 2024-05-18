@@ -45,32 +45,38 @@ function add(id,name,professor,classroom,subjectType,credit,dayOfWeek,startTime,
 
         }
      }else{
-     //check_ID : span_List
-     var applicationItems = null;
-     var applicationId = addLecture.querySelectorAll("span");
-     for (let i = 0; i < applicationId.length; i++) {
-          applicationItems = applicationId[i].textContent;
-     }
-     console.log("id"+applicationItems);
+           //check_ID : span_List
+           var applicationItems = null;
+           var applicationId = addLecture.querySelectorAll("span");
+           for (let i = 0; i < applicationId.length; i++) {
+                applicationItems = applicationId[i].textContent;
+           }
+           console.log("id"+applicationItems);
 
-    //수강신청목록 : tr
-    var applicationList = addLecture.querySelectorAll('tr');
-    for (let i = 0; i < applicationList.length; i++) {
-             var applicationListIds = applicationList[i];
+          //수강신청목록 : tr
+          var applicationList = addLecture.querySelectorAll('tr');
+          for (let i = 0; i < applicationList.length; i++) {
+                   var applicationListIds = applicationList[i];
+                   console.log("2", applicationListIds);
+                   if(applicationListIds.textContent == ''){
+      //                    console.log("첫 if 문");
+                      continue;
+                   }else{
+                         var applicationListId = applicationListIds.querySelector("span").textContent;
+                             console.log("text", applicationListId);
 
-             var applicationListId = applicationListIds.querySelector("span").textContent;
-             console.log("text", applicationListId);
+                         if(applicationItems == applicationListId){
+                            console.log(applicationList);
+                            console.log(applicationListIds);
+                            applicationList[i].remove();
+                            return;
+                         }else{
 
-             if(applicationItems == applicationListId){
-                console.log(applicationList);
-                console.log(applicationListIds);
-                applicationList[i].remove();
-                return;
-             }else{
+                         }
+                   }
 
-             }
+               }
          }
-     }
   }
 
 //checkBox 선택 신청 과목 내역
