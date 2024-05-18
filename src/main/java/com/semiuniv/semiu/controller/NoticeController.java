@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Controller
-@RequestMapping("/semi/notice")
+@RequestMapping("/semi")
 public class NoticeController {
     NoticeService noticeService;
 
@@ -26,7 +26,7 @@ public class NoticeController {
     }
 
     //등록
-    @GetMapping("/insertForm")
+    @GetMapping("/admin/notice/insertForm")
     public String insertForm(Model model){
         model.addAttribute("noticeDto", new NoticeDto());
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
@@ -37,7 +37,7 @@ public class NoticeController {
         return "notices/insertNotice";
     }
 
-    @PostMapping("/insert")
+    @PostMapping("/admin/notice/insert")
     public String insert(@Valid @ModelAttribute("noticeDto")NoticeDto dto,
                          BindingResult bindingResult){
         if (bindingResult.hasErrors()){
@@ -48,8 +48,27 @@ public class NoticeController {
     }
 
     //조회 + 검색
-    @GetMapping("/show")
+    // 공지사항 글 목록 ( 관리자 사용)
+    @GetMapping("/admin/notice/showAll")
     public String showAll(Model model,
+                          @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+                          @RequestParam(value = "keyword", defaultValue = "") String keyword){
+
+        Page<NoticeDto> noticeDto = null;
+
+        if (keyword == null || keyword.isEmpty()) {
+            noticeDto = noticeService.findAllNotice(pageable);
+        } else {
+            noticeDto = noticeService.searchNoticeByTitle(keyword, pageable);
+        }
+
+        model.addAttribute("noticeDto", noticeDto);
+        return "notices/showNoticeAdmin";
+    }
+
+    // 공지사항 글 목록 ( 학생/교수 사용)
+    @GetMapping("/notice/show")
+    public String show(Model model,
                           @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
                           @RequestParam(value = "keyword", defaultValue = "") String keyword){
 
@@ -65,7 +84,8 @@ public class NoticeController {
         return "notices/showNotice";
     }
 
-    @GetMapping("/show/detail")
+    // 공지사항 글 디테일 ( 학생/교수/관리자 공통 사용 )
+    @GetMapping("/notice/show/detail")
     public String showDetail(@RequestParam("id") Integer id, Model model) {
         NoticeDto noticeDto = noticeService.getNoticeById(id);
 
@@ -78,25 +98,25 @@ public class NoticeController {
     }
 
     //수정
-    @GetMapping("/updateForm/{updateId}")
+    @GetMapping("/admin/notice/updateForm/{updateId}")
     public String updateForm(@PathVariable("updateId") Integer id, Model model) {
         NoticeDto noticeDto = noticeService.getNoticeById(id);
         model.addAttribute("noticeDto", noticeDto);
         return "notices/updateNotice";
     }
 
-    @PostMapping("update")
+    @PostMapping("/admin/notice/update")
     public String update(@Valid @ModelAttribute("noticeDto") NoticeDto dto,
                          BindingResult bindingResult){
         if (bindingResult.hasErrors()){
             return "notices/updateNotice";
         }
         noticeService.updateNotice(dto);
-        return "redirect:/semi/notice/show";
+        return "redirect:/semi/admin/notice/showAll";
     }
 
     //삭제
-    @PostMapping("/delete/{deleteId}")
+    @PostMapping("/notice/delete/{deleteId}")
     public String delete(@PathVariable("deleteId") Integer id){
         noticeService.deleteNotice(id);
         return "redirect:/semi/notice/show";

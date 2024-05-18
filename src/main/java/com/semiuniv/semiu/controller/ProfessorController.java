@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/semi/professor")
+@RequestMapping("/semi/admin/professor")
 public class ProfessorController {
 
     private final DepartmentRepository departmentRepository;
@@ -46,7 +46,7 @@ public class ProfessorController {
         }
 
         professorService.insertProfessor(dto);
-        return "redirect:/semi/professor/show";
+        return "redirect:/semi/admin/professor/show";
     }
 
     //조회 + 검색
@@ -94,13 +94,13 @@ public class ProfessorController {
         }
 
         professorService.updateProfessor(dto);
-        return "redirect:/semi/professor/show";
+        return "redirect:/semi/admin/professor/show";
     }
 
     //삭제
     @PostMapping("/delete/{deleteId}")
     public String delete(@PathVariable("deleteId") Integer id) {
         professorService.deleteProfessor(id);
-        return "redirect:/semi/professor/show";
+        return "redirect:/semi/admin/professor/show";
     }
 }

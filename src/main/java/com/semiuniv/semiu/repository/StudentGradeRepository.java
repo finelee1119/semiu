@@ -21,6 +21,8 @@ public interface StudentGradeRepository extends JpaRepository<StudentGrade, Inte
 
     StudentGrade findBySubjectId(Integer subjectId);
 
+    StudentGrade findByNo(Integer id);
+
 //    Page<StudentGrade> findByStudentId(Integer studentId);
 
     Page<StudentGrade> findBySubjectId(Integer keyword, Pageable pageable);

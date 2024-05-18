@@ -13,34 +13,34 @@
 <!-- Content -->
 <div class="container">
     <h1>교수 수정</h1>
-    <form action="/semi/professor/update" method="post" th:object="${professorDto}">
+    <form action="/semi/admin/professor/update" method="post" th:object="${professorDto}">
         <input type="hidden" id="id" name="id" th:field="*{id}">
-        <label for="name">Name:</label>
+        <label for="name">이름:</label>
         <input type="text" id="name" name="name" th:field="*{name}" required><br>
-        <label for="birth">Birth:</label>
+        <label for="birth">생년월일:</label>
         <input type="date" id="birth" name="birth" th:field="*{birth}" required><br>
-        <label for="gender">Gender:</label>
+        <label for="gender">성별:</label>
         <select id="gender" name="gender" required>
             <option value="M" th:text="Male" th:selected="${professorDto.gender == 'MALE'}"></option>
             <option value="F" th:text="Female" th:selected="${professorDto.gender == 'FEMALE'}"></option>
         </select><br>
-        <label for="address">Address:</label>
+        <label for="address">주소:</label>
         <input type="text" id="address" name="address" th:field="*{address}" required><br>
-        <label for="phone">Phone:</label>
+        <label for="phone">연락처:</label>
         <input type="text" id="phone" name="phone" th:field="*{phone}" required><br>
 
-        <label for="departmentId">Department:</label>
+        <label for="departmentId">학과:</label>
         <select id="departmentId" name="departmentId" required>
             <option th:each="department : ${departments}" th:value="${department.id}" th:text="${department.name}"
                     th:selected="${department.id == professorDto.departmentId}"></option>
         </select><br>
 
-        <label for="hireDate">Hire Date:</label>
+        <label for="hireDate">입사일:</label>
         <input type="date" id="hireDate" name="hireDate" th:field="*{hireDate}" required><br>
-        <label for="terminationDate">termination Date:</label>
+        <label for="terminationDate">퇴사일:</label>
         <input type="date" id="terminationDate" name="terminationDate" th:field="*{terminationDate}" required><br>
         <button type="submit">Submit</button>
-        <a th:href="@{/semi/professor/show}" class="btn btn-outline-primary me-2">이전 화면으로 돌아가기</a>
+        <a th:href="@{/semi/admin/professor/show}" class="btn btn-outline-primary me-2">이전 화면으로 돌아가기</a>
     </form>
 </div>
 

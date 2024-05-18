@@ -13,7 +13,7 @@
 <!-- Content -->
 <div class="container">
     <h1>교수 등록</h1>
-    <form th:action="@{/semi/professor/insert}" method="post" th:object="${professorDto}">
+    <form th:action="@{/semi/admin/professor/insert}" method="post" th:object="${professorDto}">
         <div>
             <label for="name">이름:</label>
             <input type="text" id="name" name="name" th:field="*{name}" required>
@@ -52,19 +52,19 @@
             <span th:errors="*{departmentId}"></span>
         </div>
         <div>
-            <label for="hireDate">입학일:</label>
+            <label for="hireDate">입사일:</label>
             <input type="date" id="hireDate" name="hireDate" th:field="*{hireDate}" required>
             <span th:errors="*{hireDate}"></span>
         </div>
         <div>
-            <label for="terminationDate">졸업일:</label>
+            <label for="terminationDate">퇴사일:</label>
             <input type="date" id="terminationDate" name="terminationDate" th:field="*{terminationDate}">
             <span th:errors="*{terminationDate}"></span>
         </div>
         <input type="submit" value="등록">
     </form>
 
-    <a th:href="@{/semi/professor/show}" class="btn btn-primary">이전 화면으로 돌아가기</a>
+    <a th:href="@{/semi/admin/professor/show}" class="btn btn-primary">이전 화면으로 돌아가기</a>
 </div>
 
 <!-- Footer fragment -->

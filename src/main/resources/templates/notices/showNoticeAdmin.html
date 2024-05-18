@@ -19,6 +19,7 @@
                     <th>번호</th>
                     <th>제목</th>
                     <th>작성날짜</th>
+                    <th>편집</th>
                 </tr>
             </thead>
             <tbody>
@@ -31,6 +32,14 @@
                     </td>
 
                     <td th:text="${#dates.format(noticeDto.createdTime, 'yyyy-MM-dd HH:mm')}"></td>
+                    <td>
+                        <!-- 편집 버튼 -->
+                        <a th:href="@{/semi/admin/notice/updateForm/{id}(id=${noticeDto.id})}" class="btn btn-primary btn-sm">수정</a>
+
+                        <!-- 삭제 버튼 -->
+                        <form th:action="@{/semi/admin/notice/delete/{id}(id=${noticeDto.id})}" method="post" style="display: inline;">
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('정말로 이 게시글을 삭제하시겠습니까?')">삭제</button>
+                        </form>
                     </td>
                 </tr>
             </tbody>
@@ -61,12 +70,14 @@
         </div>
 
         <!-- 검색 처리 -->
-        <form th:action="@{/semi/notice/show}" method="get">
+        <form th:action="@{/semi/admin/notice/showAll}" method="get">
             <div class="input-group mb-3">
                 <input type="text" name="keyword" class="form-control" placeholder="검색어 입력">
                 <button class="btn btn-outline-secondary" type="submit">검색</button>
             </div>
         </form>
+
+        <a th:href="@{/semi/admin/notice/insertForm}" class="btn btn-primary me-2">등록</a>
     </div>
 
     <th:block th:replace="~{fragments/footer :: footer}"></th:block>

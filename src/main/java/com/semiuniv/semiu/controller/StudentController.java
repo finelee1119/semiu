@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/semi/student")
+@RequestMapping("/semi/admin/student")
 public class StudentController {
 
     private final DepartmentRepository departmentRepository;
@@ -46,7 +46,7 @@ public class StudentController {
         }
 
         studentService.insertStudent(dto);
-        return "redirect:/semi/student/show";
+        return "redirect:/semi/admin/student/show";
     }
 
     //조회 + 검색
@@ -85,7 +85,7 @@ public class StudentController {
         return "students/updateStudent";
     }
 
-    @PostMapping("/update")
+    @PostMapping("/student/update")
     public String update(@Valid @ModelAttribute("studentDto") StudentDto dto,
                          BindingResult bindingResult) {
 
@@ -94,14 +94,14 @@ public class StudentController {
         }
 
         studentService.updateStudent(dto);
-        return "redirect:/semi/student/show";
+        return "redirect:/semi/admin/student/show";
     }
 
     //삭제
     @PostMapping("/delete/{deleteId}")
     public String delete(@PathVariable("deleteId") Integer id) {
         studentService.deleteStudent(id);
-        return "redirect:/semi/student/show";
+        return "redirect:/semi/admin/student/show";
     }
 
 }

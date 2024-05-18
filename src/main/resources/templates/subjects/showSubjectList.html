@@ -60,7 +60,7 @@
     <th:block th:replace="~{fragments/header_admin :: header}"></th:block>
     <div class="container">
          <p class="header-title">강의 목록<p>
-        <form id="deleteForm" th:action="@{/semi/subject/deleteSubjects}" method="post" >
+        <form id="deleteForm" th:action="@{/semi/admin/subject/deleteSubjects}" method="post" >
             <div class="alert alert-danger alert-dismissible fade show" th:if="${#fields.hasErrors('selectedIds')}" role="alert">
                 <span th:each="error : ${#fields.errors('selectedIds')}" th:text="${error}"></span>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" onclick="goBack()"></button>
@@ -135,15 +135,15 @@
             </div>
         </form>
         <!-- 검색 처리 -->
-        <form th:action="@{/semi/subject/show}" method="get">
+        <form th:action="@{/semi/admin/subject/show}" method="get">
             <div class="input-group mb-3">
                 <input type="text" name="keyword" class="form-control" placeholder="검색어 입력">
                 <button class="btn btn-outline-secondary" type="submit">검색</button>
             </div>
         </form>
         <div class="button-group">
-            <a th:href="@{/semi/subject/insertForm}" class="btn btn-outline-primary me-2">등록</a>
-            <a th:href="@{/semi/subject/show}" class="btn btn-outline-primary me-2">검색 초기화</a>
+            <a th:href="@{/semi/admin/subject/insertForm}" class="btn btn-outline-primary me-2">등록</a>
+            <a th:href="@{/semi/admin/subject/show}" class="btn btn-outline-primary me-2">검색 초기화</a>
             <a th:href="@{http://localhost:8080/semi/admin/home}" class="btn btn-outline-primary me-2">메인 화면으로 돌아가기</a>
         </div>
     </div>

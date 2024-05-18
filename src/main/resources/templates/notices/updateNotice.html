@@ -13,7 +13,7 @@
     <!-- Content -->
     <div class="container">
         <h3>공지사항 수정</h3>
-        <form th:action="@{/semi/notice/update}" method="post" th:object="${noticeDto}">
+        <form th:action="@{/semi/admin/notice/update}" method="post" th:object="${noticeDto}">
             <input type="hidden" id="id" name="id" th:field="*{id}">
 
             <div class="mb-3">
@@ -27,7 +27,7 @@
             </div>
 
             <button type="submit" class="btn btn-primary">수정</button>
-            <a th:href="@{/semi/notice/show}" class="btn btn-primary">이전 화면으로 돌아가기</a>
+            <a th:href="@{/semi/admin/notice/showAll}" class="btn btn-primary">이전 화면으로 돌아가기</a>
         </form>
     </div>
 
