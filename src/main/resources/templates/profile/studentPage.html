@@ -8,6 +8,8 @@
         body {
             background-color: #f8f9fa;
             color: #333;
+            margin: 0;
+            padding: 0;
         }
         .container {
             max-width: 800px;
@@ -43,71 +45,80 @@
             text-align: center;
             margin-bottom: 20px;
             font-size: 35px;
+            margin-top: -30px;
         }
         .button-group {
             text-align: center;
             margin-top: 40px;
         }
+        .content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 80vh;
+            margin: 0;
+            padding: 0;
+        }
     </style>
 </head>
 <body>
-    <div class="content" layout:fragment="content">
-        <div class="container">
-            <h1 class="header-title">마이페이지</h1>
-            <form>
-                <table class="table table-bordered">
-                    <tr>
-                        <th>아이디</th>
-                        <td th:text="${studentDto.id}"></td>
-                    </tr>
-                    <tr>
-                        <th>이름</th>
-                        <td th:text="${studentDto.name}"></td>
-                    </tr>
-                    <tr>
-                        <th>생년월일</th>
-                        <td th:text="${studentDto.birth}"></td>
-                    </tr>
-                    <tr>
-                        <th>성별</th>
-                        <td th:text="${studentDto.gender}"></td>
-                    </tr>
-                    <tr>
-                        <th>주소</th>
-                        <td th:text="${studentDto.address}"></td>
-                    </tr>
-                    <tr>
-                        <th>전화번호</th>
-                        <td th:text="${studentDto.phone}"></td>
-                    </tr>
-                    <tr>
-                        <th>학과</th>
-                        <td th:text="${studentDto.departmentName}"></td>
-                    </tr>
-                    <tr>
-                        <th>학년</th>
-                        <td th:text="${studentDto.academicYear}"></td>
-                    </tr>
-                    <tr>
-                        <th>학기</th>
-                        <td th:text="${studentDto.semester}"></td>
-                    </tr>
-                    <tr>
-                        <th>입학일</th>
-                        <td th:text="${studentDto.entranceDate}"></td>
-                    </tr>
-                    <tr>
-                        <th>졸업일</th>
-                        <td th:text="${studentDto.graduationDate}"></td>
-                    </tr>
-                </table>
-            </form>
-            <div class="button-group">
-                <a th:href="@{/semi/profile/updateForm/{id}(id=${studentDto.id})}" class="btn btn-outline-primary me-2">수정하기</a>
-                <a th:href="@{/semi/student/home}" class="btn btn-outline-primary me-2">메인 화면으로 돌아가기</a>
-            </div>
+<div class="content" layout:fragment="content">
+    <div class="container">
+        <h1 class="header-title">마이페이지</h1>
+        <form>
+            <table class="table table-bordered">
+                <tr>
+                    <th>아이디</th>
+                    <td th:text="${studentDto.id}"></td>
+                </tr>
+                <tr>
+                    <th>이름</th>
+                    <td th:text="${studentDto.name}"></td>
+                </tr>
+                <tr>
+                    <th>생년월일</th>
+                    <td th:text="${studentDto.birth}"></td>
+                </tr>
+                <tr>
+                    <th>성별</th>
+                    <td th:text="${studentDto.gender}"></td>
+                </tr>
+                <tr>
+                    <th>주소</th>
+                    <td th:text="${studentDto.address}"></td>
+                </tr>
+                <tr>
+                    <th>전화번호</th>
+                    <td th:text="${studentDto.phone}"></td>
+                </tr>
+                <tr>
+                    <th>학과</th>
+                    <td th:text="${studentDto.departmentName}"></td>
+                </tr>
+                <tr>
+                    <th>학년</th>
+                    <td th:text="${studentDto.academicYear}"></td>
+                </tr>
+                <tr>
+                    <th>학기</th>
+                    <td th:text="${studentDto.semester}"></td>
+                </tr>
+                <tr>
+                    <th>입학일</th>
+                    <td th:text="${studentDto.entranceDate}"></td>
+                </tr>
+                <tr>
+                    <th>졸업일</th>
+                    <td th:text="${studentDto.graduationDate}"></td>
+                </tr>
+            </table>
+        </form>
+        <div class="button-group">
+            <a th:href="@{/semi/profile/updateForm/{id}(id=${studentDto.id})}" class="btn btn-outline-primary me-2">수정하기</a>
+            <a th:href="@{/semi/student/home}" class="btn btn-outline-primary me-2">메인 화면으로 돌아가기</a>
         </div>
     </div>
+</div>
 
 <!-- Footer fragment -->
     <th:block th:replace="~{fragments/footer :: footer}"></th:block>
