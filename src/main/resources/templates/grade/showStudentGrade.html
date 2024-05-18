@@ -70,7 +70,7 @@
                     <th>성적</th>
                 </tr>
                 </thead>
-                <tbody class="table-group-divider">
+                <tbody>
                     <tr th:each="gradeList, iterstat : ${gradeList}" style="text-align: center;">
                             <td th:text="${iterstat.index+1}"></td>
                             <td th:text="${gradeList.subjectId}"></td>

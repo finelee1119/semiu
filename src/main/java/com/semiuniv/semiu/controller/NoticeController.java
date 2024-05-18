@@ -116,9 +116,9 @@ public class NoticeController {
     }
 
     //삭제
-    @PostMapping("/notice/delete/{deleteId}")
+    @PostMapping("admin/notice/delete/{deleteId}")
     public String delete(@PathVariable("deleteId") Integer id){
         noticeService.deleteNotice(id);
-        return "redirect:/semi/notice/show";
+        return "redirect:/semi/admin/notice/showAll";
     }
 }

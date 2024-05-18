@@ -9,37 +9,43 @@
             text-align:center;
             vertical-align: middle;
         }
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+        }
         p {
             font-weight: bold;
             font-size: 35px;
-            margin-top: 20px;
+            color: #3788D8;
             text-align:center;
         }
         .button-group {
             text-align: center;
             vertical-align: middle;
             margin-top: 40px;
-            margin-bottom: 30px
+            margin-bottom: 30px;
+        }
+        header {
+            max-width: 1200px;
+            padding: 0 20px;
         }
     </style>
     <script type="text/javascript" th:src="@{/js/subjectCheck.js}"></script>
 </head>
 <body>
-
-    <th:block th:replace="~{fragments/header_admin :: header}"></th:block>
-
-    <div class="container">
-        <p>강의 목록</p> <br>
+<th:block th:replace="~{fragments/header_admin :: header}"></th:block>
+    <div class="container" style="padding-left: 10px; padding-right: 10px;">
+        <br><p>강의 목록</p>
         <form id="deleteForm" th:action="@{/semi/admin/subject/deleteSubjects}" method="post" >
-            <div class="alert alert-danger alert-dismissible fade show" th:if="${#fields.hasErrors('selectedIds')}" role="alert">
-                <span th:each="error : ${#fields.errors('selectedIds')}" th:text="${error}"></span>
+            <div class="alert alert-danger alert-dismissible fade show" th:if="${deleteFailed}"  role="alert">
+                <span th:text="${deleteFailed}"></span>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" onclick="goBack()"></button>
             </div>
             <div style="text-align: right;">
-                <button type="button" class="btn btn-outline-danger btn-sm" onclick="deleteSelectedSubjects()" style="margin-bottom: 30px">선택 항목 삭제</button>
+                <button type="button" class="btn btn-outline-danger btn-sm" onclick="deleteSelectedSubjects()" style="margin-bottom: 20px">선택 항목 삭제</button>
             </div>
-            <table class="table" border="1">
-                <thead>
+            <table class="table table-bordered">
+                <thead class="table-light">
                 <tr>
                     <th><input type="checkbox" id="selectAllCheckbox" onclick="allSelected()"></th>
                     <th>강의코드</th>
@@ -58,6 +64,7 @@
                     <th>수정</th>
                 </tr>
                 </thead>
+                <tbody>
                 <tr th:each="subject : ${subjects}" th:object="${subject}">
                     <td><input class="form-check-input" type="checkbox" th:value="*{id}" name="selectedIds" id="flexCheckDefault"></td>
                     <td th:text="*{id}"></td>
@@ -77,6 +84,7 @@
                         <button type="button" class="btn btn-outline-primary btn-sm" th:onclick="'updateSubject(\'' + ${subject.id} + '\')'">수정</button>
                     </td>
                 </tr>
+                </tbody>
             </table>
 
             <!-- 페이징 처리 -->
@@ -107,8 +115,9 @@
         <!-- 검색 처리 -->
         <form th:action="@{/semi/admin/subject/show}" method="get">
             <div class="input-group mb-3">
-                <input type="text" name="keyword" class="form-control" placeholder="검색어 입력">
+                <input type="text" name="keyword" class="form-control" placeholder="검색어 입력(강의코드/강의명)">
                 <button class="btn btn-outline-secondary" type="submit">검색</button>
+                <a th:href="@{/semi/admin/subject/show}" class="btn btn-outline-secondary">검색초기화</a>
             </div>
         </form>
         <div class="button-group">

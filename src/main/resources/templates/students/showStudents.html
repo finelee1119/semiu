@@ -10,10 +10,14 @@
             text-align:center;
             vertical-align: middle;
         }
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+        }
         p {
             font-weight: bold;
             font-size: 35px;
-            margin-top: 20px;
+            color: #3788D8;
             text-align:center;
         }
         .button-group {
@@ -25,13 +29,17 @@
     </style>
 </head>
 <body>
-
+<script>
+    function goBack() {
+        window.history.back();
+   }
+</script>
 <th:block th:replace="~{fragments/header_admin :: header}"></th:block>
 
 <div class="container">
-    <p>학생 목록</p>
-    <table class="table">
-        <thead>
+    <br><p>학생 목록</p><br>
+    <table class="table table-bordered">
+        <thead class="table-light">
         <tr>
             <th>학번</th>
             <th>이름</th>
@@ -70,6 +78,10 @@
                 </form>
             </td>
         </tr>
+        <div class="alert alert-danger alert-dismissible fade show" th:if="${deleteFailed}"  role="alert">
+            <span th:text="${deleteFailed}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" onclick="goBack()"></button>
+        </div>
         </tbody>
     </table>
 
