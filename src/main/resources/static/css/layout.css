@@ -77,7 +77,7 @@ body {
  /*lectureApplication-HTML : 수강신청 폼*/
 .content .lectureMain {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
 }
 
  /*lectureApplication-HTML : 수강신청 폼 -- 사이드 nav */
@@ -85,7 +85,7 @@ body {
  display: inline-block;
  Position: sticky;
  top: 0;
- margin : 20px;
+ margin : 40px;
  text-align : center;
 }
 

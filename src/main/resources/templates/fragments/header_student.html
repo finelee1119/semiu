@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>semi university</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .logo-img {
+            max-height: 100px;
+            width: auto;
+        }
+        header {
+            max-width: 1200px;
+            padding: 0 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="header" th:fragment="header">
+    <header class="container d-flex align-items-center justify-content-between border-bottom" style="height: 100px;">
+        <a th:href="@{/semi/student/home}" class="d-flex align-items-center">
+            <img th:src="@{/images/semiu_logo1.png}" alt="logo" class="logo-img" style="height: 100px">
+        </a>
+        <div class="text-end">
+            <a role="button" id="loginout" class="btn btn-outline-primary me-2"
+               sec:authorize="isAuthenticated()"
+               th:href="@{/logout}">로그아웃</a>
+        </div>
+    </header>
+</div>
+</body>
+</html>
