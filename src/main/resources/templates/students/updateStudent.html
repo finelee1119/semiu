@@ -60,7 +60,7 @@
 <!-- Content -->
 <div class="container">
     <p class="header-title">학생 수정</p>
-    <form th:action="@{/semi/student/update}" method="post" th:object="${studentDto}" class="needs-validation border p-4 bg-white rounded shadow-sm" novalidate>
+    <form th:action="@{/semi/admin/student/update}" method="post" th:object="${studentDto}" class="needs-validation border p-4 bg-white rounded shadow-sm" novalidate>
         <input type="hidden" id="id" name="id" th:field="*{id}">
 
         <div class="mb-3">
@@ -151,8 +151,8 @@
         </div>
 
         <div class="button-group">
-            <button type="submit" class="btn btn-outline-primary me-2">저장하기</button>
-            <a th:href="@{/semi/student/show}" class="btn btn-outline-primary me-2">이전 화면으로 돌아가기</a>
+            <button type="submit" class="btn btn-outline-primary me-2">수정 완료하기</button>
+            <a th:href="@{/semi/admin/student/show}" class="btn btn-outline-primary me-2">이전 화면으로 돌아가기</a>
         </div>
     </form>
 </div>

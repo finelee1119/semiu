@@ -16,6 +16,12 @@
             margin-top: 20px;
             text-align:center;
         }
+        .button-group {
+            text-align: center;
+            vertical-align: middle;
+            margin-top: 40px;
+            margin-bottom: 30px
+        }
     </style>
 </head>
 <body>
@@ -56,10 +62,10 @@
             <td th:text="${studentDto.graduationDate}"></td>
             <td>
                 <!-- 편집 버튼 -->
-                <a th:href="@{/semi/student/updateForm/{id}(id=${studentDto.id})}" class="btn btn-outline-primary btn-sm">수정</a>
+                <a th:href="@{/semi/admin/student/updateForm/{id}(id=${studentDto.id})}" class="btn btn-outline-primary btn-sm">수정</a>
 
                 <!-- 삭제 버튼 -->
-                <form th:action="@{/semi/student/delete/{id}(id=${studentDto.id})}" method="post" style="display: inline;">
+                <form th:action="@{/semi/admin/student/delete/{id}(id=${studentDto.id})}" method="post" style="display: inline;">
                     <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('정말로 이 학생을 삭제하시겠습니까?')">삭제</button>
                 </form>
             </td>
@@ -92,14 +98,14 @@
     </div>
 
     <!-- 검색 처리 -->
-    <form th:action="@{/semi/student/show}" method="get">
+    <form th:action="@{/semi/admin/student/show}" method="get">
         <div class="input-group mb-3">
             <input type="text" name="keyword" class="form-control" placeholder="검색어 입력">
             <button class="btn btn-outline-secondary" type="submit">검색</button>
         </div>
     </form>
-    <div style="margin-bottom: 30px">
-        <a th:href="@{/semi/student/insertForm}" class="btn btn-outline-primary me-2">등록</a>
+    <div class="button-group">
+        <a th:href="@{/semi/admin/student/insertForm}" class="btn btn-outline-primary me-2">학생 등록하기</a>
         <a th:href="@{/semi/admin/home}" class="btn btn-outline-primary me-2">메인 화면으로 돌아가기</a>
     </div>
 </div>

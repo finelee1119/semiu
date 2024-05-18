@@ -70,7 +70,7 @@
 <!-- Content -->
 <div class="container">
     <p class="header-title">교수 수정</p>
-    <form th:action="@{/semi/professor/update}" method="post" th:object="${professorDto}" class="needs-validation border p-4 bg-white rounded shadow-sm" novalidate>
+    <form th:action="@{/semi/admin/professor/update}" method="post" th:object="${professorDto}" class="needs-validation border p-4 bg-white rounded shadow-sm" novalidate>
         <input type="hidden" id="id" name="id" th:field="*{id}">
 
         <div class="mb-3">
@@ -92,8 +92,8 @@
         <div class="mb-3">
             <label for="gender" class="form-label">성별</label>
             <select id="gender" name="gender" th:field="*{gender}" class="form-select" required>
-                <option value="M" th:text="Male" th:selected="${professorDto.gender == 'MALE'}"></option>
-                <option value="F" th:text="Female" th:selected="${professorDto.gender == 'FEMALE'}"></option>
+                <option value="M" th:text="남성" th:selected="${professorDto.gender == 'MALE'}"></option>
+                <option value="F" th:text="여성" th:selected="${professorDto.gender == 'FEMALE'}"></option>
             </select>
             <div class="invalid-feedback">
                 성별을 선택해주세요.
@@ -127,24 +127,24 @@
         </div>
 
         <div class="mb-3">
-            <label for="hireDate" class="form-label">입학일</label>
+            <label for="hireDate" class="form-label">입사일</label>
             <input type="date" id="hireDate" name="hireDate" th:field="*{hireDate}" class="form-control" required>
             <div class="invalid-feedback">
-                입학일을 입력해주세요.
+                입사일을 입력해주세요.
             </div>
         </div>
 
         <div class="mb-3">
-            <label for="terminationDate" class="form-label">졸업일</label>
+            <label for="terminationDate" class="form-label">퇴사일</label>
             <input type="date" id="terminationDate" name="terminationDate" th:field="*{terminationDate}" class="form-control" required>
             <div class="invalid-feedback">
-                졸업일을 입력해주세요.
+                퇴사일을 입력해주세요.
             </div>
         </div>
 
         <div class="button-group">
-            <button type="submit" class="btn btn-outline-primary me-2">Submit</button>
-            <a th:href="@{/semi/professor/show}" class="btn btn-outline-primary me-2">이전 화면으로 돌아가기</a>
+            <button type="submit" class="btn btn-outline-primary me-2">수정 완료하기</button>
+            <a th:href="@{/semi/admin/professor/show}" class="btn btn-outline-primary me-2">이전 화면으로 돌아가기</a>
         </div>
     </form>
 </div>
