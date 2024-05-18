@@ -77,7 +77,7 @@ function allSelected() {
 
 
     function deleteSelectedSubjects() {
-    if (confirm('정말로 이 과목을 삭제하시겠습니까?')) {
+    if (confirm('선택한 성적 데이터를 삭제하시겠습니까?')) {
         var form = document.getElementById("deleteForm");
         var selectedItems = form.querySelectorAll('input[name="selectedIds"]:checked');
         var selectedIds = [];
