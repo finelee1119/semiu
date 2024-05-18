@@ -55,116 +55,116 @@
     </style>
 </head>
 <body>
-<!-- Header fragment -->
-<th:block th:replace="~{fragments/header :: header}"></th:block>
+    <!-- Header fragment -->
+    <th:block th:replace="~{fragments/header :: header}"></th:block>
 
-<!-- Content -->
-<div class="container">
-    <p class="header-title">강의 등록</p>
-    <form id="frm" th:action="@{/semi/subject/insertForm}" method="post" th:object="${subject}" class="needs-validation border p-4 bg-white rounded shadow-sm" novalidate>
-        <div class="mb-3">
-            <label for="name" class="form-label">강의명</label>
-            <input type="text" id="name" th:field="*{name}" class="form-control" required>
-            <div class="invalid-feedback">
-                강의명을 입력해 주세요.
+    <!-- Content -->
+    <div class="container">
+        <p class="header-title">강의 등록</p>
+        <form id="frm" th:action="@{/semi/subject/insertForm}" method="post" th:object="${subject}" class="needs-validation border p-4 bg-white rounded shadow-sm" novalidate>
+            <div class="mb-3">
+                <label for="name" class="form-label">강의명</label>
+                <input type="text" id="name" th:field="*{name}" class="form-control" required>
+                <div class="invalid-feedback">
+                    강의명을 입력해 주세요.
+                </div>
             </div>
-        </div>
-        <div class="mb-3">
-            <label for="professor" class="form-label">교수</label>
-            <select th:field="*{professor.id}" id="professor" class="form-select" onchange="professorCheck()" required>
-                <option value="">선택</option>
-                <option th:each="professor : ${professors}" th:value="${professor.id}" th:text="${professor.name}"></option>
-            </select>
-            <div class="invalid-feedback">
-                교수를 선택해 주세요.
+            <div class="mb-3">
+                <label for="professor" class="form-label">교수</label>
+                <select th:field="*{professor.id}" id="professor" class="form-select" onchange="professorCheck()" required>
+                    <option value="">선택</option>
+                    <option th:each="professor : ${professors}" th:value="${professor.id}" th:text="${professor.name}"></option>
+                </select>
+                <div class="invalid-feedback">
+                    교수를 선택해 주세요.
+                </div>
+                <span id="selectedProfessorName"></span>
             </div>
-            <span id="selectedProfessorName"></span>
-        </div>
-        <div class="mb-3">
-            <label for="classroom" class="form-label">강의실</label>
-            <select th:field="*{classroom.id}" id="classroom" class="form-select" required>
-                <option value="">선택</option>
-                <option th:each="classroom : ${classrooms}" th:value="${classroom}" th:text="${classroom}"></option>
-            </select>
-            <div class="invalid-feedback">
-                강의실을 선택해 주세요.
+            <div class="mb-3">
+                <label for="classroom" class="form-label">강의실</label>
+                <select th:field="*{classroom.id}" id="classroom" class="form-select" required>
+                    <option value="">선택</option>
+                    <option th:each="classroom : ${classrooms}" th:value="${classroom}" th:text="${classroom}"></option>
+                </select>
+                <div class="invalid-feedback">
+                    강의실을 선택해 주세요.
+                </div>
             </div>
-        </div>
-        <div class="mb-3">
-            <label for="subjectType" class="form-label">강의 구분</label>
-            <select th:field="*{subjectType}" id="subjectType" class="form-select" required>
-                <option value="">선택</option>
-                <option th:each="subjectType : ${T(com.semiuniv.semiu.constant.SubjectType).values()}" th:value="${subjectType.value}" th:text="${subjectType.value}"></option>
-            </select>
-            <div class="invalid-feedback">
-                강의 구분을 선택해 주세요.
+            <div class="mb-3">
+                <label for="subjectType" class="form-label">강의 구분</label>
+                <select th:field="*{subjectType}" id="subjectType" class="form-select" required>
+                    <option value="">선택</option>
+                    <option th:each="subjectType : ${T(com.semiuniv.semiu.constant.SubjectType).values()}" th:value="${subjectType.value}" th:text="${subjectType.value}"></option>
+                </select>
+                <div class="invalid-feedback">
+                    강의 구분을 선택해 주세요.
+                </div>
             </div>
-        </div>
-        <div class="mb-3">
-            <label for="credit" class="form-label">이수학점</label>
-            <input type="text" id="credit" th:field="*{credit}" class="form-control" required>
-            <div class="invalid-feedback">
-                이수학점을 입력해 주세요.
+            <div class="mb-3">
+                <label for="credit" class="form-label">이수학점</label>
+                <input type="text" id="credit" th:field="*{credit}" class="form-control" required>
+                <div class="invalid-feedback">
+                    이수학점을 입력해 주세요.
+                </div>
             </div>
-        </div>
-        <div class="mb-3">
-            <label for="academicYear" class="form-label">연도</label>
-            <input type="text" id="academicYear" th:field="*{academicYear}" class="form-control" required>
-            <div class="invalid-feedback">
-                연도를 입력해 주세요.
+            <div class="mb-3">
+                <label for="academicYear" class="form-label">연도</label>
+                <input type="text" id="academicYear" th:field="*{academicYear}" class="form-control" required>
+                <div class="invalid-feedback">
+                    연도를 입력해 주세요.
+                </div>
             </div>
-        </div>
-        <div class="mb-3">
-            <label for="semester" class="form-label">학기</label>
-            <input type="text" id="semester" th:field="*{semester}" class="form-control" required>
-            <div class="invalid-feedback">
-                학기를 입력해 주세요.
+            <div class="mb-3">
+                <label for="semester" class="form-label">학기</label>
+                <input type="text" id="semester" th:field="*{semester}" class="form-control" required>
+                <div class="invalid-feedback">
+                    학기를 입력해 주세요.
+                </div>
             </div>
-        </div>
-        <div class="mb-3">
-            <label for="dayOfWeek" class="form-label">요일</label>
-            <select th:field="*{dayOfWeek}" id="dayOfWeek" class="form-select" required>
-                <option value="">선택</option>
-                <option value="Mon">월요일</option>
-                <option value="Tue">화요일</option>
-                <option value="Wed">수요일</option>
-                <option value="Thu">목요일</option>
-                <option value="Fri">금요일</option>
-            </select>
-            <div class="invalid-feedback">
-                요일을 선택해 주세요.
+            <div class="mb-3">
+                <label for="dayOfWeek" class="form-label">요일</label>
+                <select th:field="*{dayOfWeek}" id="dayOfWeek" class="form-select" required>
+                    <option value="">선택</option>
+                    <option value="Mon">월요일</option>
+                    <option value="Tue">화요일</option>
+                    <option value="Wed">수요일</option>
+                    <option value="Thu">목요일</option>
+                    <option value="Fri">금요일</option>
+                </select>
+                <div class="invalid-feedback">
+                    요일을 선택해 주세요.
+                </div>
             </div>
-        </div>
-        <div class="mb-3">
-            <label for="startTime" class="form-label">시작시간</label>
-            <input type="text" id="startTime" th:field="*{startTime}" class="form-control" required>
-            <div class="invalid-feedback">
-                시작시간을 입력해 주세요.
+            <div class="mb-3">
+                <label for="startTime" class="form-label">시작시간</label>
+                <input type="text" id="startTime" th:field="*{startTime}" class="form-control" required>
+                <div class="invalid-feedback">
+                    시작시간을 입력해 주세요.
+                </div>
             </div>
-        </div>
-        <div class="mb-3">
-            <label for="endTime" class="form-label">종료시간</label>
-            <input type="text" id="endTime" th:field="*{endTime}" class="form-control" required>
-            <div class="invalid-feedback">
-                종료시간을 입력해 주세요.
+            <div class="mb-3">
+                <label for="endTime" class="form-label">종료시간</label>
+                <input type="text" id="endTime" th:field="*{endTime}" class="form-control" required>
+                <div class="invalid-feedback">
+                    종료시간을 입력해 주세요.
+                </div>
             </div>
-        </div>
-        <div class="mb-3">
-            <label for="maxStudent" class="form-label">수강 정원</label>
-            <input type="text" id="maxStudent" th:field="*{maxStudent}" class="form-control" required>
-            <div class="invalid-feedback">
-                수강 정원을 입력해 주세요.
+            <div class="mb-3">
+                <label for="maxStudent" class="form-label">수강 정원</label>
+                <input type="text" id="maxStudent" th:field="*{maxStudent}" class="form-control" required>
+                <div class="invalid-feedback">
+                    수강 정원을 입력해 주세요.
+                </div>
             </div>
-        </div>
-        <div class="button-group">
-            <button class="btn btn-outline-primary me-2" type="button" onclick="check()">저장하기</button>
-            <a th:href="@{/semi/subject/show}" class="btn btn-outline-primary me-2" type="button">이전 화면으로 돌아가기</a>
-        </div>
-    </form>
-</div>
+            <div class="button-group">
+                <button class="btn btn-outline-primary me-2" type="button" onclick="check()">등록하기</button>
+                <a th:href="@{/semi/admin/subject/show}" class="btn btn-outline-primary me-2" type="button">이전 화면으로 돌아가기</a>
+            </div>
+        </form>
+    </div>
 
-<!-- Footer fragment -->
-<th:block th:replace="~{fragments/footer :: footer}"></th:block>
+    <!-- Footer fragment -->
+    <th:block th:replace="~{fragments/footer :: footer}"></th:block>
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

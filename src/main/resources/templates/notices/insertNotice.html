@@ -15,31 +15,31 @@
 </head>
 <body>
 <!-- Header fragment -->
-<th:block th:replace="~{fragments/header_admin :: header}"></th:block>
+    <th:block th:replace="~{fragments/header_admin :: header}"></th:block>
 
-<!-- Content -->
-<div class="container">
-    <p>공지사항 등록</p>
-    <form th:action="@{/semi/notice/insert}" method="post" th:object="${noticeDto}">
-        <div class="mb-3">
-            <label for="title" class="form-label" style="font-size: 18px">제목</label>
-            <input type="text" id="title" name="title" class="form-control form-control-lg" th:field="*{title}" required>
-        </div>
+    <!-- Content -->
+    <div class="container">
+        <p>공지사항 등록</p>
+        <form th:action="@{/semi/admin/notice/insert}" method="post" th:object="${noticeDto}">
+            <div class="mb-3">
+                <label for="title" class="form-label" style="font-size: 18px">제목</label>
+                <input type="text" id="title" name="title" class="form-control form-control-lg" th:field="*{title}" required>
+            </div>
 
-        <div class="mb-3">
-            <label for="content" style="font-size: 18px">내용</label>
-            <textarea id="content" name="content" class="form-control form-control-lg" style="height: 300px;" th:field="*{content}" required></textarea>
-        </div>
-        <div style="margin-top: 20px; margin-bottom: 30px">
-            <button type="submit" class="btn btn-outline-primary me-2">저장하기</button>
-            <a th:href="@{/semi/notice/show}" class="btn btn-outline-primary me-2">이전 화면으로 돌아가기</a>
-        </div>
-    </form>
+            <div class="mb-3">
+                <label for="content" style="font-size: 18px">내용</label>
+                <textarea id="content" name="content" class="form-control form-control-lg" style="height: 300px;" th:field="*{content}" required></textarea>
+            </div>
+            <div style="margin-top: 20px; margin-bottom: 30px">
+                <button type="submit" class="btn btn-outline-primary me-2">등록하기</button>
+                <a th:href="@{/semi/admin/notice/showAll}" class="btn btn-outline-primary me-2">이전 화면으로 돌아가기</a>
+            </div>
+        </form>
 
-</div>
+    </div>
 
-<!-- Footer fragment -->
-<th:block th:replace="~{fragments/footer :: footer}"></th:block>
+    <!-- Footer fragment -->
+    <th:block th:replace="~{fragments/footer :: footer}"></th:block>
 
 </body>
 </html>

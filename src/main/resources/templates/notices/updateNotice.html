@@ -20,7 +20,7 @@
 <!-- Content -->
 <div class="container">
     <p>공지사항 수정</p>
-    <form th:action="@{/semi/notice/update}" method="post" th:object="${noticeDto}">
+    <form th:action="@{/semi/admin/notice/update}" method="post" th:object="${noticeDto}">
         <input type="hidden" id="id" name="id" th:field="*{id}">
 
         <div class="mb-3">
@@ -34,8 +34,8 @@
         </div>
 
         <div style="margin-top: 20px; margin-bottom: 30px">
-            <button type="submit" class="btn btn-outline-primary me-2">저장하기</button>
-            <a th:href="@{/semi/notice/show}" class="btn btn-outline-primary me-2">이전 화면으로 돌아가기</a>
+            <button type="submit" class="btn btn-outline-primary me-2">수정 완료하기</button>
+            <a th:href="@{/semi/admin/notice/showAll}" class="btn btn-outline-primary me-2">이전 화면으로 돌아가기</a>
         </div>
     </form>
 </div>

@@ -58,7 +58,7 @@
 <!-- Content -->
 <div class="container">
     <p class="header-title">강의 수정</p>
-    <form id="frm" th:action="@{/semi/subject/updateSubject}" method="post" th:object="${subject}" class="needs-validation border p-4 bg-white rounded shadow-sm" novalidate>
+    <form id="frm" th:action="@{/semi/admin/subject/updateSubject}" method="post" th:object="${subject}" class="needs-validation border p-4 bg-white rounded shadow-sm" novalidate>
         <input type="hidden" th:field="*{id}" th:value="*{id}">
 
         <div class="mb-3">
@@ -133,9 +133,14 @@
             <input type="text" id="maxStudent" th:field="*{maxStudent}" class="form-control" required>
         </div>
 
+        <div class="mb-3">
+            <label for="maxStudent" class="form-label">현재 인원</label>
+            <input type="text" id="totalStudent" th:field="*{totalStudent}" class="form-control" required>
+        </div>
+
         <div class="button-group">
-            <button class="btn btn-outline-primary me-2" type="button" onclick="check()">수정하기</button>
-            <a th:href="@{/semi/subject/show}" class="btn btn-outline-primary me-2" type="button">이전 화면으로 돌아가기</a>
+            <button class="btn btn-outline-primary me-2" type="button" onclick="check()">수정 완료하기</button>
+            <a th:href="@{/semi/admin/subject/show}" class="btn btn-outline-primary me-2" type="button">이전 화면으로 돌아가기</a>
         </div>
     </form>
 </div>

@@ -70,7 +70,7 @@
 <!-- Content -->
 <div class="container">
     <p class="header-title">교수 등록</p>
-    <form th:action="@{/semi/professor/insert}" method="post" th:object="${professorDto}" class="needs-validation border p-4 bg-white rounded shadow-sm" novalidate>
+    <form th:action="@{/semi/admin/professor/insert}" method="post" th:object="${professorDto}" class="needs-validation border p-4 bg-white rounded shadow-sm" novalidate>
         <div class="mb-3">
             <label for="name" class="form-label">이름</label>
             <input type="text" id="name" name="name" th:field="*{name}" class="form-control" required>
@@ -121,22 +121,22 @@
                 </select>
             </div>
             <div class="mb-3">
-                <label for="hireDate" class="form-label">입학일</label>
+                <label for="hireDate" class="form-label">입사일</label>
                 <input type="date" id="hireDate" name="hireDate" th:field="*{hireDate}" class="form-control" required>
                 <div class="invalid-feedback">
-                    입학일을 입력해주세요.
+                    입사일을 입력해주세요.
                 </div>
             </div>
             <div class="mb-3">
-                <label for="terminationDate" class="form-label">졸업일</label>
+                <label for="terminationDate" class="form-label">퇴사일</label>
                 <input type="date" id="terminationDate" name="terminationDate" th:field="*{terminationDate}" class="form-control">
                 <div class="invalid-feedback">
-                    졸업일을 입력해주세요.
+                    퇴사일을 입력해주세요.
                 </div>
             </div>
             <div class="button-group">
-                <button type="submit" class="btn btn-outline-primary me-2">등록</button>
-                <a th:href="@{/semi/professor/show}" class="btn btn-outline-primary me-2">이전 화면으로 돌아가기</a>
+                <button type="submit" class="btn btn-outline-primary me-2">등록하기</button>
+                <a th:href="@{/semi/admin/professor/show}" class="btn btn-outline-primary me-2">이전 화면으로 돌아가기</a>
             </div>
         </div>
     </form>
