@@ -150,7 +150,7 @@ public class FindController {
             return "find/password";
         }
 
-        Optional<Users> userOpt = userRepository.findById(String.valueOf(id));
+        Optional<Users> userOpt = userRepository.findById(id);
 
         if (userOpt.isPresent()) {
             Users user = userOpt.get();

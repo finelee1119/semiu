@@ -116,7 +116,7 @@
                             <td th:text="*{name}"></td>
                             <td th:text="*{professor.name}"></td>
                             <td th:text="*{classroom.id}"></td>
-                            <td th:text="*{subjectType}"></td>
+                            <td th:text="*{subjectType.value}"></td>
                             <td th:text="*{credit}"></td>
                             <td th:text="*{dayOfWeek}"></td>
                             <td th:text="*{startTime}"></td>
@@ -135,7 +135,7 @@
                                      th:name="*{name}"
                                      th:professor="*{professor.name}"
                                      th:classroom="*{classroom.id}"
-                                     th:subjectType="*{subjectType}"
+                                     th:subjectType="*{subjectType.value}"
                                      th:credit="*{credit}"
                                      th:dayOfWeek="*{dayOfWeek}"
                                      th:startTime="*{startTime}"

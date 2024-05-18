@@ -38,15 +38,15 @@ public class SecurityConfig {
                 )
 
                 .formLogin((form)->form
-                        .loginPage("/semi/login-page") // 로그인 페이지 URL
+                        .loginPage("/semi") // 로그인 페이지 URL
                         .loginProcessingUrl("/login") // 로그인 처리 URL
                         .successHandler(customAuthenticationSuccessHandler)
-//                        .defaultSuccessUrl("/semi/login", true) // 로그인 성공 후 이동할 URL
+//                       .defaultSuccessUrl("/semi/login", true) // 로그인 성공 후 이동할 URL
                         .permitAll() // 로그인 페이지는 모든 사용자 접근 허용
                 )
 
                 .logout((out)->out
-                        .logoutSuccessUrl("/semi/login-page") // 로그아웃 성공 후 이동할 URL
+                        .logoutSuccessUrl("/semi") // 로그아웃 성공 후 이동할 URL
                         .logoutUrl("/logout")
                         .permitAll() // 로그아웃 페이지는 모든 사용자 접근 허용
                 )

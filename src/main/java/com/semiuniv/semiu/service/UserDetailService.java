@@ -29,7 +29,7 @@ public class UserDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<Users> user = userRepository.findById(username);
+        Optional<Users> user = userRepository.findById(Integer.valueOf(username));
 
         if(user.isEmpty()){
             throw new UsernameNotFoundException("사용자를 찾을 수 없습니다.");
