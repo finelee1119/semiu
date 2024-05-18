@@ -36,7 +36,7 @@ public class MainController {
     public String login(Principal principal, Model model) {
 
         // 로그인, 로그아웃후 : Role에 맞는 홈에 이동 > 뒤로 가기 : 위치
-        System.out.printf("------------------------------------");
+
         if(principal == null){
             return"welcome";
         }else{

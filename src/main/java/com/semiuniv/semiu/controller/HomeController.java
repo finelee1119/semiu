@@ -3,12 +3,14 @@ package com.semiuniv.semiu.controller;
 import com.semiuniv.semiu.dto.ProfessorDto;
 import com.semiuniv.semiu.dto.StudentDto;
 import com.semiuniv.semiu.entity.Professor;
+import com.semiuniv.semiu.entity.Student;
 import com.semiuniv.semiu.entity.Users;
 import com.semiuniv.semiu.service.ProfessorService;
 import com.semiuniv.semiu.service.StudentService;
 import com.semiuniv.semiu.service.UserDetailService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.catalina.User;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -49,7 +51,7 @@ public class HomeController {
         String user = principal.getName();
         StudentDto student = studentService.showOneStudent(Integer.valueOf(user));
         model.addAttribute("Student", student);
-        model.addAttribute("users",user);
+        model.addAttribute("users", user);
         return "home/studentHome";
     }
 
@@ -63,4 +65,27 @@ public class HomeController {
         return "home/professorHome";
     }
 
+
+    //공지사항 헤더 로고 홈페이지 이동용
+    @GetMapping("/home")
+    public String homePage(Model model, Authentication authentication) {
+        if (authentication != null && authentication.isAuthenticated()) {
+            String username = authentication.getName();
+            Integer userId = Integer.valueOf(username);
+            if (authentication.getAuthorities().stream().anyMatch(r -> r.getAuthority().equals("STUDENT"))) {
+                Optional<Student> studentOptional = studentService.show_student(userId);
+                if (studentOptional.isPresent()) {
+                    return "redirect:/semi/student/home";
+                }
+            } else if (authentication.getAuthorities().stream().anyMatch(r -> r.getAuthority().equals("PROFESSOR"))) {
+                Optional<Professor> professorOptional = professorService.show_professor(userId);
+                if (professorOptional.isPresent()) {
+                    return "redirect:/semi/professor/home";
+                }
+            }else {
+                return "redirect:/semi/admin/home";
+            }
+        }
+        return "errorPage";
+    }
 }
