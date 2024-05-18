@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -108,7 +109,9 @@ public class StudentGradeService {
 
     // 성적 데이터 삭제 (관리자용)
     public void deleteGrade(int id){
-        studentGradeRepository.deleteById(id);
+        StudentGrade studentGrade = studentGradeRepository.findByNo(id);
+        studentGrade.setGrade(null);
+        studentGradeRepository.save(studentGrade);
     }
 
 

@@ -57,7 +57,7 @@
     <th:block th:replace="~{fragments/header_admin :: header}"></th:block>
     <div class="container">
         <p class="header-title">성적 목록</p>
-        <form id="deleteForm" th:action="@{/semi/grade/deleteGrade}" method="post" th:object="${gradeList}">
+        <form id="deleteForm" th:action="@{/semi/admin/grade/deleteGrade}" method="post" th:object="${gradeList}">
             <div style="text-align: right;">
                 <button type="button" class="btn btn-outline-danger btn-sm" onclick="deleteSelectedSubjects()" >선택 항목 삭제</button>
             </div>
@@ -124,7 +124,7 @@
             </div>
         </form>
         <div class="button-group">
-            <a th:href="@{/semi/grade/show}" class="btn btn-outline-primary me-2">검색 초기화</a>
+            <a th:href="@{/semi/admin/grade/show}" class="btn btn-outline-primary me-2">검색 초기화</a>
             <a th:href="@{http://localhost:8080/semi/admin/home}" class="btn btn-outline-primary me-2">메인 화면으로 돌아가기</a>
         </div>
     </div>

@@ -19,14 +19,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/semi/grade")
+@RequestMapping("/semi")
 @Slf4j
 public class GradeController {
     @Autowired
     StudentGradeService studentGradeService;
 
     // 학생 로그인 후 학생 성적 조회 화면 진입
-    @GetMapping("/{id}")
+    @GetMapping("/grade/{id}")
     public String showStudentGrade(@PathVariable("id") Integer id, Model model,
                                    @PageableDefault(page = 0, size = 10, sort = "no", direction = Sort.Direction.ASC) Pageable pageable,
                                    @RequestParam(value = "keyword", defaultValue = "") String keyword) {
@@ -47,7 +47,7 @@ public class GradeController {
 
 
     // 강사 로그인 후 강사 성적 화면 진입
-    @GetMapping("professor/{id}")
+    @GetMapping("/grade/professor/{id}")
     public String showGrade(@PathVariable("id") Integer id, Model model,
                             @PageableDefault(page = 0, size = 10, sort = "no", direction = Sort.Direction.ASC) Pageable pageable,
                             @RequestParam(value = "keyword", defaultValue = "") String keyword) {
@@ -74,7 +74,7 @@ public class GradeController {
     }
 
     // 교수 성적 입력, 수정
-    @PostMapping("/insertForm/{id}")
+    @PostMapping("/grade/insertForm/{id}")
     public String insertSubject(@PathVariable("id") Integer id,
                                 @RequestParam("studentId") Integer studentId,
                                 @RequestParam("subjectId") Integer subjectId,
@@ -90,7 +90,7 @@ public class GradeController {
     }
 
     // 관리자 성적 데이터 관리
-    @GetMapping("/show")
+    @GetMapping("/admin/grade/show")
     public String showGrade(Model model,
                             @PageableDefault(page = 0, size = 10, sort = "no", direction = Sort.Direction.ASC) Pageable pageable,
                             @RequestParam(value = "keyword", defaultValue = "") String keyword){
@@ -115,10 +115,10 @@ public class GradeController {
         return "grade/showAdminGrade";
     }
 
-    @PostMapping("/deleteGrade")
+    @PostMapping("admin/grade/deleteGrade")
     public String deleteGrades(@ModelAttribute("selectedIds") Integer[] selectedIds) {
         for (Integer id : selectedIds) {
         studentGradeService.deleteGrade(id);}
-        return "redirect:/semi/grade/show";
+        return "redirect:/semi/admin/grade/show";
     }
 }

@@ -13,7 +13,7 @@
     <!-- Content -->
     <div class="container">
         <h3>공지사항 등록</h3>
-        <form th:action="@{/semi/notice/insert}" method="post" th:object="${noticeDto}">
+        <form th:action="@{/semi/admin/notice/insert}" method="post" th:object="${noticeDto}">
             <div class="mb-3">
                 <label for="title" class="form-label">제목:</label>
                 <input type="text" id="title" name="title" class="form-control form-control-lg" th:field="*{title}" required>
@@ -27,7 +27,7 @@
             <button type="submit" class="btn btn-primary">등록</button>
         </form>
 
-        <a th:href="@{/semi/notice/show}" class="btn btn-primary">이전 화면으로 돌아가기</a>
+        <a th:href="@{/semi/admin/notice/showAll}" class="btn btn-primary">이전 화면으로 돌아가기</a>
     </div>
 
     <!-- Footer fragment -->

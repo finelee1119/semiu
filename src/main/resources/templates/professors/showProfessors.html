@@ -41,10 +41,10 @@
                 <td th:text="${professorDto.terminationDate}"></td>
                 <td>
                     <!-- 편집 버튼 -->
-                    <a th:href="@{/semi/professor/updateForm/{id}(id=${professorDto.id})}" class="btn btn-primary btn-sm">편집</a>
+                    <a th:href="@{/semi/admin/professor/updateForm/{id}(id=${professorDto.id})}" class="btn btn-primary btn-sm">편집</a>
 
                     <!-- 삭제 버튼 -->
-                    <form th:action="@{/semi/professor/delete/{id}(id=${professorDto.id})}" method="post" style="display: inline;">
+                    <form th:action="@{/semi/admin/professor/delete/{id}(id=${professorDto.id})}" method="post" style="display: inline;">
                         <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('정말로 이 교수를 삭제하시겠습니까?')">삭제</button>
                     </form>
                 </td>
@@ -78,14 +78,14 @@
         </div>
 
         <!-- 검색 처리 -->
-        <form th:action="@{/semi/professor/show}" method="get">
+        <form th:action="@{/semi/admin/professor/show}" method="get">
             <div class="input-group mb-3">
                 <input type="text" name="keyword" class="form-control" placeholder="검색어 입력">
                 <button class="btn btn-outline-secondary" type="submit">검색</button>
             </div>
         </form>
 
-        <a th:href="@{/semi/professor/insertForm}" class="btn btn-primary me-2">등록</a>
+        <a th:href="@{/semi/admin/professor/insertForm}" class="btn btn-primary me-2">등록</a>
     </div>
 
     <th:block th:replace="~{fragments/footer :: footer}"></th:block>
