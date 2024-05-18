@@ -5,22 +5,34 @@
 <head>
     <meta charset="UTF-8">
     <title>Subject List</title>
+    <style>
+        .table th, table td{
+            text-align:center;
+            vertical-align: middle;
+        }
+        p {
+            font-weight: bold;
+            font-size: 35px;
+            margin-top: 20px;
+            text-align:center;
+        }
+    </style>
     <script type="text/javascript" th:src="@{/js/subjectCheck.js}"></script>
 </head>
 <body>
     <div class="container" layout:fragment="content">
-         <h1 style="text-align: center;" >강의 목록</h1> <br>
+         <p>강의 목록</p> <br>
         <form id="deleteForm" th:action="@{/semi/subject/deleteSubjects}" method="post" >
             <div class="alert alert-danger alert-dismissible fade show" th:if="${#fields.hasErrors('selectedIds')}" role="alert">
                 <span th:each="error : ${#fields.errors('selectedIds')}" th:text="${error}"></span>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" onclick="goBack()"></button>
             </div>
             <div style="text-align: right;">
-                <button type="button" class="btn btn-outline-danger btn-sm" onclick="deleteSelectedSubjects()" >선택 항목 삭제</button>
+                <button type="button" class="btn btn-outline-danger btn-sm" onclick="deleteSelectedSubjects()" style="margin-bottom: 30px">선택 항목 삭제</button>
             </div>
             <table class="table" border="1">
                 <thead>
-                    <tr style="text-align: center;">
+                    <tr>
                         <th><input type="checkbox" id="selectAllCheckbox" onclick="allSelected()"></th>
                         <th>강의코드</th>
                         <th>강의명</th>
@@ -38,7 +50,7 @@
                         <th>수정</th>
                     </tr>
                 </thead>
-                <tr th:each="subject : ${subjects}" th:object="${subject}" style="text-align: center;">
+                <tr th:each="subject : ${subjects}" th:object="${subject}">
                     <td><input class="form-check-input" type="checkbox" th:value="*{id}" name="selectedIds" id="flexCheckDefault"></td>
                     <td th:text="*{id}"></td>
                     <td th:text="*{name}"></td>

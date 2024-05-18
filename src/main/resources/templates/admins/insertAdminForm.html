@@ -7,7 +7,6 @@
     <style>
         body {
             background-color: #f8f9fa;
-            color: #333;
         }
         .container {
             max-width: 800px;
@@ -33,7 +32,7 @@
             background-color: #2d6caa;
         }
         .btn-back {
-            background-color: #3788D8;
+            background-color: #6c757d;
             border: none;
             color: #fff;
             padding: 10px 20px;
@@ -49,7 +48,8 @@
             margin-top: 40px;
         }
         p{
-        font-size: 35px
+        font-wight: bold;
+        font-size: 35px;
         }
     </style>
 </head>
@@ -60,7 +60,7 @@
 <!-- Content -->
 <div class="container">
     <p class="header-title">관리자 등록</p>
-    <form th:action="@{/semi/admin/insert}" method="post" th:object="${adminDto}" class="needs-validation" novalidate>
+    <form th:action="@{/semi/admin/insert}" method="post" th:object="${adminDto}" class="needs-validation border p-4 bg-white rounded shadow-sm" novalidate>
         <div class="mb-3">
             <label for="id" class="form-label">아이디</label>
             <input type="number" id="id" name="id" th:field="*{id}" class="form-control" required>
@@ -68,7 +68,6 @@
                 아이디를 입력해주세요.
             </div>
         </div>
-
         <div class="mb-3">
             <label for="name" class="form-label">이름</label>
             <input type="text" id="name" name="name" th:field="*{name}" class="form-control" required>
@@ -76,7 +75,6 @@
                 이름을 입력해주세요.
             </div>
         </div>
-
         <div class="button-group">
             <button type="submit" class="btn btn-outline-primary me-2">저장하기</button>
             <a th:href="@{/semi/admin/show}" class="btn btn-outline-primary me-2">관리자 목록 보기</a>
@@ -95,18 +93,19 @@
 <script>
     // Bootstrap's form validation
     (function () {
-        'use strict';
-        var forms = document.querySelectorAll('.needs-validation');
-        Array.prototype.slice.call(forms).forEach(function (form) {
-            form.addEventListener('submit', function (event) {
-                if (!form.checkValidity()) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                }
-                form.classList.add('was-validated');
-            }, false);
-        });
-    })();
+        'use strict'
+        var forms = document.querySelectorAll('.needs-validation')
+        Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            })
+    })()
 </script>
 </body>
 </html>

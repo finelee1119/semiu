@@ -48,6 +48,10 @@
             text-align: center;
             margin-top: 40px;
         }
+        p {
+            font-weight: bold;
+            font-size: 35px;
+        }
     </style>
 </head>
 <body>
@@ -56,7 +60,7 @@
 
 <!-- Content -->
 <div class="container">
-    <p class="header-title">과목 등록</p>
+    <p class="header-title">강의 등록</p>
     <form id="frm" th:action="@{/semi/subject/insertForm}" method="post" th:object="${subject}" class="needs-validation border p-4 bg-white rounded shadow-sm" novalidate>
         <div class="mb-3">
             <label for="name" class="form-label">강의명</label>
@@ -153,8 +157,8 @@
             </div>
         </div>
         <div class="button-group">
-            <button class="btn btn-outline-primary me-2" type="button" onclick="check()">등록</button>
-            <button class="btn btn-outline-primary me-2" type="button">다시쓰기</button>
+            <button class="btn btn-outline-primary me-2" type="button" onclick="check()">저장하기</button>
+            <a th:href="@{/semi/subject/show}" class="btn btn-outline-primary me-2" type="button">이전 화면으로 돌아가기</a>
         </div>
     </form>
 </div>
