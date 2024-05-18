@@ -117,11 +117,12 @@
             <div class="input-group mb-3">
                 <input type="text" name="keyword" class="form-control" placeholder="검색어 입력(강의코드/강의명)">
                 <button class="btn btn-outline-secondary" type="submit">검색</button>
-                <a th:href="@{/semi/admin/subject/show}" class="btn btn-outline-secondary">검색초기화</a>
+
             </div>
         </form>
         <div class="button-group">
             <a th:href="@{/semi/admin/subject/insertForm}" class="btn btn-outline-primary me-2">강의 등록하기</a>
+            <a th:href="@{/semi/admin/subject/show}" class="btn btn-outline-primary me-2">검색초기화</a>
             <a th:href="@{/semi/admin/home}" class="btn btn-outline-primary me-2">메인 화면으로 돌아가기</a>
         </div>
     </div>
