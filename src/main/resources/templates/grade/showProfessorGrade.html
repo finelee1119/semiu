@@ -44,7 +44,7 @@
             <input type="hidden" th:value="*{id}" name="id">
         </div>
         <table class="table table-bordered" style="text-align: center;" >
-            <thead class="table-light">
+            <thead class="table-secondary">
             <tr style="text-align: center;">
                 <th>No</th>
                 <th>강의코드</th>
@@ -57,8 +57,8 @@
                 <th>이름</th>
                 <th>성적</th>
             </tr>
-            </thead>
-            <tbody class="table-group-divider">
+            </thead >
+            <tbody>
             <tr th:each="gradeList, iterstat : ${gradeList}" style="text-align: center;">
                 <form th:action="@{/semi/grade/insertForm/{id}(id=*{id})}" method="post"
                       th:id="'insertForm_' + ${gradeList.studentId} + '_' + ${gradeList.subjectId}">

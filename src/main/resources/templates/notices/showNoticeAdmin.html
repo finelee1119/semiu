@@ -10,10 +10,14 @@
             text-align:center;
             vertical-align: middle;
         }
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+        }
         p {
             font-weight: bold;
             font-size: 35px;
-            margin-top: 20px;
+            color: #3788D8;
             text-align:center;
         }
         .button-group {
@@ -25,10 +29,10 @@
 </head>
 <body>
     <th:block th:replace="~{fragments/header_admin :: header}"></th:block>
-    <div class="container">
-        <p>공지사항</p>
-        <table class="table">
-            <thead>
+    <div class="container" style="padding-left: 50px; padding-right: 50px;">
+        <br><p>공지사항</p><br>
+        <table class="table table-bordered">
+            <thead class="table-light">
             <tr>
                 <th>번호</th>
                 <th>제목</th>
@@ -83,9 +87,9 @@
         </div>
 
         <!-- 검색 처리 -->
-        <form th:action="@{/semi/notice/show}" method="get">
+        <form th:action="@{/semi/admin/notice/showAll}" method="get">
             <div class="input-group mb-3">
-                <input type="text" name="keyword" class="form-control" placeholder="검색어 입력">
+                <input type="text" name="keyword" class="form-control" placeholder="검색어 입력(제목)">
                 <button class="btn btn-outline-secondary" type="submit">검색</button>
             </div>
             <div class="button-group">

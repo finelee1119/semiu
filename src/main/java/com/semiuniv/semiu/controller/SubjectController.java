@@ -20,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 @Slf4j
@@ -105,14 +106,13 @@ public class SubjectController {
 
     //삭제
     @PostMapping("/deleteSubjects")
-    public String deleteSubjects(@Valid @ModelAttribute("selectedIds") Integer[] selectedIds, BindingResult bindingResult) {
+    public String deleteSubjects(@Valid @ModelAttribute("selectedIds") Integer[] selectedIds, RedirectAttributes redirectAttributes) {
         try {
             for (Integer id : selectedIds) {
                 subjectService.deleteSubject(id);
             }
         }  catch (Exception e) {
-            bindingResult.reject("deleteFailed","수강/성적 데이터가 존재하여 삭제가 불가능합니다.");
-            return "subjects/showSubjectList";
+            redirectAttributes.addFlashAttribute("deleteFailed","수강/성적 데이터가 존재하여 삭제가 불가능합니다.");
         }
         return "redirect:/semi/admin/subject/show";
     }

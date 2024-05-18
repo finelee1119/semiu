@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -99,8 +100,12 @@ public class ProfessorController {
 
     //삭제
     @PostMapping("/delete/{deleteId}")
-    public String delete(@PathVariable("deleteId") Integer id) {
-        professorService.deleteProfessor(id);
+    public String delete(@Valid @PathVariable("deleteId") Integer id, RedirectAttributes redirectAttributes) {
+        try {
+            professorService.deleteProfessor(id);
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("deleteFailed", "수강/성적 데이터가 존재하여 삭제할 수 없습니다.");
+        }
         return "redirect:/semi/admin/professor/show";
     }
 }
