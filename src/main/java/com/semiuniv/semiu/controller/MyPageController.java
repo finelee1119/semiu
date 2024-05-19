@@ -111,6 +111,8 @@ public class MyPageController {
     public String updateProfileForm(@PathVariable("updateId") Integer id, Model model) {
         ProfessorDto professorDto = professorService.showOneProfessor(id);
         model.addAttribute("professorDto", professorDto);
+        UserDto userDto = new UserDto();
+        model.addAttribute("userDto", userDto);
         List<Department> departments = departmentRepository.findAll();
         model.addAttribute("departments", departments);
         return "profile/professorProfileUpdate";
