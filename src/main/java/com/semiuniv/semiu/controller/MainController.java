@@ -38,7 +38,7 @@ public class MainController {
         // 로그인, 로그아웃후 : Role에 맞는 홈에 이동 > 뒤로 가기 : 위치
 
         if(principal == null){
-            return"welcome";
+            return "index";
         }else{
             String loginId = principal.getName();
             System.out.printf(loginId);
@@ -59,22 +59,22 @@ public class MainController {
                 System.out.println(studentLogin.toString());
                 model.addAttribute("principal", principal.getName());
                 model.addAttribute("studentLogin", studentLogin);
-                return "welcome";
+                return "index";
             } else if (professor.isPresent()) {
                 Professor professorLogin = professor.get();
                 System.out.println(professorLogin.toString());
                 model.addAttribute("principal", principal.getName());
                 model.addAttribute("professorLogin", professorLogin);
-                return "welcome";
+                return "index";
             } else if (admin.isPresent()) {
                 Admin adminLogin = admin.get();
                 System.out.println(adminLogin.toString());
                 model.addAttribute("principal", principal.getName());
                 model.addAttribute("adminLogin", adminLogin);
-                return "welcome";
+                return "index";
             }
         }
-        return "welcome";
+        return "index";
     }
 
 //    @GetMapping("/login-page")
