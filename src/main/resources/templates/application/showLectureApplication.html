@@ -181,6 +181,31 @@
                     </tr>
                     <tr>
                         <td colspan="5"  style="text-align: center;">
+                            <!--수강 신청 :  시간표-->
+                            <table class="table table-bordered">
+                                <tr>
+                                    <th>시간표</th>
+                                    <th>월</th>
+                                    <th>화</th>
+                                    <th>수</th>
+                                    <th>목</th>
+                                    <th>금</th>
+                                </tr>
+                                <tr th:each="hour : ${#numbers.sequence(9, 17)}">
+                                    <!-- 해당 시간 표시 -->
+                                    <td th:text="${hour + ':00'}"></td>
+                                    <!-- 월요일의 수업 정보 표시 -->
+                                    <td th:each="sub : ${subjectApplication}" th:if="${sub.startTime.hour == hour and sub.dayOfWeek == '월'}" th:utext="${sub.name + '<br>' + sub.classroom.id}" class="specialTd"></td>
+                                    <!-- 화요일의 수업 정보 표시 -->
+                                    <td th:each="sub : ${subjectApplication}" th:if="${sub.startTime.hour == hour and sub.dayOfWeek == '화'}"  th:utext="${sub.name + '<br>' + sub.classroom.id}" class="specialTd"></td>
+                                    <!-- 수요일의 수업 정보 표시 -->
+                                    <td th:each="sub : ${subjectApplication}" th:if="${sub.startTime.hour == hour and sub.dayOfWeek == '수'}"  th:utext="${sub.name + '<br>' + sub.classroom.id}" class="specialTd"></td>
+                                    <!-- 목요일의 수업 정보 표시 -->
+                                    <td th:each="sub : ${subjectApplication}" th:if="${sub.startTime.hour == hour and sub.dayOfWeek == '목'}"  th:utext="${sub.name + '<br>' + sub.classroom.id}" class="specialTd"></td>
+                                    <!-- 금요일의 수업 정보 표시 -->
+                                    <td th:each="sub : ${subjectApplication}" th:if="${sub.startTime.hour == hour and sub.dayOfWeek == '금'}"  th:utext="${sub.name + '<br>' + sub.classroom.id}" class="specialTd"></td>
+                                </tr>
+                            </table>
                         </td>
                     </tr>
                     </tbody>
@@ -198,5 +223,28 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // 랜덤 밝은 색상 생성 함수
+    function getRandomBrightColor() {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        var r, g, b;
+        do {
+            r = Math.floor(Math.random() * 256);
+            g = Math.floor(Math.random() * 256);
+            b = Math.floor(Math.random() * 256);
+        } while (r < 150 || g < 150 || b < 150); // 밝은 색상 조건 설정
+        color += ('0' + r.toString(16)).slice(-2);
+        color += ('0' + g.toString(16)).slice(-2);
+        color += ('0' + b.toString(16)).slice(-2);
+        return color;
+    }
+
+    // 특정 클래스를 가진 td 요소에 랜덤 밝은 색상 적용
+    var specialTds = document.querySelectorAll('.specialTd');
+    specialTds.forEach(function(td) {
+        td.style.backgroundColor = getRandomBrightColor();
+    });
+</script>
 </body>
 </html>
