@@ -1,8 +1,11 @@
 package com.semiuniv.semiu.controller;
 
+import com.semiuniv.semiu.dto.StudentGradeDto;
 import com.semiuniv.semiu.entity.Student;
+import com.semiuniv.semiu.entity.StudentGrade;
 import com.semiuniv.semiu.entity.StudentSubject;
 import com.semiuniv.semiu.entity.Subject;
+import com.semiuniv.semiu.service.StudentGradeService;
 import com.semiuniv.semiu.service.StudentService;
 import com.semiuniv.semiu.service.StudentSubjectService;
 import com.semiuniv.semiu.service.SubjectService;
@@ -23,6 +26,7 @@ public class ApplicationController {
     private final StudentService studentService;
     private final SubjectService subjectService;
     private final StudentSubjectService studentSubjectService;
+    private final StudentGradeService studentGradeService;
 
     //수강 신청 페이지 : 로그인 전
     @GetMapping("application")
@@ -76,7 +80,12 @@ public class ApplicationController {
             studentSubject.setStudent(studentId);
             studentSubject.setSubject(id);
             studentSubjectService.insertApplication(studentSubject);
-
+            //StudentGrade 데이터 추가
+            StudentGradeDto gradedto = new StudentGradeDto();
+            gradedto.setStudent(studentId);
+            gradedto.setSubject(id);
+            studentGradeService.studentSubjectInsert(gradedto);
+            
             //subject : 정원 변경 +증가
             subjectService.updateSubjectTotalStudent(id);
         }

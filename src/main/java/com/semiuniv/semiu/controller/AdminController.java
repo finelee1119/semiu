@@ -1,10 +1,14 @@
 package com.semiuniv.semiu.controller;
 
+import com.semiuniv.semiu.constant.UserRole;
 import com.semiuniv.semiu.dto.AdminDto;
 import com.semiuniv.semiu.dto.UserDto;
+import com.semiuniv.semiu.entity.Users;
+import com.semiuniv.semiu.repository.UserRepository;
 import com.semiuniv.semiu.service.AdminService;
 import com.semiuniv.semiu.service.EmailService;
 import jakarta.validation.Valid;
+import org.apache.catalina.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -22,10 +26,12 @@ public class AdminController {
 
     private final AdminService adminService;
     private final EmailService emailService;
+    private final UserRepository userRepository;
 
-    public AdminController(AdminService adminService, EmailService emailService) {
+    public AdminController(AdminService adminService, EmailService emailService, UserRepository userRepository) {
         this.adminService = adminService;
         this.emailService = emailService;
+        this.userRepository = userRepository;
     }
 
     //등록
@@ -42,6 +48,12 @@ public class AdminController {
         if (bindingResult.hasErrors()) {
             return "admins/insertAdminForm";
         }
+        // 관리자 등록 시 유저로 등록
+        Users users = new Users();
+        users.setId(dto.getId());
+        users.setPassword(String.valueOf(dto.getId()));
+        users.setRole(UserRole.ADMIN);
+        userRepository.save(users);
 
         adminService.insertAdmin(dto);
         return "redirect:/semi/admin/show";
