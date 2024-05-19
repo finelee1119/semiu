@@ -12,6 +12,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 public interface StudentGradeRepository extends JpaRepository<StudentGrade, Integer> {
     Page<StudentGrade> findBySubjectProfessorId(Integer professorId, Pageable pageable);
@@ -23,10 +24,9 @@ public interface StudentGradeRepository extends JpaRepository<StudentGrade, Inte
 
     StudentGrade findByNo(Integer id);
 
-//    Page<StudentGrade> findByStudentId(Integer studentId);
 
     Page<StudentGrade> findBySubjectId(Integer keyword, Pageable pageable);
-//    Page<StudentGrade> findByNameContaining(String keyword, Pageable pageable);
+    Page<StudentGrade> findBySubjectNameContaining(String keyword, Pageable pageable);
 
     Page<StudentGrade> findByStudentId(Integer keyword, Pageable pageable);
 

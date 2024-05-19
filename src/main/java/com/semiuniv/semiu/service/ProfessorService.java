@@ -35,6 +35,10 @@ public class ProfessorService {
                 .map(ProfessorDto::fromProfessorEntity);
     }
 
+    public List<ProfessorDto> showAllProfessor(){
+        return professorRepository.findAll().stream().map(x -> ProfessorDto.fromProfessorEntity(x)).toList();
+    }
+
     public ProfessorDto showOneProfessor(Integer id) {
         return professorRepository.findById(id)
                 .map(ProfessorDto::fromProfessorEntity)
