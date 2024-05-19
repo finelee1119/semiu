@@ -31,14 +31,12 @@ public class FindController {
 
     private final StudentService studentService;
     private final ProfessorService professorService;
-    private final UserDetailService userDetailService;
     private final UserRepository userRepository;
     private final EmailService emailService;
 
     public FindController(StudentService studentService, ProfessorService professorService, UserDetailService userDetailService, UserRepository userRepository, EmailService emailService) {
         this.studentService = studentService;
         this.professorService = professorService;
-        this.userDetailService = userDetailService;
         this.userRepository = userRepository;
         this.emailService = emailService;
     }
@@ -98,29 +96,6 @@ public class FindController {
         return professor.getName().equals(name) && professor.getBirth().equals(birth) && professor.getPhone().equals(phone);
     }
 
-//    //비밀번호 찾기
-//    @GetMapping("/showPassword")
-//    public String showPassword(){
-//        return "find/showPassword";
-//    }
-//
-//    @PostMapping("findPassword")
-//    public String findPassword(@RequestParam("id") Integer id, Model model) {
-//        String userIdString = String.valueOf(id);
-//        UserDetails userDetails = userDetailService.loadUserByUsername(userIdString);
-//        Optional<Users> user = userRepository.findById(userIdString);
-//        Users userAccount = user.get();
-//        // 조회된 사용자 정보가 null이 아니고, ID와 사용자 이름이 같은지 확인합니다.
-//        if (userDetails != null && userDetails.getUsername().equals(userIdString)) {
-//            userAccount.setPassword(userIdString);
-//            userRepository.save(userAccount);
-//            model.addAttribute("password", userDetails.getPassword());
-//            return "find/password";
-//        } else {
-//            model.addAttribute("error", "ID를 다시 확인해주세요");
-//            return "errorPage";
-//        }
-//    }
 
     //비밀번호 찾기
     @GetMapping("/showPassword")
@@ -132,18 +107,14 @@ public class FindController {
     public String findPassword(@RequestParam("id") Integer id,
                                @RequestParam("email") String email,
                                Model model) {
-        // ID가 비어 있는지 확인
         if (id == null) {
             model.addAttribute("error", "ID를 입력해주세요.");
             return "find/password";
         }
-
-        // 이메일이 비어 있는지 확인
         if (email == null || email.isEmpty()) {
             model.addAttribute("error", "이메일을 입력해주세요.");
             return "find/password";
         }
-
         // 이메일 형식인지 확인
         if (!EmailValidator.isValidEmail(email)) {
             model.addAttribute("error", "유효한 이메일 주소를 입력해주세요.");
@@ -160,7 +131,6 @@ public class FindController {
 
             try {
                 String message = String.format("안녕하세요, %d님. 임시 비밀번호 안내 관련 메일입니다. 귀하의 비밀번호는: %s 입니다. \n 임시 비밀번호로 다시 로그인해 주세요.", id, temporaryPassword);
-                // 이메일 주소가 null이 아닌 경우에만 이메일을 보냅니다.
                 if (email != null) {
                     emailService.sendSimpleMessage(email, "임시 비밀번호 안내", message);
                 }
@@ -182,11 +152,9 @@ public class FindController {
             return email != null && email.matches("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}");
         }
 
-        public class PasswordGenerator {
+        public static class PasswordGenerator {
 
-            // 임시 비밀번호 길이 설정
             private static final int TEMP_PASSWORD_LENGTH = 10;
-            // 임시 비밀번호에 포함될 문자열
             private static final String PASSWORD_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
             public static String generateTemporaryPassword() {
@@ -200,11 +168,6 @@ public class FindController {
                 }
 
                 return password.toString();
-            }
-
-            public static void main(String[] args) {
-                String tempPassword = generateTemporaryPassword();
-                System.out.println("임시 비밀번호: " + tempPassword);
             }
         }
     }
