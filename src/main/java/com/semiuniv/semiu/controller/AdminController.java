@@ -48,14 +48,14 @@ public class AdminController {
         if (bindingResult.hasErrors()) {
             return "admins/insertAdminForm";
         }
+
+        adminService.insertAdmin(dto);
         // 관리자 등록 시 유저로 등록
         Users users = new Users();
         users.setId(dto.getId());
         users.setPassword(String.valueOf(dto.getId()));
         users.setRole(UserRole.ADMIN);
         userRepository.save(users);
-
-        adminService.insertAdmin(dto);
         return "redirect:/semi/admin/show";
     }
 

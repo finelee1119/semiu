@@ -3,10 +3,11 @@ package com.semiuniv.semiu.controller;
 import com.semiuniv.semiu.constant.UserRole;
 import com.semiuniv.semiu.dto.StudentDto;
 import com.semiuniv.semiu.entity.Department;
+import com.semiuniv.semiu.entity.Student;
 import com.semiuniv.semiu.entity.Users;
 import com.semiuniv.semiu.repository.DepartmentRepository;
-import com.semiuniv.semiu.repository.UserRepository;
 import com.semiuniv.semiu.service.StudentService;
+import com.semiuniv.semiu.service.UserDetailService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/semi/admin/student")
@@ -26,12 +28,12 @@ public class StudentController {
 
     private final DepartmentRepository departmentRepository;
     private final StudentService studentService;
-    private final UserRepository userRepository;
+    private final UserDetailService userService;
 
-    public StudentController(StudentService studentService, DepartmentRepository departmentRepository, UserRepository userRepository) {
+    public StudentController(StudentService studentService, DepartmentRepository departmentRepository, UserDetailService userService) {
         this.studentService = studentService;
         this.departmentRepository = departmentRepository;
-        this.userRepository = userRepository;
+        this.userService = userService;
     }
 
     //등록
@@ -50,14 +52,15 @@ public class StudentController {
         if (bindingResult.hasErrors()) {
             return "students/insertStudent";
         }
-        // 학생 등록 시 유저로 등록
-        Users users = new Users();
-        users.setId(dto.getId());
-        users.setPassword(String.valueOf(dto.getId()));
-        users.setRole(UserRole.STUDENT);
-        userRepository.save(users);
 
         studentService.insertStudent(dto);
+        // 학생 등록 시 유저로 등록
+        Optional<Student> user = studentService.findByName(dto.getName());
+        Users users = new Users();
+        users.setId(user.get().getId());
+        users.setPassword(String.valueOf(user.get().getId()));
+        users.setRole(UserRole.STUDENT);
+        userService.createUser(users);
         return "redirect:/semi/admin/student/show";
     }
 

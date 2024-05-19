@@ -3,6 +3,7 @@ package com.semiuniv.semiu.controller;
 import com.semiuniv.semiu.constant.UserRole;
 import com.semiuniv.semiu.dto.ProfessorDto;
 import com.semiuniv.semiu.entity.Department;
+import com.semiuniv.semiu.entity.Professor;
 import com.semiuniv.semiu.entity.Users;
 import com.semiuniv.semiu.repository.DepartmentRepository;
 import com.semiuniv.semiu.repository.UserRepository;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/semi/admin/professor")
@@ -51,15 +53,14 @@ public class ProfessorController {
             return "professors/insertProfessorForm";
         }
 
+        professorService.insertProfessor(dto);
         // 교수 등록 시 유저로 등록
+        Optional<Professor> user = professorService.findByName(dto.getName());
         Users users = new Users();
-        users.setId(dto.getId());
-        users.setPassword(String.valueOf(dto.getId()));
+        users.setId(user.get().getId());
+        users.setPassword(String.valueOf(user.get().getId()));
         users.setRole(UserRole.PROFESSOR);
         userRepository.save(users);
-
-
-        professorService.insertProfessor(dto);
         return "redirect:/semi/admin/professor/show";
     }
 
