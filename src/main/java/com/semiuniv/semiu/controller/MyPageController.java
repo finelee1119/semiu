@@ -39,14 +39,12 @@ public class MyPageController {
     final ProfessorService professorService;
 
     private final EmailService emailService;
-    private final UserDetailService userDetailService;
 
     public MyPageController(DepartmentRepository departmentRepository, StudentService studentService, ProfessorService professorService, UserDetailService userDetailService, EmailService emailService, UserDetailService userDetailService1) {
         this.departmentRepository = departmentRepository;
         this.studentService = studentService;
         this.professorService = professorService;
         this.emailService = emailService;
-        this.userDetailService = userDetailService1;
     }
 
     @GetMapping("/show")
