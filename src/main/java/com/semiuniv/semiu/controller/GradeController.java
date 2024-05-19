@@ -3,6 +3,7 @@ package com.semiuniv.semiu.controller;
 import com.semiuniv.semiu.constant.Grade;
 import com.semiuniv.semiu.dto.GradeDto;
 import com.semiuniv.semiu.dto.StudentGradeDto;
+import com.semiuniv.semiu.entity.Professor;
 import com.semiuniv.semiu.service.StudentGradeService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -38,9 +39,9 @@ public class GradeController {
         }else {
             try {
                 int key = Integer.parseInt(keyword);
-                gradeDtoList = studentGradeService.searchSubjectById(key, pageable);
+                gradeDtoList = studentGradeService.searchStudentIdAndSubjectId(id, key, pageable);
             } catch (NumberFormatException e) {
-                gradeDtoList = studentGradeService.searchSubjectByName(keyword, pageable);
+                gradeDtoList = studentGradeService.searchStudentIdAndSubjectByName(id, keyword, pageable);
             }
         }
         log.info(gradeDtoList.toString());
@@ -64,7 +65,7 @@ public class GradeController {
                 gradeDtoList = studentGradeService.searchSubjectById(key, pageable);
                 if (gradeDtoList.isEmpty()) {
                     // subjectId로 검색한 결과가 없을 경우 studentId로 검색 시도
-                    gradeDtoList = studentGradeService.searchStudentById(key, pageable);
+                    gradeDtoList = studentGradeService.searchSubjectIdAndStudentId(id, key, pageable);
                 }
             } catch (NumberFormatException e) {
                 // keyword가 숫자가 아닐 경우 studentId로 검색
