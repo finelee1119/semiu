@@ -52,7 +52,7 @@ function add(id,name,professor,classroom,subjectType,credit,dayOfWeek,startTime,
                 applicationItems = applicationId[i].textContent;
            }
            console.log("id"+applicationItems);
-
+           console.log("checked"+id);
           //수강신청목록 : tr
           var applicationList = addLecture.querySelectorAll('tr');
           for (let i = 0; i < applicationList.length; i++) {
@@ -65,7 +65,7 @@ function add(id,name,professor,classroom,subjectType,credit,dayOfWeek,startTime,
                          var applicationListId = applicationListIds.querySelector("span").textContent;
                              console.log("text", applicationListId);
 
-                         if(applicationItems == applicationListId){
+                         if(id == applicationListId){
                             console.log(applicationList);
                             console.log(applicationListIds);
                             applicationList[i].remove();
