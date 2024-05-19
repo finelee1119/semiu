@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -116,9 +117,10 @@ public class GradeController {
     }
 
     @PostMapping("admin/grade/deleteGrade")
-    public String deleteGrades(@ModelAttribute("selectedIds") Integer[] selectedIds) {
+    public String deleteGrades(@RequestParam("selectedIds") Integer[] selectedIds) {
+        log.info(Arrays.toString(selectedIds));
         for (Integer id : selectedIds) {
-        studentGradeService.deleteGrade(id);}
+            studentGradeService.deleteGrade(id);}
         return "redirect:/semi/admin/grade/show";
     }
 }

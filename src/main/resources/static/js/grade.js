@@ -76,21 +76,21 @@ function allSelected() {
         }
 
 
-    function deleteSelectedSubjects() {
-    if (confirm('선택한 성적 데이터를 삭제하시겠습니까?')) {
-        var form = document.getElementById("deleteForm");
-        var selectedItems = form.querySelectorAll('input[name="selectedIds"]:checked');
-        var selectedIds = [];
-        for (var i = 0; i < selectedItems.length; i++) {
-            selectedIds.push(selectedItems[i].value);
-        }
-        if(selectedIds.length === 0) {
-            alert("삭제할 데이터가 없습니다.")
-            return false;
-        }
-        console.log("SelectedIDs:", selectedIds);
-        form.submit();
-        return true;
-    } else {
-        return false;}
+function deleteSelectedSubjects() {
+if (confirm('선택한 성적 데이터를 삭제하시겠습니까?')) {
+    var form = document.getElementById("deleteForm");
+    var selectedItems = form.querySelectorAll('input[name="selectedIds"]:checked');
+    var selectedIds = [];
+    for (var i = 0; i < selectedItems.length; i++) {
+        selectedIds.push(selectedItems[i].value);
     }
+    if(selectedIds.length === 0) {
+        alert("삭제할 데이터가 없습니다.")
+        return false;
+    }
+    console.log("SelectedIDs:", selectedIds);
+    form.submit();
+    return true;
+} else {
+    return false;}
+}
