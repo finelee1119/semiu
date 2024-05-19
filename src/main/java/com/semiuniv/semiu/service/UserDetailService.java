@@ -7,6 +7,8 @@ import com.semiuniv.semiu.entity.Student;
 import com.semiuniv.semiu.entity.Users;
 import com.semiuniv.semiu.repository.StudentRepository;
 import com.semiuniv.semiu.repository.UserRepository;
+import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,7 +22,12 @@ import java.util.Optional;
 public class UserDetailService implements UserDetailsService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-
+    @Autowired
+    EntityManager em;
+    @Transactional
+    public void createUser(Users users) {
+        em.persist(users);
+    }
     @Autowired
     public UserDetailService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
