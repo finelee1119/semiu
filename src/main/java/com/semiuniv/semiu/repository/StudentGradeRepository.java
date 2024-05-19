@@ -26,9 +26,17 @@ public interface StudentGradeRepository extends JpaRepository<StudentGrade, Inte
 
 
     Page<StudentGrade> findBySubjectId(Integer keyword, Pageable pageable);
+
+    Page<StudentGrade> findByStudentIdAndSubjectId(Integer id, Integer keyword, Pageable pageable);
     Page<StudentGrade> findBySubjectNameContaining(String keyword, Pageable pageable);
 
+    Page<StudentGrade> findByStudentIdAndSubjectNameContaining(Integer id, String keyword, Pageable pageable);
+
     Page<StudentGrade> findByStudentId(Integer keyword, Pageable pageable);
+
+    @Query("SELECT sg FROM StudentGrade sg JOIN sg.subject s WHERE s.professor.id = :professorId AND sg.student.id = :studentId")
+    Page<StudentGrade> findByProfessorIdAndStudentId(@Param("professorId") Integer professorId, @Param("studentId") Integer studentId, Pageable pageable);
+
 
 }
 

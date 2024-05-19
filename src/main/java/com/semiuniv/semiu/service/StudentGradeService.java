@@ -163,13 +163,29 @@ public class StudentGradeService {
                 .map(GradeDto::fromStudentGradeEntity);
     }
 
+    public Page<GradeDto> searchStudentIdAndSubjectId(int id, int keyword, Pageable pageable) {
+        return studentGradeRepository.findByStudentIdAndSubjectId(id, keyword, pageable)
+                .map(GradeDto::fromStudentGradeEntity);
+    }
+
+
     public Page<GradeDto> searchStudentById(int id, Pageable pageable) {
         return studentGradeRepository.findByStudentId(id, pageable)
                 .map(GradeDto::fromStudentGradeEntity);
     }
 
+    public Page<GradeDto> searchSubjectIdAndStudentId(int id, int keyword, Pageable pageable) {
+        return studentGradeRepository.findByProfessorIdAndStudentId(id, keyword, pageable)
+                .map(com.semiuniv.semiu.dto.GradeDto::fromStudentGradeEntity);
+    }
+
     public Page<GradeDto> searchSubjectByName(String name, Pageable pageable) {
         return studentGradeRepository.findBySubjectNameContaining(name, pageable)
+                .map(GradeDto::fromStudentGradeEntity);
+    }
+
+    public Page<GradeDto> searchStudentIdAndSubjectByName(int id, String name, Pageable pageable) {
+        return studentGradeRepository.findByStudentIdAndSubjectNameContaining(id, name, pageable)
                 .map(GradeDto::fromStudentGradeEntity);
     }
 
