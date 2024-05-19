@@ -11,6 +11,11 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/layout.css}">
     <script type="text/javascript" th:src="@{/js/applicationForm.js}" ></script>
+    <script>
+        function goBack() {
+            window.history.back();
+       }
+    </script>
     <style>
         body {
             background-color: #f8f9fa;
@@ -98,6 +103,7 @@
 
     <div class="button-group">
         <a th:href="@{/semi/notice/show}" class="btn btn-outline-primary me-2">검색초기화</a>
+        <a class="btn btn-outline-primary me-2" onclick="goBack()">메인 화면으로 돌아가기</a>
     </div>
 
 <!-- Footer fragment -->
