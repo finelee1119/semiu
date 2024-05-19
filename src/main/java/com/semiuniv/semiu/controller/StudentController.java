@@ -1,8 +1,11 @@
 package com.semiuniv.semiu.controller;
 
+import com.semiuniv.semiu.constant.UserRole;
 import com.semiuniv.semiu.dto.StudentDto;
 import com.semiuniv.semiu.entity.Department;
+import com.semiuniv.semiu.entity.Users;
 import com.semiuniv.semiu.repository.DepartmentRepository;
+import com.semiuniv.semiu.repository.UserRepository;
 import com.semiuniv.semiu.service.StudentService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -23,10 +26,12 @@ public class StudentController {
 
     private final DepartmentRepository departmentRepository;
     private final StudentService studentService;
+    private final UserRepository userRepository;
 
-    public StudentController(StudentService studentService, DepartmentRepository departmentRepository) {
+    public StudentController(StudentService studentService, DepartmentRepository departmentRepository, UserRepository userRepository) {
         this.studentService = studentService;
         this.departmentRepository = departmentRepository;
+        this.userRepository = userRepository;
     }
 
     //등록
@@ -45,6 +50,12 @@ public class StudentController {
         if (bindingResult.hasErrors()) {
             return "students/insertStudent";
         }
+        // 학생 등록 시 유저로 등록
+        Users users = new Users();
+        users.setId(dto.getId());
+        users.setPassword(String.valueOf(dto.getId()));
+        users.setRole(UserRole.STUDENT);
+        userRepository.save(users);
 
         studentService.insertStudent(dto);
         return "redirect:/semi/admin/student/show";

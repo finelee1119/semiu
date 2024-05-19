@@ -167,10 +167,14 @@ public class StudentGradeService {
         return studentGradeRepository.findByStudentId(id, pageable)
                 .map(GradeDto::fromStudentGradeEntity);
     }
-//    public Page<GradeDto> searchSubjectBySubjectName(String keyword, Pageable pageable) {
-//        return subjectRepository.findByNameContaining(keyword, pageable)
-//                .map(GradeDto::fromStudentGradeEntity);
-//    }
+
+    public void studentSubjectInsert(StudentGradeDto gradeDto){
+        StudentGrade studentGrade = new StudentGrade();
+        studentGrade.setStudent(gradeDto.getStudent());
+        studentGrade.setSubject(gradeDto.getSubject());
+        studentGradeRepository.save(studentGrade);
+    }
+
 }
 
 
