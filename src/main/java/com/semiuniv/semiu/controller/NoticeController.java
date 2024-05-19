@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -44,7 +45,7 @@ public class NoticeController {
             return "notices/insertNotice";
         }
         noticeService.insertNotice(dto);
-        return "redirect:/semi/notice/show";
+        return "redirect:/semi/admin/notice/showAll";
     }
 
     //조회 + 검색
@@ -87,11 +88,8 @@ public class NoticeController {
     // 공지사항 글 디테일 ( 학생/교수/관리자 공통 사용 )
     @GetMapping("/notice/show/detail")
     public String showDetail(@RequestParam("id") Integer id, Model model) {
-        NoticeDto noticeDto = noticeService.getNoticeById(id);
 
-        if (noticeDto == null) {
-            return "redirect:/semi/notice/show";
-        }
+        NoticeDto noticeDto = noticeService.getNoticeById(id);
 
         model.addAttribute("noticeDto", noticeDto);
         return "notices/showNoticeDetail";
