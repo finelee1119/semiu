@@ -66,7 +66,7 @@ public class FindController {
             return "find/studentId";
         }
         model.addAttribute("error", "맞는 정보를 찾을 수 없습니다. 다시 시도해주세요");
-        return "error";
+        return "find/errorId";
     }
 
 
@@ -89,7 +89,7 @@ public class FindController {
         }
 
         model.addAttribute("error", "맞는 정보를 찾을 수 없습니다. 다시 시도해주세요");
-        return "error";
+        return "find/errorId";
     }
 
     private boolean professorMatches(Professor professor, String name, LocalDate birth, String phone) {
