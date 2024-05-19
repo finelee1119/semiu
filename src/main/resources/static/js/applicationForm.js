@@ -92,7 +92,7 @@ function applicationSelectedSubjects() {
             alert("수강 신청 내역이 없습니다.")
             return false;
         }
-         alert(selectedIds);
+        alert(selectedIds + "과목 신청완료");
         console.log("SelectedIDs:", selectedIds);
         form.submit();
         return true;
