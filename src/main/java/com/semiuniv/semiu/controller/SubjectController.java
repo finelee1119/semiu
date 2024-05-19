@@ -40,7 +40,7 @@ public class SubjectController {
         List<Integer> classrooms = classroomRepository.findAllIds();
         model.addAttribute("classrooms", classrooms);
 
-        Page<ProfessorDto> professors = professorService.showAllProfessors(pageable);
+        List<ProfessorDto> professors = professorService.showAllProfessor();
         model.addAttribute("professors", professors);
 
         SubjectDto subjectDto = new SubjectDto();
@@ -88,7 +88,7 @@ public class SubjectController {
         List<Integer> classrooms = classroomRepository.findAllIds();
         model.addAttribute("classrooms", classrooms);
 
-        Page<ProfessorDto> professors = professorService.showAllProfessors(pageable);
+        List<ProfessorDto> professors = professorService.showAllProfessor();
         model.addAttribute("professors", professors);
 
         SubjectDto subject = subjectService.findSubjectId(id);

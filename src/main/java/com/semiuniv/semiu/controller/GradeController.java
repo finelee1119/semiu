@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Arrays;
 import java.util.List;
@@ -39,6 +40,7 @@ public class GradeController {
                 int key = Integer.parseInt(keyword);
                 gradeDtoList = studentGradeService.searchSubjectById(key, pageable);
             } catch (NumberFormatException e) {
+                gradeDtoList = studentGradeService.searchSubjectByName(keyword, pageable);
             }
         }
         log.info(gradeDtoList.toString());
@@ -66,7 +68,7 @@ public class GradeController {
                 }
             } catch (NumberFormatException e) {
                 // keyword가 숫자가 아닐 경우 studentId로 검색
-                gradeDtoList = studentGradeService.searchStudentById(Integer.parseInt(keyword), pageable);
+                gradeDtoList = studentGradeService.searchSubjectByName(keyword, pageable);
             }
         }
         model.addAttribute("gradeList", gradeDtoList);
@@ -103,13 +105,9 @@ public class GradeController {
                 int id = Integer.parseInt(keyword);
                 // subjectId로 검색 시도
                 gradeDtoList = studentGradeService.searchSubjectById(id, pageable);
-                if (gradeDtoList.isEmpty()) {
-                    // subjectId로 검색한 결과가 없을 경우 studentId로 검색 시도
-                    gradeDtoList = studentGradeService.searchStudentById(id, pageable);
-                }
-            } catch (NumberFormatException e) {
-                // keyword가 숫자가 아닐 경우 studentId로 검색
-                gradeDtoList = studentGradeService.searchStudentById(Integer.parseInt(keyword), pageable);
+
+            } catch (Exception e){
+                gradeDtoList = studentGradeService.searchSubjectByName(keyword, pageable);
             }
         }
         model.addAttribute("gradeList", gradeDtoList);

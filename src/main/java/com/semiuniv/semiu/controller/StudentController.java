@@ -100,7 +100,7 @@ public class StudentController {
         return "students/updateStudent";
     }
 
-    @PostMapping("/student/update")
+    @PostMapping("/update")
     public String update(@Valid @ModelAttribute("studentDto") StudentDto dto,
                          BindingResult bindingResult) {
 
