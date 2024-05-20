@@ -75,6 +75,13 @@
                 이름을 입력해주세요.
             </div>
         </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">이메일</label>
+            <input type="email" id="email" name="email" th:field="*{email}" class="form-control" required>
+            <div class="invalid-feedback">
+                이메일을 입력해주세요.
+            </div>
+        </div>
         <div class="button-group">
             <button type="submit" class="btn btn-outline-primary me-2">등록하기</button>
             <a th:href="@{/semi/admin/show}" class="btn btn-outline-primary me-2">관리자 목록 보기</a>

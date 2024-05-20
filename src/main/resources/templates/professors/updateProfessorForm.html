@@ -117,6 +117,13 @@
         </div>
 
         <div class="mb-3">
+            <label for="email" class="form-label">이메일</label>
+            <input type="text" id="email" name="email" th:field="*{email}" class="form-control" required>
+            <div class="invalid-feedback">
+                이메일을 입력해주세요.
+            </div>
+        </div>
+        <div class="mb-3">
             <label for="departmentId" class="form-label">학과</label>
             <select id="departmentId" name="departmentId" th:field="*{departmentId}" class="form-select" required>
                 <option th:each="department : ${departments}" th:value="${department.id}" th:text="${department.name}" th:selected="${department.id == professorDto.departmentId}"></option>

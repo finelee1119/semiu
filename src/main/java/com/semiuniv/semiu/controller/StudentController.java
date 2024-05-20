@@ -60,6 +60,7 @@ public class StudentController {
         users.setId(user.get().getId());
         users.setPassword(String.valueOf(user.get().getId()));
         users.setRole(UserRole.STUDENT);
+        users.setEmail(user.get().getEmail());
         userService.createUser(users);
         return "redirect:/semi/admin/student/show";
     }
@@ -107,8 +108,11 @@ public class StudentController {
         if (bindingResult.hasErrors()) {
             return "students/updateStudent";
         }
-
         studentService.updateStudent(dto);
+        Optional<Student> user = studentService.findByName(dto.getName());
+        Users users = userService.searchUserId(user.get().getId());
+        users.setEmail(user.get().getEmail());
+        userService.createUser(users);
         return "redirect:/semi/admin/student/show";
     }
 

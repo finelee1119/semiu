@@ -13,12 +13,14 @@ public class AdminDto {
 
     private Integer id; //아이디
     private String name; //성명
+    private String email;
 
     // Entity -> Dto
     public static AdminDto fromAdminEntity(Admin admin) {
         return new AdminDto(
                 admin.getId(),
-                admin.getName()
+                admin.getName(),
+                admin.getEmail()
         );
     }
 
@@ -27,6 +29,7 @@ public class AdminDto {
         Admin admin = new Admin();
         admin.setId(dto.getId());
         admin.setName(dto.getName());
+        admin.setEmail(dto.getEmail());
         return admin;
     }
 }

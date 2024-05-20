@@ -125,24 +125,30 @@ public class FindController {
 
         if (userOpt.isPresent()) {
             Users user = userOpt.get();
-            String temporaryPassword = EmailValidator.PasswordGenerator.generateTemporaryPassword();
-            user.setPassword(temporaryPassword);
-            userRepository.save(user);
+            log.info(user.getEmail());
+            if (user.getEmail() != null && user.getEmail().equals(email)) {
+                String temporaryPassword = EmailValidator.PasswordGenerator.generateTemporaryPassword();
+                user.setPassword(temporaryPassword);
+                userRepository.save(user);
 
-            try {
-                String message = String.format("안녕하세요, %d님. 임시 비밀번호 안내 관련 메일입니다. 귀하의 비밀번호는: %s 입니다. \n 임시 비밀번호로 다시 로그인해 주세요.", id, temporaryPassword);
-                if (email != null) {
+                try {
+                    String message = String.format("안녕하세요, %d님. 임시 비밀번호 안내 관련 메일입니다. 귀하의 비밀번호는: %s 입니다. \n 임시 비밀번호로 다시 로그인해 주세요.", id, temporaryPassword);
                     emailService.sendSimpleMessage(email, "임시 비밀번호 안내", message);
+                    log.info(message);
+                    model.addAttribute("message", "비밀번호가 이메일로 전송되었습니다.");
+                    return "find/password";
+                } catch (Exception e) {
+                    model.addAttribute("error", "이메일 전송 중 오류가 발생했습니다: " + e.getMessage());
+                    return "find/errorPassword";
                 }
-                log.info(message);
-                model.addAttribute("message", "비밀번호가 이메일로 전송되었습니다.");
-                return "find/password";
-            } catch (Exception e) {
-                model.addAttribute("error", "이메일 전송 중 오류가 발생했습니다: " + e.getMessage());
+            } else {
+                model.addAttribute("error", "입력된 이메일 주소가 등록된 이메일 주소와 일치하지 않습니다.");
+                return "find/errorPassword";
             }
+        } else {
+            model.addAttribute("error", "사용자를 찾을 수 없습니다.");
+            return "find/password";
         }
-        model.addAttribute("error", "사용자를 찾을 수 없습니다.");
-        return "find/password";
     }
 
     public class EmailValidator {

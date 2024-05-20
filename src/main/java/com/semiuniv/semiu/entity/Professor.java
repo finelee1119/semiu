@@ -41,4 +41,7 @@ public class Professor {
 
     @Column(name = "termination_date", nullable = true)
     private LocalDate terminationDate;
+
+    @Column(length = 100)
+    private String email;
 }
