@@ -34,14 +34,12 @@ public class SecurityConfig {
                         .requestMatchers("/semi/admin").hasRole("ADMIN")
                         .requestMatchers("/semi/student").hasRole("STUDENT")
                         .requestMatchers("/semi/professor").hasRole("PROFESSOR")
-//                        .anyRequest().authenticated()) // 나머지 모든 요청은 인증 필요
                 )
 
                 .formLogin((form)->form
                         .loginPage("/semi") // 로그인 페이지 URL
                         .loginProcessingUrl("/login") // 로그인 처리 URL
                         .successHandler(customAuthenticationSuccessHandler)
-//                       .defaultSuccessUrl("/semi/login", true) // 로그인 성공 후 이동할 URL
                         .permitAll() // 로그인 페이지는 모든 사용자 접근 허용
                 )
 

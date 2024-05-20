@@ -31,12 +31,7 @@ public class StudentGradeService {
     @Autowired
     StudentGradeRepository studentGradeRepository;
     @Autowired
-    StudentService studentService;
-    @Autowired
     SubjectService subjectService;
-    @Autowired
-    StudentSubjectRepository subjectRepository;
-
 
     // 강사 성적 조회/입력/수정 (강사 아이디로 데이터 조회)
     public Page<GradeDto> getProfessorGrades(Integer professorId, Pageable pageable) {

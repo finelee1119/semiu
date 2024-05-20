@@ -68,9 +68,9 @@
 
         <div class="mb-3">
             <label for="professor" class="form-label">교수</label>
-            <select th:field="*{professor.id}" id="professor" class="form-select" onchange="professorCheck()" required>
+            <select th:field="*{professor.id}" id="professor" class="form-select" required>
                 <option value="">선택</option>
-                <option th:each="professor : ${professors}" th:value="${professor.id}" th:text="${professor.id}" th:data-name="${professor.name}"></option>
+                <option th:each="professor : ${professors}" th:value="${professor.id}" th:text="${professor.id + ' '+ professor.name}" th:data-name="${professor.name}"></option>
             </select>
             <span id="selectedProfessorName"></span>
         </div>

@@ -22,11 +22,6 @@ public class PrincipalDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-//        Collection<GrantedAuthority> collect = new ArrayList<>();
-//        collect.add(() -> {
-//            return users.getRole().toString();});
-//        return collect;
-
         return Collections.singletonList(new SimpleGrantedAuthority(users.getRole().name()));
     }
 
