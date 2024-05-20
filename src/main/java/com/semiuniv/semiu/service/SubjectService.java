@@ -75,11 +75,9 @@ public class SubjectService {
 
     //수강신청 : 과목 정보 + 신청과목 제외 과목 내역
     public Page<Subject> showSubject(Integer id, Pageable pageable) {
-        // studentSubject All : id = studentId
         List<StudentSubject> studentSubjects = studentSubjectRepository.findByStudentId(id);
-        // id = studentId studentSubject가 없을 경우
+
         if(studentSubjects.isEmpty()){
-            // studentSubject All
             return subjectRepository.findAll(pageable);
         }else{
             // studentSubject All : id = studentId 인 과목 제외 출력 : 쿼리 메소드
@@ -99,7 +97,6 @@ public class SubjectService {
     public List<Subject> showSubjectApplication(Integer id) {
         // studentSubject 전체 : id = student
         List<StudentSubject> studentSubjects = studentSubjectRepository.findByStudentId(id);
-//        System.out.println(studentSubjects);
         if(studentSubjects.isEmpty()){
             return null;
         }else{
@@ -107,10 +104,8 @@ public class SubjectService {
             List<Integer> subjectIds = new ArrayList<>();
             for (StudentSubject subject : studentSubjects){
                 Integer subjectId = subject.getSubject().getId();
-//                System.out.println(subjectId);
                 subjectIds.add(subjectId);
             }
-//            System.out.println(subjectIds);
             subjects = subjectRepository.findByIdIn(subjectIds);
             System.out.println(subjects);
             return subjects;

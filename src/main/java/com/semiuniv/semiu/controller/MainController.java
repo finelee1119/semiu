@@ -37,9 +37,9 @@ public class MainController {
 
         // 로그인, 로그아웃후 : Role에 맞는 홈에 이동 > 뒤로 가기 : 위치
 
-        if(principal == null){
+        if (principal == null) {
             return "index";
-        }else{
+        } else {
             String loginId = principal.getName();
             System.out.printf(loginId);
             //로그인 한 User 정보 : Role 포함
@@ -54,7 +54,7 @@ public class MainController {
             Optional<Professor> professor = professorService.show_professor(Integer.valueOf(loginId));
             Optional<Admin> admin = adminService.show_admin(Integer.valueOf(loginId));
 
-            if (student.isPresent()){
+            if (student.isPresent()) {
                 Student studentLogin = student.get();
                 System.out.println(studentLogin.toString());
                 model.addAttribute("principal", principal.getName());
@@ -76,33 +76,4 @@ public class MainController {
         }
         return "index";
     }
-
-//    @GetMapping("/login-page")
-//    public String loginSuccess(Principal principal, Model model){
-//        Integer loginId = Integer.valueOf(principal.getName());
-//        Optional<Student> student = studentService.show_student(loginId);
-//        Optional<Professor> professor = professorService.show_professor(loginId);
-//        Optional<Admin> admin = adminService.show_admin(loginId);
-//
-//        if (student.isPresent()){
-//            Student studentLogin = student.get();
-//            System.out.println(studentLogin.toString());
-//            model.addAttribute("principal", principal.getName());
-//            model.addAttribute("studentLogin", studentLogin);
-//            return "welcome";
-//        } else if (professor.isPresent()) {
-//            Professor professorLogin = professor.get();
-//            System.out.println(professorLogin.toString());
-//            model.addAttribute("principal", principal.getName());
-//            model.addAttribute("professorLogin", professorLogin);
-//            return "welcome";
-//        } else if (admin.isPresent()) {
-//            Admin adminLogin = admin.get();
-//            System.out.println(adminLogin.toString());
-//            model.addAttribute("principal", principal.getName());
-//            model.addAttribute("adminLogin", adminLogin);
-//            return "welcome";
-//        }
-//        return "welcome";
-//    }
 }
