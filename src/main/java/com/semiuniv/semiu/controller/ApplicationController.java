@@ -31,9 +31,6 @@ public class ApplicationController {
     //수강 신청 페이지 : 로그인 전
     @GetMapping("application")
     public String lectureApplicationView(Model model){
-        //신청 과목
-//        List<Subject> subject = subjectService.showSubject();
-//        model.addAttribute("subject", subject);
         return "application/lectureApplication";
     }
 
