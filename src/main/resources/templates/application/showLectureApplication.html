@@ -239,27 +239,26 @@
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    // 랜덤 밝은 색상 생성 함수
-    function getRandomBrightColor() {
-        var letters = '0123456789ABCDEF';
-        var color = '#';
-        var r, g, b;
-        do {
-            r = Math.floor(Math.random() * 256);
-            g = Math.floor(Math.random() * 256);
-            b = Math.floor(Math.random() * 256);
-        } while (r < 150 || g < 150 || b < 150); // 밝은 색상 조건 설정
-        color += ('0' + r.toString(16)).slice(-2);
-        color += ('0' + g.toString(16)).slice(-2);
-        color += ('0' + b.toString(16)).slice(-2);
-        return color;
+    // 랜덤 연한 색상 생성 함수
+    function getRandomLightColor() {
+        var r = Math.floor(Math.random() * 56) + 200; // 200부터 255까지 범위
+        var g = Math.floor(Math.random() * 56) + 200; // 200부터 255까지 범위
+        var b = Math.floor(Math.random() * 56) + 200; // 200부터 255까지 범위
+        return '#' + r.toString(16) + g.toString(16) + b.toString(16);
     }
 
-    // 특정 클래스를 가진 td 요소에 랜덤 밝은 색상 적용
-    var specialTds = document.querySelectorAll('.specialTd');
-    specialTds.forEach(function(td) {
-        td.style.backgroundColor = getRandomBrightColor();
+    // 과목 이름을 기반으로 색상을 지정하는 매핑
+    var colorMap = {};
+
+    // 과목 이름을 기반으로 동일한 색상 할당
+    document.querySelectorAll('.specialTd').forEach(function(td) {
+        var subName = td.textContent.split('<br>')[0]; // 과목 이름 추출
+        if (!colorMap[subName]) {
+            colorMap[subName] = getRandomLightColor(); // 새로운 과목이라면 색상 할당
+        }
+        td.style.backgroundColor = colorMap[subName];
     });
 </script>
+
 </body>
 </html>
