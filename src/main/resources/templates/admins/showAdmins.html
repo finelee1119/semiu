@@ -36,6 +36,7 @@
         <tr>
             <th>아이디</th>
             <th>이름</th>
+            <th>이메일</th>
             <th>편집</th>
         </tr>
         </thead>
@@ -43,6 +44,7 @@
         <tr th:each="adminDto : ${adminDto}">
             <td th:text="${adminDto.id}"></td>
             <td th:text="${adminDto.name}"></td>
+            <td th:text="${adminDto.email}"></td>
             <td>
                 <!-- 편집 버튼 -->
                 <a th:href="@{/semi/admin/updateForm/{id}(id=${adminDto.id})}" class="btn btn-outline-primary btn-sm">수정</a>

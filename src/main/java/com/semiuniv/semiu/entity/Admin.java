@@ -15,4 +15,7 @@ public class Admin {
 
     @Column(name = "admin_name", length = 30)
     private String name;
+
+    @Column(length = 100)
+    private String email;
 }

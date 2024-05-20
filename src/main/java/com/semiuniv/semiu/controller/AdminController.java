@@ -55,6 +55,7 @@ public class AdminController {
         users.setId(dto.getId());
         users.setPassword(String.valueOf(dto.getId()));
         users.setRole(UserRole.ADMIN);
+        users.setEmail(dto.getEmail());
         userRepository.save(users);
         return "redirect:/semi/admin/show";
     }

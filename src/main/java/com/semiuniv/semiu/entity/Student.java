@@ -3,6 +3,7 @@ package com.semiuniv.semiu.entity;
 import com.semiuniv.semiu.constant.Gender;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -47,4 +48,7 @@ public class Student {
 
     @Column(name = "graduation_date", nullable = true)
     private LocalDate graduationDate;
+
+    @Column(length = 100)
+    private String email;
 }

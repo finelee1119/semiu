@@ -3,6 +3,8 @@ package com.semiuniv.semiu.service;
 
 import com.semiuniv.semiu.config.PrincipalDetails;
 import com.semiuniv.semiu.constant.UserRole;
+import com.semiuniv.semiu.dto.StudentDto;
+import com.semiuniv.semiu.dto.UserDto;
 import com.semiuniv.semiu.entity.Student;
 import com.semiuniv.semiu.entity.Users;
 import com.semiuniv.semiu.repository.StudentRepository;
@@ -10,6 +12,7 @@ import com.semiuniv.semiu.repository.UserRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -60,5 +63,8 @@ public class UserDetailService implements UserDetailsService {
         return new PrincipalDetails(userAccount);
     }
 
-
+    public Users searchUserId(Integer id){
+        Users user = userRepository.findByUserId(id);
+        return user;
+    }
 }

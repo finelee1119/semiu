@@ -4,10 +4,12 @@ import com.semiuniv.semiu.constant.UserRole;
 import com.semiuniv.semiu.dto.ProfessorDto;
 import com.semiuniv.semiu.entity.Department;
 import com.semiuniv.semiu.entity.Professor;
+import com.semiuniv.semiu.entity.Student;
 import com.semiuniv.semiu.entity.Users;
 import com.semiuniv.semiu.repository.DepartmentRepository;
 import com.semiuniv.semiu.repository.UserRepository;
 import com.semiuniv.semiu.service.ProfessorService;
+import com.semiuniv.semiu.service.UserDetailService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,11 +31,13 @@ public class ProfessorController {
     private final DepartmentRepository departmentRepository;
     private final ProfessorService professorService;
     private final UserRepository userRepository;
+    private final UserDetailService userService;
 
-    public ProfessorController(DepartmentRepository departmentRepository, ProfessorService professorService, UserRepository userRepository) {
+    public ProfessorController(DepartmentRepository departmentRepository, ProfessorService professorService, UserRepository userRepository, UserDetailService userService) {
         this.departmentRepository = departmentRepository;
         this.professorService = professorService;
         this.userRepository = userRepository;
+        this.userService = userService;
     }
 
     //등록
@@ -60,6 +64,7 @@ public class ProfessorController {
         users.setId(user.get().getId());
         users.setPassword(String.valueOf(user.get().getId()));
         users.setRole(UserRole.PROFESSOR);
+        users.setEmail(user.get().getEmail());
         userRepository.save(users);
         return "redirect:/semi/admin/professor/show";
     }
@@ -109,6 +114,10 @@ public class ProfessorController {
         }
 
         professorService.updateProfessor(dto);
+        Optional<Professor> user = professorService.findByName(dto.getName());
+        Users users = userService.searchUserId(user.get().getId());
+        users.setEmail(user.get().getEmail());
+        userService.createUser(users);
         return "redirect:/semi/admin/professor/show";
     }
 

@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
@@ -21,6 +22,7 @@ public class ProfessorDto {
 
     private String name; //성명
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birth; //생년월일
 
     private Gender gender; //성별
@@ -28,13 +30,15 @@ public class ProfessorDto {
     private String address; //주소
 
     private String phone; //연락처
+    private String email;
 
     //    private Department department; // 학과
     private Integer departmentId; // 학과 ID
     private String departmentName; // 학과 이름
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate hireDate; //입사일
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate terminationDate; //퇴사일
 
     // Entity -> Dto
@@ -46,6 +50,7 @@ public class ProfessorDto {
                 professor.getGender(),
                 professor.getAddress(),
                 professor.getPhone(),
+                professor.getEmail(),
 
                 professor.getDepartment().getId(),
                 professor.getDepartment().getName(),
@@ -64,6 +69,7 @@ public class ProfessorDto {
         professor.setGender(dto.getGender());
         professor.setAddress(dto.getAddress());
         professor.setPhone(dto.getPhone());
+        professor.setEmail(dto.getEmail());
 
         Department department = new Department();
         department.setId(dto.getDepartmentId());

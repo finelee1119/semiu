@@ -110,6 +110,10 @@
                 <th>연락처</th>
                 <td><input type="text" id="phone" name="phone" th:field="${studentDto.phone}" class="form-control"></td>
             </tr>
+            <tr>
+                <th>이메일</th>
+                <td><input type="email" id="email" name="phone" th:field="${studentDto.email}" class="form-control"></td>
+            </tr>
             <tr th:if="${studentDto.departmentId != null}">
                 <th>학과</th>
                 <td>
