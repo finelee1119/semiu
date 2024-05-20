@@ -32,7 +32,6 @@ public class SubjectController {
     private final SubjectService subjectService;
     private final ProfessorService professorService;
     private final ClassroomRepository classroomRepository;
-    private final StudentGradeService studentGradeService;
 
     //등록
     @GetMapping("/insertForm")

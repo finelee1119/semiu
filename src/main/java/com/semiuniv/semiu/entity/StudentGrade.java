@@ -12,8 +12,6 @@ public class StudentGrade {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "student_grade_seq")
-//    @SequenceGenerator(name = "student_grade_seq", sequenceName = "student_grade_sequence", allocationSize = 1)
     private Integer no;
 
     @ManyToOne(fetch = LAZY)
