@@ -195,15 +195,30 @@
                                     <!-- 해당 시간 표시 -->
                                     <td th:text="${hour + ':00'}"></td>
                                     <!-- 월요일의 수업 정보 표시 -->
-                                    <td th:each="sub : ${subjectApplication}" th:if="${sub.startTime.hour == hour and sub.dayOfWeek == '월'}" th:utext="${sub.name + '<br>' + sub.classroom.id}" class="specialTd"></td>
+                                    <td th:each="sub : ${subjectApplication}"
+                                        th:if="${(sub.startTime.hour == hour and sub.dayOfWeek == '월') or
+                                                 (sub.endTime.hour == hour+1 and sub.dayOfWeek == '월')}"
+                                        th:utext="${sub.name + '<br>' + sub.classroom.id}" class="specialTd"></td>
                                     <!-- 화요일의 수업 정보 표시 -->
-                                    <td th:each="sub : ${subjectApplication}" th:if="${sub.startTime.hour == hour and sub.dayOfWeek == '화'}"  th:utext="${sub.name + '<br>' + sub.classroom.id}" class="specialTd"></td>
+                                    <td th:each="sub : ${subjectApplication}"
+                                        th:if="${(sub.startTime.hour == hour and sub.dayOfWeek == '화') or
+                                                (sub.endTime.hour == hour+1 and sub.dayOfWeek == '화')}"
+                                        th:utext="${sub.name + '<br>' + sub.classroom.id}" class="specialTd"></td>
                                     <!-- 수요일의 수업 정보 표시 -->
-                                    <td th:each="sub : ${subjectApplication}" th:if="${sub.startTime.hour == hour and sub.dayOfWeek == '수'}"  th:utext="${sub.name + '<br>' + sub.classroom.id}" class="specialTd"></td>
+                                    <td th:each="sub : ${subjectApplication}"
+                                        th:if="${(sub.startTime.hour == hour and sub.dayOfWeek == '수') or
+                                                 (sub.endTime.hour == hour+1 and sub.dayOfWeek == '수')}"
+                                        th:utext="${sub.name + '<br>' + sub.classroom.id}" class="specialTd"></td>
                                     <!-- 목요일의 수업 정보 표시 -->
-                                    <td th:each="sub : ${subjectApplication}" th:if="${sub.startTime.hour == hour and sub.dayOfWeek == '목'}"  th:utext="${sub.name + '<br>' + sub.classroom.id}" class="specialTd"></td>
+                                    <td th:each="sub : ${subjectApplication}"
+                                        th:if="${(sub.startTime.hour == hour and sub.dayOfWeek == '목') or
+                                                 (sub.endTime.hour == hour+1 and sub.dayOfWeek == '목')}"
+                                        th:utext="${sub.name + '<br>' + sub.classroom.id}" class="specialTd"></td>
                                     <!-- 금요일의 수업 정보 표시 -->
-                                    <td th:each="sub : ${subjectApplication}" th:if="${sub.startTime.hour == hour and sub.dayOfWeek == '금'}"  th:utext="${sub.name + '<br>' + sub.classroom.id}" class="specialTd"></td>
+                                    <td th:each="sub : ${subjectApplication}"
+                                        th:if="${(sub.startTime.hour == hour and sub.dayOfWeek == '금') or
+                                                 (sub.endTime.hour == hour+1 and sub.dayOfWeek == '금')}"
+                                        th:utext="${sub.name + '<br>' + sub.classroom.id}" class="specialTd"></td>
                                 </tr>
                             </table>
                         </td>
