@@ -16,8 +16,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/semi")
@@ -102,6 +102,19 @@ public class ApplicationController {
         //과목 목록 : subject : 조건-수강신청한 과목 내역
         List<Subject> subjectApplication = subjectService.showSubjectApplication(id);
         model.addAttribute("subjectApplication", subjectApplication);
+
+        //시간표 : 날짜 분리
+        Map<String, List<Subject>> subjectMap = new LinkedHashMap<>();
+        List<String> daysOfWeek = Arrays.asList("월", "화", "수", "목", "금");
+
+        for (String day : daysOfWeek) {
+            List<Subject> subjectsForDay = subjectApplication.stream()
+                    .filter(sub -> sub.getDayOfWeek().equals(day))
+                    .collect(Collectors.toList());
+            subjectMap.put(day, subjectsForDay);
+        }
+        System.out.println("-------------------------------"+subjectMap.toString());
+        model.addAttribute("subjectMap", subjectMap);
 
         return "application/showLectureApplication";
     }
