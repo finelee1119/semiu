@@ -1,60 +1,69 @@
-function check(){
+$(function(){
+    $("#submit_btn").on("click", function(){
+        alert("등록/수정이 완료되었습니다.")
+    })
+})
 
-    alert("등록/수정이 완료되었습니다.")
-    document.getElementById("frm").submit()
-    return true
-}
-
-
-
-function allSelected() {
-    document.getElementById('selectAllCheckbox')
-        var checkboxes = document.querySelectorAll('input[name="selectedIds"]');
-        checkboxes.forEach(function(checkbox) {
-            checkbox.checked = event.target.checked;
-        });
+$(function(){
+  $("#selectAllCheckbox").on("click", function(){
+    if($("#selectAllCheckbox").is(":checked")){
+      $('input[name="selectedIds"]').each(function(){
+        $(this).prop('checked', true);
+      });
+    } else {
+      $('input[name="selectedIds"]').each(function(){
+        $(this).prop('checked', false);
+      });
     }
+  });
+});
 
-
-function deleteSelectedSubjects() {
-if (confirm('선택된 과목을 삭제하시겠습니까?')) {
-    var form = document.getElementById("deleteForm");
-    var selectedItems = form.querySelectorAll('input[name="selectedIds"]:checked');
+$(function(){
+   $("#delete_btn").on("click", function(){
     var selectedIds = [];
-    for (var i = 0; i < selectedItems.length; i++) {
-        selectedIds.push(selectedItems[i].value);
-    }
-    if(selectedIds.length === 0) {
-        alert("삭제할 데이터가 없습니다.")
-        return false;
-    }
-    console.log("SelectedIDs:", selectedIds);
-    form.submit();
-    return true;
-} else {
-    return false;}
-}
+    $("input[name='selectedIds']:checked").each(function(){
+        selectedIds.push($(this).val());
+        });
+        $("#deleteForm").submit();
+   });
+});
 
  function goBack() {
         window.history.back();
     }
 
+//function updateSubject(subjectId) {
+//    var updateForm = document.createElement("form");
+//    updateForm.setAttribute("method", "get");
+//    updateForm.setAttribute("action", "/semi/admin/subject/updateSubject");
+//
+//    var input = document.createElement("input");
+//    input.setAttribute("type", "hidden");
+//    input.setAttribute("name", "updateId");
+//    input.setAttribute("value", subjectId);
+//
+//    updateForm.appendChild(input);
+//    document.body.appendChild(updateForm);
+//
+//    updateForm.submit();
+//}
 
-function updateSubject(subjectId) {
-    var updateForm = document.createElement("form");
-    updateForm.setAttribute("method", "get");
-    updateForm.setAttribute("action", "/semi/admin/subject/updateSubject");
+$(function(){
+    $("").on("click", function(subjectId){
+    const updateForm = $('<form></form>')
+    .attr({'method': 'get',
+           'action' : "/semi/admin/subject/updateSubject"});
+    const input = $('<input>')
+    .attr({'type' : 'hidden',
+           'name' : 'updateId',
+           'value' : subjectId});
 
-    var input = document.createElement("input");
-    input.setAttribute("type", "hidden");
-    input.setAttribute("name", "updateId");
-    input.setAttribute("value", subjectId);
+           $(updateForm).append(input);
+           $('body').append(updateForm);
+           $(updateForm).submit();
+        })
+    })
 
-    updateForm.appendChild(input);
-    document.body.appendChild(updateForm);
-
-    updateForm.submit();
-}
 
 function professorCheck() {
     var selectedProfessorId = document.getElementById('professor').value;
