@@ -30,6 +30,7 @@
             padding: 0 20px;
         }
     </style>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script type="text/javascript" th:src="@{/js/subjectCheck.js}"></script>
 </head>
 <body>
@@ -42,7 +43,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" onclick="goBack()"></button>
             </div>
             <div style="text-align: right;">
-                <button type="button" class="btn btn-outline-danger btn-sm" onclick="deleteSelectedSubjects()" style="margin-bottom: 20px">선택 항목 삭제</button>
+                <button type="button" class="btn btn-outline-danger btn-sm" id="delete_btn" onclick="deleteSelectedSubjects()" style="margin-bottom: 20px">선택 항목 삭제</button>
             </div>
             <table class="table table-bordered">
                 <thead class="table-light">
