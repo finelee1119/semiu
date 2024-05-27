@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/semi/admin")
+@RequestMapping("/semi/admin/admin")
 public class AdminController {
 
     private final AdminService adminService;
@@ -57,7 +57,7 @@ public class AdminController {
         users.setRole(UserRole.ADMIN);
         users.setEmail(dto.getEmail());
         userRepository.save(users);
-        return "redirect:/semi/admin/show";
+        return "redirect:/semi/admin/admin/show";
     }
 
     //조회 + 검색
@@ -66,7 +66,7 @@ public class AdminController {
                           @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable,
                           @RequestParam(value = "keyword", defaultValue = "") String keyword) {
 
-        Page<AdminDto> adminDto = null;
+        Page<AdminDto> adminDto;
 
         if (keyword == null || keyword.isEmpty()) {
             adminDto = adminService.showAllAdmins(pageable);
@@ -82,6 +82,7 @@ public class AdminController {
         }
 
         model.addAttribute("adminDto", adminDto);
+        model.addAttribute("keyword", keyword);  // 검색어를 모델에 추가
         return "admins/showAdmins";
     }
 
@@ -90,6 +91,7 @@ public class AdminController {
     public String updateForm(@PathVariable("updateId") Integer id, Model model) {
         AdminDto adminDto = adminService.showOneAdmin(id);
         model.addAttribute("adminDto", adminDto);
+
         UserDto userDto = new UserDto();
         model.addAttribute("userDto", userDto);
         return "admins/updateAdminForm";
@@ -105,13 +107,13 @@ public class AdminController {
         userDto.setId(adminDto.getId());
         adminService.updateAdmin(adminDto);
         emailService.updatePassword(userDto);
-        return "redirect:/semi/admin/show";
+        return "redirect:/semi/admin/admin/show";
     }
 
     //삭제
     @PostMapping("/delete/{deleteId}")
     public String delete(@PathVariable("deleteId") Integer id) {
         adminService.deleteAdmin(id);
-        return "redirect:/semi/admin/show";
+        return "redirect:/semi/admin/admin/show";
     }
 }

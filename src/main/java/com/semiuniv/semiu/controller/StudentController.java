@@ -71,7 +71,7 @@ public class StudentController {
                           @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable,
                           @RequestParam(value = "keyword", defaultValue = "") String keyword) {
 
-        Page<StudentDto> studentDto = null;
+        Page<StudentDto> studentDto;
 
         if (keyword == null || keyword.isEmpty()) {
             studentDto = studentService.showAllStudents(pageable);
@@ -87,6 +87,7 @@ public class StudentController {
         }
 
         model.addAttribute("studentDto", studentDto);
+        model.addAttribute("keyword", keyword);  // 검색어를 모델에 추가
         return "students/showStudents";
     }
 

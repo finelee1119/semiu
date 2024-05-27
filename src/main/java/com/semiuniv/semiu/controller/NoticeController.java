@@ -55,7 +55,7 @@ public class NoticeController {
                           @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
                           @RequestParam(value = "keyword", defaultValue = "") String keyword){
 
-        Page<NoticeDto> noticeDto = null;
+        Page<NoticeDto> noticeDto;
 
         if (keyword == null || keyword.isEmpty()) {
             noticeDto = noticeService.findAllNotice(pageable);
@@ -64,6 +64,7 @@ public class NoticeController {
         }
 
         model.addAttribute("noticeDto", noticeDto);
+        model.addAttribute("keyword", keyword);  // 검색어를 모델에 추가
         return "notices/showNoticeAdmin";
     }
 
