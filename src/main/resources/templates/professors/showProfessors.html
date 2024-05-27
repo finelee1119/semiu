@@ -87,7 +87,7 @@
     <div aria-label="Page navigation" th:if="${!professorDto.isEmpty()}">
         <ul class="pagination justify-content-center">
             <li class="page-item" th:classappend="${!professorDto.hasPrevious()} ? 'disabled'">
-                <a class="page-link" th:href="@{|?page=${professorDto.number - 1}|}">
+                <a class="page-link" th:href="@{|/semi/admin/professor/show?keyword=${keyword}&page=${professorDto.number - 1}|}">
                     <span>이전</span>
                 </a>
             </li>
@@ -96,12 +96,12 @@
                 th:if="${page >= professorDto.number - 5 and page <= professorDto.number + 5}"
                 th:classappend="${page == professorDto.number} ? 'active'"
                 class="page-item">
-                <a th:text="${page + 1}" class="page-link" th:href="@{|?page=${page}|}"></a>
+                <a th:text="${page + 1}" class="page-link" th:href="@{|/semi/admin/professor/show?keyword=${keyword}&page=${page}|}"></a>
             </li>
 
 
             <li class="page-item" th:classappend="${!professorDto.hasNext} ? 'disabled'">
-                <a class="page-link" th:href="@{|?page=${professorDto.number + 1}|}">
+                <a class="page-link" th:href="@{|/semi/admin/professor/show?keyword=${keyword}&page=${professorDto.number + 1}|}">
                     <span>다음</span>
                 </a>
             </li>
@@ -111,7 +111,7 @@
     <!-- 검색 처리 -->
     <form th:action="@{/semi/admin/professor/show}" method="get">
         <div class="input-group mb-3">
-            <input type="text" name="keyword" class="form-control" placeholder="검색어 입력">
+            <input type="text" name="keyword" class="form-control" placeholder="검색어 입력" th:value="${keyword}">
             <button class="btn btn-outline-secondary" type="submit">검색</button>
         </div>
     </form>

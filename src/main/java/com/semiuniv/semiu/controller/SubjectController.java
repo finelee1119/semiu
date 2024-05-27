@@ -62,7 +62,7 @@ public class SubjectController {
                               @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable,
                               @RequestParam(value = "keyword", defaultValue = "") String keyword) {
 
-        Page<SubjectDto> subjectDto = null;
+        Page<SubjectDto> subjectDto;
 
         if (keyword == null || keyword.isEmpty()) {
             subjectDto = subjectService.findSubject(pageable);
@@ -78,6 +78,7 @@ public class SubjectController {
         }
         model.addAttribute("selectedIds", new Integer[]{});
         model.addAttribute("subjects", subjectDto);
+        model.addAttribute("keyword", keyword);  // 검색어를 모델에 추가
         return "subjects/showSubjectList";
     }
 

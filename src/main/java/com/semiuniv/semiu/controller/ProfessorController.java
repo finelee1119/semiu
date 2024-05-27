@@ -75,7 +75,7 @@ public class ProfessorController {
                           @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable,
                           @RequestParam(value = "keyword", defaultValue = "") String keyword) {
 
-        Page<ProfessorDto> professorDto = null;
+        Page<ProfessorDto> professorDto;
 
         if (keyword == null || keyword.isEmpty()) {
             professorDto = professorService.showAllProfessors(pageable);
@@ -91,6 +91,7 @@ public class ProfessorController {
         }
 
         model.addAttribute("professorDto", professorDto);
+        model.addAttribute("keyword", keyword);  // 검색어를 모델에 추가
         return "professors/showProfessors";
     }
 
